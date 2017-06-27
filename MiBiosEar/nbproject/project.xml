@@ -12,6 +12,14 @@
                     <path-in-war>/</path-in-war>
                 </library>
                 <library>
+                    <file>${reference.MiBiosDto.jar}</file>
+                    <path-in-war>/lib</path-in-war>
+                </library>
+                <library>
+                    <file>${reference.MiBiosJpa.jar}</file>
+                    <path-in-war>/lib</path-in-war>
+                </library>
+                <library>
                     <file>${reference.MiBiosWeb.dist-ear}</file>
                     <path-in-war>/</path-in-war>
                 </library>
@@ -19,12 +27,28 @@
         </data>
         <references xmlns="http://www.netbeans.org/ns/ant-project-references/1">
             <reference>
+                <foreign-project>MiBiosDto</foreign-project>
+                <artifact-type>jar</artifact-type>
+                <script>build.xml</script>
+                <target>jar</target>
+                <clean-target>clean</clean-target>
+                <id>jar</id>
+            </reference>
+            <reference>
                 <foreign-project>MiBiosEjb</foreign-project>
                 <artifact-type>j2ee_ear_archive</artifact-type>
                 <script>build.xml</script>
                 <target>dist-ear</target>
                 <clean-target>clean-ear</clean-target>
                 <id>dist-ear</id>
+            </reference>
+            <reference>
+                <foreign-project>MiBiosJpa</foreign-project>
+                <artifact-type>jar</artifact-type>
+                <script>build.xml</script>
+                <target>jar</target>
+                <clean-target>clean</clean-target>
+                <id>jar</id>
             </reference>
             <reference>
                 <foreign-project>MiBiosWeb</foreign-project>

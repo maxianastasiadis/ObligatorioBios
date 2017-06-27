@@ -22,6 +22,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Table(name = "usuarios")
 @XmlRootElement
 @NamedQueries({
+    @NamedQuery(name = "Usuarios.login", query = "SELECT u FROM Usuarios u WHERE u.usuariosPK.tipoPersona = :tipoPersona and u.usuariosPK.tipoDocumento = :tipoDocumento and u.usuariosPK.documento = :documento and u.clave = :clave"),
+    @NamedQuery(name = "Usuarios.controlLogin", query = "SELECT count(u) FROM Usuarios u WHERE u.usuariosPK.tipoPersona = :tipoPersona and u.usuariosPK.tipoDocumento = :tipoDocumento and u.usuariosPK.documento = :documento and u.clave = :clave"),
     @NamedQuery(name = "Usuarios.findAll", query = "SELECT u FROM Usuarios u"),
     @NamedQuery(name = "Usuarios.findByTipoPersona", query = "SELECT u FROM Usuarios u WHERE u.usuariosPK.tipoPersona = :tipoPersona"),
     @NamedQuery(name = "Usuarios.findByTipoDocumento", query = "SELECT u FROM Usuarios u WHERE u.usuariosPK.tipoDocumento = :tipoDocumento"),
