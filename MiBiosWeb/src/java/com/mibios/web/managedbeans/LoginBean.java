@@ -66,8 +66,7 @@ public class LoginBean implements Serializable{
         this.clave = clave;
     }
     
-    public boolean Login() {
-        
+    public Boolean Login() {
         ParamLogin paramLogin = new ParamLogin();
         ReturnLogin returnLogin = new ReturnLogin();
         UsuariosFachada usuarioFachada = new UsuariosFachada();
@@ -78,9 +77,7 @@ public class LoginBean implements Serializable{
             paramLogin.setTipoDocumento(tipoDocumento);
             paramLogin.setDocumento(documento);
             paramLogin.setClave(clave);
-            
             returnLogin = usuarioFachada.Login(paramLogin);
-            
             if(returnLogin.getLogin())
             {
                 return returnLogin.getLogin();

@@ -7,7 +7,7 @@ package com.mibios.web.fachada;
 
 import com.mibios.dto.usuarios.ParamLogin;
 import com.mibios.dto.usuarios.ReturnLogin;
-import com.mibios.ejb.usuarios.UsuariosEjbLocal;
+import com.mibios.ejb.usuarios.UsuariosBeanLocal;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.naming.Context;
@@ -23,20 +23,20 @@ public class UsuariosFachada {
     
     public ReturnLogin Login(ParamLogin xParamLogin) throws Exception
     {
-        return lookupUsuariosEjb().Login(xParamLogin);
+        return lookupUsuariosBean().Login(xParamLogin);
     }
     
     /**********************************/
     /*ACA ESTAN LAS LLAMADAS A LOS EJB*/
     /**********************************/
     
-    //ABMTCambioBean 
-    private UsuariosEjbLocal lookupUsuariosEjb()
+    //UsuariosBean 
+    private UsuariosBeanLocal lookupUsuariosBean()
     {
         try
         {
             Context c = new InitialContext();
-            return (UsuariosEjbLocal) c.lookup("UsuariosEjb");
+            return (UsuariosBeanLocal) c.lookup("UsuariosBean");
         }
         catch (NamingException ne)
         {

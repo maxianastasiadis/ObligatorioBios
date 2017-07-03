@@ -7,14 +7,18 @@ package com.mibios.ejb.usuarios;
 
 import com.mibios.dto.usuarios.ParamLogin;
 import com.mibios.dto.usuarios.ReturnLogin;
-import javax.ejb.Remote;
+import com.mibios.jpa.peristencia.UsuariosJpaPersitencia;
+import javax.ejb.Stateless;
 
 /**
  *
  * @author Maxi
  */
-@Remote
-public interface UsuariosEjbLocal {
-    
-    public ReturnLogin Login(ParamLogin xParamLogin);
+@Stateless(mappedName="UsuariosBean")
+public class UsuariosBean implements UsuariosBeanLocal {
+
+    @Override
+    public ReturnLogin Login(ParamLogin xParamLogin) {
+        return UsuariosJpaPersitencia.Login(xParamLogin);
+    }
 }
