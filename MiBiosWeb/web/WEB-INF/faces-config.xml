@@ -17,4 +17,13 @@
                     <to-view-id>/index.xhtml</to-view-id>
                 </navigation-case>
         </navigation-rule>
+        <navigation-rule>
+            <from-view-id>/menuPrincipal.xhtml</from-view-id>
+                <navigation-case>
+                    <from-action>#{menuPrincipalBean.Logout}</from-action>
+                    <from-outcome>true</from-outcome>
+                    <to-view-id>/index.xhtml</to-view-id>
+                    <redirect></redirect>
+                </navigation-case>
+        </navigation-rule>
 </faces-config>
