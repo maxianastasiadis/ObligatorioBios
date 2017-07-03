@@ -11,9 +11,13 @@ and open the template in the editor.
 .login-form {
     margin-right: auto; 
     margin-left: auto; 
-    width: 350px;
+    width: 450px;
 }
 
 .message {
     color:red;
+}
+
+.ui-selectonemenu{
+     width: 212px !important;
 }
