@@ -24,7 +24,7 @@
                     <p:spacer></p:spacer>
                     <h:message for="password" class="message"/>
                     <p:spacer></p:spacer>
-                    <p:commandButton action="#{loginBean.Login}" value="Login" icon="ui-icon-key" ajax="true" update="loginForm"></p:commandButton>
+                    <p:commandButton action="#{loginBean.Login()}" value="Login" icon="ui-icon-key" ajax="true" update="loginForm"></p:commandButton>
                 </h:panelGrid>
                 <h:messages class="message" globalOnly="true" />
             </p:panel>
