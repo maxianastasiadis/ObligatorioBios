@@ -15,5 +15,7 @@ import javax.ejb.Remote;
  */
 @Remote
 public interface UsuariosBeanLocal {
+    
     public ReturnLogin Login(ParamLogin xParamLogin);
+    
 }

@@ -21,3 +21,8 @@ and open the template in the editor.
 .ui-selectonemenu{
      width: 212px !important;
 }
+
+.prueba {
+    width: 100%;
+    text-align: center;
+}

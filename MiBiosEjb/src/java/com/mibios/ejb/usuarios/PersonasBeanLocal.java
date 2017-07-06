@@ -6,24 +6,21 @@
 package com.mibios.ejb.usuarios;
 
 import com.mibios.dto.usuarios.ParamActualizarDatosPersonales;
-import com.mibios.dto.usuarios.ParamLogin;
 import com.mibios.dto.usuarios.ParamObtenerDatosPersonales;
 import com.mibios.dto.usuarios.ReturnActualizarDatosPersonales;
-import com.mibios.dto.usuarios.ReturnLogin;
 import com.mibios.dto.usuarios.ReturnObtenerDatosPersonales;
-import com.mibios.jpa.peristencia.UsuariosJpaPersitencia;
-import javax.ejb.Stateless;
+import javax.ejb.Local;
+import javax.ejb.Remote;
 
 /**
  *
  * @author Maxi
  */
-@Stateless(mappedName="UsuariosBean")
-public class UsuariosBean implements UsuariosBeanLocal {
-
-    @Override
-    public ReturnLogin Login(ParamLogin xParamLogin) {
-        return UsuariosJpaPersitencia.Login(xParamLogin);
-    }
-   
+@Remote
+public interface PersonasBeanLocal {
+        
+    public ReturnActualizarDatosPersonales ActualizarDatosPersonales(ParamActualizarDatosPersonales xParamActualizarDatosPersonales) throws Exception;
+    
+    public ReturnObtenerDatosPersonales ObtenerDatosPersonales(ParamObtenerDatosPersonales xParamObtenerDatosPersonales) throws Exception;
+    
 }

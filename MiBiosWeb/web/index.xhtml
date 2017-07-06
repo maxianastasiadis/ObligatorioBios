@@ -33,6 +33,18 @@
                     <h:message for="password" class="message"/>
                     <p:spacer></p:spacer>
                     <p:commandButton action="#{loginBean.Login}" value="Login" icon="ui-icon-key" ajax="true" update="loginForm"></p:commandButton>
+                </h:panelGrid> 
+                <p:spacer></p:spacer>
+                <h:panelGrid columns="1" styleClass="prueba">
+                    <h:panelGroup>
+                        <h:commandLink>
+                            <h:link value="Olvide la Contraseña." outcome="olvideContrasena"></h:link>
+                        </h:commandLink> 
+                        <br></br>
+                        <h:commandLink>
+                            <h:link value="Registrarme." outcome="registroUsuario"></h:link>
+                        </h:commandLink> 
+                    </h:panelGroup>
                 </h:panelGrid>
                 <h:messages class="message" globalOnly="true" />
             </p:panel>

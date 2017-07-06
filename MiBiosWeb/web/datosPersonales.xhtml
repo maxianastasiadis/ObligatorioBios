@@ -21,7 +21,7 @@
                     <p:spacer></p:spacer>
                     <h:message for="password" class="message"/>
                     <p:spacer></p:spacer>
-                    <p:commandButton action="" value="Guardar" icon="ui-icon-key" ajax="true" update="datosPersonales"></p:commandButton>
+                    <p:commandButton action="#{datosPersonalesBean.actualizarDatosPersonales}" value="Guardar" icon="ui-icon-key" ajax="true" update="datosPersonales"></p:commandButton>
                 </h:panelGrid>
                 <h:messages class="message" globalOnly="true" />
             </p:panel>
