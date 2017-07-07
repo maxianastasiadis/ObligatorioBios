@@ -8,7 +8,7 @@ package com.mibios.web.managedbeans;
 import java.io.Serializable;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 
 /**
@@ -16,10 +16,22 @@ import javax.faces.context.FacesContext;
  * @author General
  */
 @ManagedBean
-@SessionScoped
+@RequestScoped
 public class MenuPrincipalBean implements Serializable {
 
+    private String page;
+
+    public String getPage() {
+        return page;
+    }
+
+    public void setPage(String page) {
+        this.page = page;
+    }
+    
+    
     public MenuPrincipalBean() {
+        this.page="background.xhtml";
     }
     
     public Boolean Logout() {
@@ -27,4 +39,9 @@ public class MenuPrincipalBean implements Serializable {
         return true;
     }
     
+    public String cargarPagina(String pagina)
+    {
+        page = pagina;
+        return page;
+    }
 }
