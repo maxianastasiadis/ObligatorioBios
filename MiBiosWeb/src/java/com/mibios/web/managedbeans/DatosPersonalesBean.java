@@ -18,10 +18,10 @@ import javax.faces.bean.SessionScoped;
 @SessionScoped
 public class DatosPersonalesBean implements Serializable  {
 
-    private String tipoPersona;
-    private String tipoDocumento;
+    //private String tipoPersona;
+    //private String tipoDocumento;
     private String documento; 
-    private String apellido1; 
+    /*private String apellido1; 
     private String apellido2; 
     private String nombre1; 
     private String nombre2; 
@@ -33,12 +33,12 @@ public class DatosPersonalesBean implements Serializable  {
     private String direccion;
     private String ciudad;
     private String departamento;
-    private String pais;
+    private String pais;*/
     
     public DatosPersonalesBean() {
     }
 
-    public String getTipoPersona() {
+    /*public String getTipoPersona() {
         return tipoPersona;
     }
 
@@ -53,7 +53,7 @@ public class DatosPersonalesBean implements Serializable  {
     public void setTipoDocumento(String tipoDocumento) {
         this.tipoDocumento = tipoDocumento;
     }
-
+*/
     public String getDocumento() {
         return documento;
     }
@@ -61,7 +61,7 @@ public class DatosPersonalesBean implements Serializable  {
     public void setDocumento(String documento) {
         this.documento = documento;
     }
-
+/*
     public String getApellido1() {
         return apellido1;
     }
@@ -164,7 +164,7 @@ public class DatosPersonalesBean implements Serializable  {
 
     public void setPais(String pais) {
         this.pais = pais;
-    }
+    }*/
     
     public Boolean ActualizarDatosPersonales() {
         return true;

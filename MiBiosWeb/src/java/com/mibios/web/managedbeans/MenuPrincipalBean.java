@@ -31,7 +31,6 @@ public class MenuPrincipalBean implements Serializable {
     
     
     public MenuPrincipalBean() {
-        this.page="background.xhtml";
     }
     
     public Boolean Logout() {

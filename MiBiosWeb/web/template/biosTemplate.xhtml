@@ -1,0 +1,49 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <h:outputStylesheet library="css" name="styleBios.css"/>
+        <title>
+            <ui:insert name="titulo">
+                Facelets Template
+            </ui:insert>
+        </title>
+    </h:head>
+    <h:body>
+        <header id="cabecera">
+            <ui:insert name="cabecera">
+                <h:form>
+                    <p:menubar>
+                        <p:submenu label="Mi Perfil" icon="ui-icon-document">
+                            <p:menuitem value="Datos Personales" action="#{menuPrincipalBean.cargarPagina('datosPersonales.xhtml')}" />
+                            <p:separator />
+                            <p:menuitem value="Cuenta Corriente" action="#{menuPrincipalBean.cargarPagina('cuentaCorriente.xhtml')}" />
+                        </p:submenu>
+                        <p:submenu label="Cursos" icon="ui-icon-pencil">
+                            <p:menuitem value="Mis Cursos" action="#{menuPrincipalBean.cargarPagina('misCursos.xhtml')}"/>
+                            <p:menuitem value="Ver Cursos" action="#{menuPrincipalBean.cargarPagina('verCursos.xhtml')}"/>
+                        </p:submenu>
+                        <p:menuitem value="Logout" action="#{menuPrincipalBean.Logout}" icon="ui-icon-extlink" style="position: absolute; right: 4px;"/>
+                    </p:menubar>
+                </h:form>
+            </ui:insert>
+        </header>
+        
+        <div class="contenido">
+            <ui:insert name="contenido">
+                Aqui va el contenido de la página
+            </ui:insert>
+        </div>
+        
+        <footer id="pie">
+            <ui:insert name="pie">
+                Aca va el footer
+            </ui:insert>
+        </footer>
+    </h:body>
+</html>
