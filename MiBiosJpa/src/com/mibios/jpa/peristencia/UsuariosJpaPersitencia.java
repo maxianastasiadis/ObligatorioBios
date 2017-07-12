@@ -17,9 +17,8 @@ import javax.persistence.Persistence;
  */
 public class UsuariosJpaPersitencia {
     
-    public static ReturnLogin Login(ParamLogin xParamLogin) {
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("MiBiosJpaPU");
-        EntityManager em = emf.createEntityManager();
+    public static ReturnLogin Login(EntityManager em, ParamLogin xParamLogin) {
+
         ReturnLogin objReturnLogin = new ReturnLogin();
         long existe = (Long)em.createNamedQuery("Usuarios.controlLogin")
                 .setParameter("tipoPersona", xParamLogin.getTipoPersona())
