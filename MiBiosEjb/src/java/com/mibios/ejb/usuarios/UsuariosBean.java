@@ -5,7 +5,7 @@
  */
 package com.mibios.ejb.usuarios;
 
-import com.mibios.dto.usuarios.ParamActualizarDatosPersonales;
+
 import com.mibios.dto.usuarios.ParamLogin;
 import com.mibios.dto.usuarios.ParamObtenerDatosPersonales;
 import com.mibios.dto.usuarios.ReturnActualizarDatosPersonales;
