@@ -1,0 +1,16 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+<h:form>
+    <p:menubar>
+        <p:menuitem icon="ui-icon-person" value="Datos Personales" action="#{menuPrincipalBean.cargarPagina('datosPersonales.xhtml')}" />
+        <p:menuitem icon="ui-icon-document" value="Cuenta Corriente" action="#{menuPrincipalBean.cargarPagina('cuentaCorriente.xhtml')}" />
+        <p:menuitem icon="ui-icon-pencil" value="Mis Cursos" action="#{menuPrincipalBean.cargarPagina('misCursos.xhtml')}"/>
+        <p:menuitem icon="ui-icon-search" value="Ver Cursos" action="#{menuPrincipalBean.cargarPagina('verCursos.xhtml')}"/>
+        <p:menuitem icon="ui-icon-closethick" value="Logout" action="#{menuPrincipalBean.Logout}" style="position: absolute; right: 4px;"/>
+    </p:menubar>
+</h:form>
+</html>
+
