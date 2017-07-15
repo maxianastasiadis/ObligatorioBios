@@ -6,10 +6,12 @@
 package com.mibios.jpa.entidades;
 
 import java.io.Serializable;
-import javax.persistence.Basic;
 import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -24,47 +26,45 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "ClaseEstudiantes.findAll", query = "SELECT c FROM ClaseEstudiantes c"),
-    @NamedQuery(name = "ClaseEstudiantes.findByIdClase", query = "SELECT c FROM ClaseEstudiantes c WHERE c.idClase = :idClase"),
-    @NamedQuery(name = "ClaseEstudiantes.findByIdEstudiante", query = "SELECT c FROM ClaseEstudiantes c WHERE c.idEstudiante = :idEstudiante"),
+    @NamedQuery(name = "ClaseEstudiantes.findByIdClase", query = "SELECT c FROM ClaseEstudiantes c WHERE c.claseEstudiantesPK.idClase = :idClase"),
+    @NamedQuery(name = "ClaseEstudiantes.findByIdEstudiante", query = "SELECT c FROM ClaseEstudiantes c WHERE c.claseEstudiantesPK.idEstudiante = :idEstudiante"),
     @NamedQuery(name = "ClaseEstudiantes.findByImporteCuota", query = "SELECT c FROM ClaseEstudiantes c WHERE c.importeCuota = :importeCuota"),
     @NamedQuery(name = "ClaseEstudiantes.findByPorcentajeBeca", query = "SELECT c FROM ClaseEstudiantes c WHERE c.porcentajeBeca = :porcentajeBeca"),
     @NamedQuery(name = "ClaseEstudiantes.findByAprobadoSn", query = "SELECT c FROM ClaseEstudiantes c WHERE c.aprobadoSn = :aprobadoSn")})
 public class ClaseEstudiantes implements Serializable {
     private static final long serialVersionUID = 1L;
-    @Id
-    @Basic(optional = false)
-    @Column(name = "ID_CLASE")
-    private Integer idClase;
-    @Column(name = "ID_ESTUDIANTE")
-    private Integer idEstudiante;
+    @EmbeddedId
+    protected ClaseEstudiantesPK claseEstudiantesPK;
     @Column(name = "IMPORTE_CUOTA")
     private Long importeCuota;
     @Column(name = "PORCENTAJE_BECA")
     private Long porcentajeBeca;
     @Column(name = "APROBADO_SN")
     private String aprobadoSn;
+    @JoinColumn(name = "ID_ESTUDIANTE", referencedColumnName = "ID_ESTUDIANTE", insertable = false, updatable = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    private Estudiantes estudiantes;
+    @JoinColumn(name = "ID_CLASE", referencedColumnName = "ID_CLASE", insertable = false, updatable = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    private Clases clases;
 
     public ClaseEstudiantes() {
     }
 
-    public ClaseEstudiantes(Integer idClase) {
-        this.idClase = idClase;
+    public ClaseEstudiantes(ClaseEstudiantesPK claseEstudiantesPK) {
+        this.claseEstudiantesPK = claseEstudiantesPK;
     }
 
-    public Integer getIdClase() {
-        return idClase;
+    public ClaseEstudiantes(int idClase, int idEstudiante) {
+        this.claseEstudiantesPK = new ClaseEstudiantesPK(idClase, idEstudiante);
     }
 
-    public void setIdClase(Integer idClase) {
-        this.idClase = idClase;
+    public ClaseEstudiantesPK getClaseEstudiantesPK() {
+        return claseEstudiantesPK;
     }
 
-    public Integer getIdEstudiante() {
-        return idEstudiante;
-    }
-
-    public void setIdEstudiante(Integer idEstudiante) {
-        this.idEstudiante = idEstudiante;
+    public void setClaseEstudiantesPK(ClaseEstudiantesPK claseEstudiantesPK) {
+        this.claseEstudiantesPK = claseEstudiantesPK;
     }
 
     public Long getImporteCuota() {
@@ -91,10 +91,26 @@ public class ClaseEstudiantes implements Serializable {
         this.aprobadoSn = aprobadoSn;
     }
 
+    public Estudiantes getEstudiantes() {
+        return estudiantes;
+    }
+
+    public void setEstudiantes(Estudiantes estudiantes) {
+        this.estudiantes = estudiantes;
+    }
+
+    public Clases getClases() {
+        return clases;
+    }
+
+    public void setClases(Clases clases) {
+        this.clases = clases;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (idClase != null ? idClase.hashCode() : 0);
+        hash += (claseEstudiantesPK != null ? claseEstudiantesPK.hashCode() : 0);
         return hash;
     }
 
@@ -105,7 +121,7 @@ public class ClaseEstudiantes implements Serializable {
             return false;
         }
         ClaseEstudiantes other = (ClaseEstudiantes) object;
-        if ((this.idClase == null && other.idClase != null) || (this.idClase != null && !this.idClase.equals(other.idClase))) {
+        if ((this.claseEstudiantesPK == null && other.claseEstudiantesPK != null) || (this.claseEstudiantesPK != null && !this.claseEstudiantesPK.equals(other.claseEstudiantesPK))) {
             return false;
         }
         return true;
@@ -113,7 +129,7 @@ public class ClaseEstudiantes implements Serializable {
 
     @Override
     public String toString() {
-        return "com.mibios.jpa.entidades.ClaseEstudiantes[ idClase=" + idClase + " ]";
+        return "com.mibios.jpa.entidades.ClaseEstudiantes[ claseEstudiantesPK=" + claseEstudiantesPK + " ]";
     }
     
 }

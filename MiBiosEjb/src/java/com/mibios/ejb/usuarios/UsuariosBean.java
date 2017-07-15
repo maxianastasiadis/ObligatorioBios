@@ -34,7 +34,15 @@ public class UsuariosBean implements UsuariosBeanLocal {
         {
             em.getTransaction().begin();
 
-            login = UsuariosJpaPersitencia.Login(em, xParamLogin);
+            //VERIFICO QUE EL USUARIO EXISTA PARA EL LOGIN
+            login = UsuariosJpaPersitencia.ControlUsuarioLogin(em, xParamLogin);
+            
+            //SI EXISTE LO OBTENGO
+            if(login.getLogin())
+            {
+                //OBTENER DATOS DE USUARIO   
+                login = UsuariosJpaPersitencia.ObtenerUsuarioLogin(em, xParamLogin);
+            }
 
             em.getTransaction().commit();
         }

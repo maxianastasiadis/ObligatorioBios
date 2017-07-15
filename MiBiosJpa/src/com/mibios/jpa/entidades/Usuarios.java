@@ -9,6 +9,10 @@ import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinColumns;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -22,8 +26,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Table(name = "usuarios")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Usuarios.login", query = "SELECT u FROM Usuarios u WHERE u.usuariosPK.tipoPersona = :tipoPersona and u.usuariosPK.tipoDocumento = :tipoDocumento and u.usuariosPK.documento = :documento and u.clave = :clave"),
-    @NamedQuery(name = "Usuarios.controlLogin", query = "SELECT count(u) FROM Usuarios u WHERE u.usuariosPK.tipoPersona = :tipoPersona and u.usuariosPK.tipoDocumento = :tipoDocumento and u.usuariosPK.documento = :documento and u.clave = :clave"),
+    @NamedQuery(name = "Usuarios.controlUsuarioLogin", query = "SELECT count(u) FROM Usuarios u WHERE u.usuariosPK.tipoPersona = :tipoPersona and u.usuariosPK.tipoDocumento = :tipoDocumento and u.usuariosPK.documento = :documento and u.clave = :clave"),
+    @NamedQuery(name = "Usuarios.obtenerUsuarioLogin", query = "SELECT u FROM Usuarios u WHERE u.usuariosPK.tipoPersona = :tipoPersona and u.usuariosPK.tipoDocumento = :tipoDocumento and u.usuariosPK.documento = :documento"),
     @NamedQuery(name = "Usuarios.findAll", query = "SELECT u FROM Usuarios u"),
     @NamedQuery(name = "Usuarios.findByTipoPersona", query = "SELECT u FROM Usuarios u WHERE u.usuariosPK.tipoPersona = :tipoPersona"),
     @NamedQuery(name = "Usuarios.findByTipoDocumento", query = "SELECT u FROM Usuarios u WHERE u.usuariosPK.tipoDocumento = :tipoDocumento"),
@@ -41,6 +45,11 @@ public class Usuarios implements Serializable {
     private String fechaIngreso;
     @Column(name = "ACTIVO")
     private String activo;
+    @JoinColumns({
+        @JoinColumn(name = "TIPO_DOCUMENTO", referencedColumnName = "TIPO_DOCUMENTO", insertable = false, updatable = false),
+        @JoinColumn(name = "DOCUMENTO", referencedColumnName = "DOCUMENTO", insertable = false, updatable = false)})
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    private Personas personas;
 
     public Usuarios() {
     }
@@ -83,6 +92,14 @@ public class Usuarios implements Serializable {
 
     public void setActivo(String activo) {
         this.activo = activo;
+    }
+
+    public Personas getPersonas() {
+        return personas;
+    }
+
+    public void setPersonas(Personas personas) {
+        this.personas = personas;
     }
 
     @Override

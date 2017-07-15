@@ -6,13 +6,18 @@
 package com.mibios.jpa.entidades;
 
 import java.io.Serializable;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -74,6 +79,12 @@ public class Personas implements Serializable {
     private String fechaIngreso;
     @Column(name = "ACTIVO")
     private String activo;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "personas", fetch = FetchType.LAZY)
+    private List<Docentes> docentesList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "personas", fetch = FetchType.LAZY)
+    private List<Estudiantes> estudiantesList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "personas", fetch = FetchType.LAZY)
+    private List<Usuarios> usuariosList;
 
     public Personas() {
     }
@@ -212,6 +223,33 @@ public class Personas implements Serializable {
 
     public void setActivo(String activo) {
         this.activo = activo;
+    }
+
+    @XmlTransient
+    public List<Docentes> getDocentesList() {
+        return docentesList;
+    }
+
+    public void setDocentesList(List<Docentes> docentesList) {
+        this.docentesList = docentesList;
+    }
+
+    @XmlTransient
+    public List<Estudiantes> getEstudiantesList() {
+        return estudiantesList;
+    }
+
+    public void setEstudiantesList(List<Estudiantes> estudiantesList) {
+        this.estudiantesList = estudiantesList;
+    }
+
+    @XmlTransient
+    public List<Usuarios> getUsuariosList() {
+        return usuariosList;
+    }
+
+    public void setUsuariosList(List<Usuarios> usuariosList) {
+        this.usuariosList = usuariosList;
     }
 
     @Override

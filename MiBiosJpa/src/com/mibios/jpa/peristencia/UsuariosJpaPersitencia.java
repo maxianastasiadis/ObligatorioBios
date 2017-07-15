@@ -7,9 +7,8 @@ package com.mibios.jpa.peristencia;
 
 import com.mibios.dto.usuarios.ParamLogin;
 import com.mibios.dto.usuarios.ReturnLogin;
+import com.mibios.jpa.entidades.Usuarios;
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 
 /**
  *
@@ -17,10 +16,10 @@ import javax.persistence.Persistence;
  */
 public class UsuariosJpaPersitencia {
     
-    public static ReturnLogin Login(EntityManager em, ParamLogin xParamLogin) {
+    public static ReturnLogin ControlUsuarioLogin(EntityManager em, ParamLogin xParamLogin) {
 
         ReturnLogin objReturnLogin = new ReturnLogin();
-        long existe = (Long)em.createNamedQuery("Usuarios.controlLogin")
+        long existe = (Long)em.createNamedQuery("Usuarios.controlUsuarioLogin")
                 .setParameter("tipoPersona", xParamLogin.getTipoPersona())
                 .setParameter("tipoDocumento", xParamLogin.getTipoDocumento())
                 .setParameter("documento", xParamLogin.getDocumento())
@@ -30,16 +29,30 @@ public class UsuariosJpaPersitencia {
         if(existe>0)
         {
             objReturnLogin.setLogin(true);
-            objReturnLogin.setNombreUsuario("maxi");
-            objReturnLogin.setRespuesta("");
         }
         else
         {
             objReturnLogin.setLogin(false);
-            objReturnLogin.setNombreUsuario("");
             objReturnLogin.setRespuesta("Usuario o Clave incorrectos");
         }
-        return objReturnLogin;
+        return objReturnLogin;        
+    }
+    
+    public static ReturnLogin ObtenerUsuarioLogin(EntityManager em, ParamLogin xParamLogin) {
+
+        ReturnLogin objReturnLogin = new ReturnLogin();
+        Usuarios objUsuario = (Usuarios)em.createNamedQuery("Usuarios.obtenerUsuarioLogin")
+                .setParameter("tipoPersona", xParamLogin.getTipoPersona())
+                .setParameter("tipoDocumento", xParamLogin.getTipoDocumento())
+                .setParameter("documento", xParamLogin.getDocumento())
+                .getSingleResult();
         
+            objReturnLogin.setLogin(true);
+            objReturnLogin.setTipoPersona(objUsuario.getUsuariosPK().getTipoPersona());
+            objReturnLogin.setTipoDocumento(objUsuario.getUsuariosPK().getTipoDocumento());
+            objReturnLogin.setDocumento(objUsuario.getUsuariosPK().getDocumento());
+            objReturnLogin.setNombreUsuario(objUsuario.getPersonas().getNombre1() + " " + objUsuario.getPersonas().getApellido1());
+        
+        return objReturnLogin;        
     }
 }

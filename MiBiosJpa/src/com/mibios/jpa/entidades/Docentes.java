@@ -6,16 +6,23 @@
 package com.mibios.jpa.entidades;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinColumns;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -26,9 +33,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Docentes.findAll", query = "SELECT d FROM Docentes d"),
-    @NamedQuery(name = "Docentes.findByIdDocente", query = "SELECT d FROM Docentes d WHERE d.idDocente = :idDocente"),
-    @NamedQuery(name = "Docentes.findByTipoDocumento", query = "SELECT d FROM Docentes d WHERE d.tipoDocumento = :tipoDocumento"),
-    @NamedQuery(name = "Docentes.findByDocumento", query = "SELECT d FROM Docentes d WHERE d.documento = :documento")})
+    @NamedQuery(name = "Docentes.findByIdDocente", query = "SELECT d FROM Docentes d WHERE d.idDocente = :idDocente")})
 public class Docentes implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -36,24 +41,19 @@ public class Docentes implements Serializable {
     @Basic(optional = false)
     @Column(name = "ID_DOCENTE")
     private Integer idDocente;
-    @Basic(optional = false)
-    @Column(name = "TIPO_DOCUMENTO")
-    private String tipoDocumento;
-    @Basic(optional = false)
-    @Column(name = "DOCUMENTO")
-    private String documento;
+    @JoinColumns({
+        @JoinColumn(name = "TIPO_DOCUMENTO", referencedColumnName = "TIPO_DOCUMENTO"),
+        @JoinColumn(name = "DOCUMENTO", referencedColumnName = "DOCUMENTO")})
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    private Personas personas;
+    @OneToMany(mappedBy = "idDocente", fetch = FetchType.LAZY)
+    private List<Clases> clasesList;
 
     public Docentes() {
     }
 
     public Docentes(Integer idDocente) {
         this.idDocente = idDocente;
-    }
-
-    public Docentes(Integer idDocente, String tipoDocumento, String documento) {
-        this.idDocente = idDocente;
-        this.tipoDocumento = tipoDocumento;
-        this.documento = documento;
     }
 
     public Integer getIdDocente() {
@@ -64,20 +64,21 @@ public class Docentes implements Serializable {
         this.idDocente = idDocente;
     }
 
-    public String getTipoDocumento() {
-        return tipoDocumento;
+    public Personas getPersonas() {
+        return personas;
     }
 
-    public void setTipoDocumento(String tipoDocumento) {
-        this.tipoDocumento = tipoDocumento;
+    public void setPersonas(Personas personas) {
+        this.personas = personas;
     }
 
-    public String getDocumento() {
-        return documento;
+    @XmlTransient
+    public List<Clases> getClasesList() {
+        return clasesList;
     }
 
-    public void setDocumento(String documento) {
-        this.documento = documento;
+    public void setClasesList(List<Clases> clasesList) {
+        this.clasesList = clasesList;
     }
 
     @Override

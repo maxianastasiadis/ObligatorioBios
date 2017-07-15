@@ -15,6 +15,9 @@ public class ReturnLogin implements Serializable{
     
     private Boolean login;
     private String nombreUsuario;
+    private String tipoPersona;
+    private String tipoDocumento;
+    private String documento;
     private String respuesta;
 
     public Boolean getLogin() {
@@ -33,6 +36,30 @@ public class ReturnLogin implements Serializable{
         this.nombreUsuario = nombreUsuario;
     }
 
+    public String getTipoPersona() {
+        return tipoPersona;
+    }
+
+    public void setTipoPersona(String tipoPersona) {
+        this.tipoPersona = tipoPersona;
+    }
+
+    public String getTipoDocumento() {
+        return tipoDocumento;
+    }
+
+    public void setTipoDocumento(String tipoDocumento) {
+        this.tipoDocumento = tipoDocumento;
+    }
+
+    public String getDocumento() {
+        return documento;
+    }
+
+    public void setDocumento(String documento) {
+        this.documento = documento;
+    }
+
     public String getRespuesta() {
         return respuesta;
     }
@@ -40,6 +67,4 @@ public class ReturnLogin implements Serializable{
     public void setRespuesta(String respuesta) {
         this.respuesta = respuesta;
     }
-    
-    
 }

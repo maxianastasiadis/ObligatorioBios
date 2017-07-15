@@ -6,16 +6,23 @@
 package com.mibios.jpa.entidades;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -27,8 +34,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Clases.findAll", query = "SELECT c FROM Clases c"),
     @NamedQuery(name = "Clases.findByIdClase", query = "SELECT c FROM Clases c WHERE c.idClase = :idClase"),
-    @NamedQuery(name = "Clases.findByIdCurso", query = "SELECT c FROM Clases c WHERE c.idCurso = :idCurso"),
-    @NamedQuery(name = "Clases.findByIdDocente", query = "SELECT c FROM Clases c WHERE c.idDocente = :idDocente"),
     @NamedQuery(name = "Clases.findByModalidadClase", query = "SELECT c FROM Clases c WHERE c.modalidadClase = :modalidadClase"),
     @NamedQuery(name = "Clases.findByFechaComienzo", query = "SELECT c FROM Clases c WHERE c.fechaComienzo = :fechaComienzo"),
     @NamedQuery(name = "Clases.findByFechaFin", query = "SELECT c FROM Clases c WHERE c.fechaFin = :fechaFin"),
@@ -43,10 +48,6 @@ public class Clases implements Serializable {
     @Basic(optional = false)
     @Column(name = "ID_CLASE")
     private Integer idClase;
-    @Column(name = "ID_CURSO")
-    private Integer idCurso;
-    @Column(name = "ID_DOCENTE")
-    private Integer idDocente;
     @Column(name = "MODALIDAD_CLASE")
     private String modalidadClase;
     @Column(name = "FECHA_COMIENZO")
@@ -61,6 +62,14 @@ public class Clases implements Serializable {
     private String duracionHoras;
     @Column(name = "SALON")
     private String salon;
+    @JoinColumn(name = "ID_CURSO", referencedColumnName = "ID_CURSO")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Cursos idCurso;
+    @JoinColumn(name = "ID_DOCENTE", referencedColumnName = "ID_DOCENTE")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Docentes idDocente;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "clases", fetch = FetchType.LAZY)
+    private List<ClaseEstudiantes> claseEstudiantesList;
 
     public Clases() {
     }
@@ -75,22 +84,6 @@ public class Clases implements Serializable {
 
     public void setIdClase(Integer idClase) {
         this.idClase = idClase;
-    }
-
-    public Integer getIdCurso() {
-        return idCurso;
-    }
-
-    public void setIdCurso(Integer idCurso) {
-        this.idCurso = idCurso;
-    }
-
-    public Integer getIdDocente() {
-        return idDocente;
-    }
-
-    public void setIdDocente(Integer idDocente) {
-        this.idDocente = idDocente;
     }
 
     public String getModalidadClase() {
@@ -147,6 +140,31 @@ public class Clases implements Serializable {
 
     public void setSalon(String salon) {
         this.salon = salon;
+    }
+
+    public Cursos getIdCurso() {
+        return idCurso;
+    }
+
+    public void setIdCurso(Cursos idCurso) {
+        this.idCurso = idCurso;
+    }
+
+    public Docentes getIdDocente() {
+        return idDocente;
+    }
+
+    public void setIdDocente(Docentes idDocente) {
+        this.idDocente = idDocente;
+    }
+
+    @XmlTransient
+    public List<ClaseEstudiantes> getClaseEstudiantesList() {
+        return claseEstudiantesList;
+    }
+
+    public void setClaseEstudiantesList(List<ClaseEstudiantes> claseEstudiantesList) {
+        this.claseEstudiantesList = claseEstudiantesList;
     }
 
     @Override

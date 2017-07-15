@@ -6,14 +6,18 @@
 package com.mibios.jpa.entidades;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -37,6 +41,8 @@ public class Cursos implements Serializable {
     private String nombre;
     @Column(name = "DESCRIPCION")
     private String descripcion;
+    @OneToMany(mappedBy = "idCurso", fetch = FetchType.LAZY)
+    private List<Clases> clasesList;
 
     public Cursos() {
     }
@@ -67,6 +73,15 @@ public class Cursos implements Serializable {
 
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
+    }
+
+    @XmlTransient
+    public List<Clases> getClasesList() {
+        return clasesList;
+    }
+
+    public void setClasesList(List<Clases> clasesList) {
+        this.clasesList = clasesList;
     }
 
     @Override

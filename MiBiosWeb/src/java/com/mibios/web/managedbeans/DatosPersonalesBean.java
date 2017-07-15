@@ -5,10 +5,12 @@
  */
 package com.mibios.web.managedbeans;
 
+import com.mibios.dto.usuarios.ReturnLogin;
 import com.mibios.dto.usuarios.ReturnObtenerDatosPersonales;
 import java.io.Serializable;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.context.FacesContext;
 
 /**
  *
@@ -36,6 +38,12 @@ public class DatosPersonalesBean implements Serializable  {
     private String pais;
     
     public DatosPersonalesBean() {
+        ReturnLogin obj = (ReturnLogin)FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("Usuario");
+        
+        tipoPersona = obj.getTipoPersona();
+        tipoDocumento = obj.getTipoDocumento();
+        documento = obj.getDocumento();
+        
     }
 
     public String getTipoPersona() {

@@ -80,12 +80,13 @@ public class LoginBean implements Serializable{
             returnLogin = usuarioFachada.Login(paramLogin);
             if(returnLogin.getLogin())
             {
+                FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("Usuario",returnLogin);
                 return returnLogin.getLogin();
             }
             else
             {
                 FacesContext facesContext = FacesContext.getCurrentInstance();
-                facesContext.addMessage(null, new FacesMessage("Usuario o Clave son incorrectos"));
+                facesContext.addMessage(null, new FacesMessage(returnLogin.getRespuesta()));
                 return returnLogin.getLogin();
             }
         } catch (Exception ex) {

@@ -6,16 +6,24 @@
 package com.mibios.jpa.entidades;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinColumns;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -26,9 +34,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Estudiantes.findAll", query = "SELECT e FROM Estudiantes e"),
-    @NamedQuery(name = "Estudiantes.findByIdEstudiante", query = "SELECT e FROM Estudiantes e WHERE e.idEstudiante = :idEstudiante"),
-    @NamedQuery(name = "Estudiantes.findByTipoDocumento", query = "SELECT e FROM Estudiantes e WHERE e.tipoDocumento = :tipoDocumento"),
-    @NamedQuery(name = "Estudiantes.findByDocumento", query = "SELECT e FROM Estudiantes e WHERE e.documento = :documento")})
+    @NamedQuery(name = "Estudiantes.findByIdEstudiante", query = "SELECT e FROM Estudiantes e WHERE e.idEstudiante = :idEstudiante")})
 public class Estudiantes implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -36,24 +42,19 @@ public class Estudiantes implements Serializable {
     @Basic(optional = false)
     @Column(name = "ID_ESTUDIANTE")
     private Integer idEstudiante;
-    @Basic(optional = false)
-    @Column(name = "TIPO_DOCUMENTO")
-    private String tipoDocumento;
-    @Basic(optional = false)
-    @Column(name = "DOCUMENTO")
-    private String documento;
+    @JoinColumns({
+        @JoinColumn(name = "TIPO_DOCUMENTO", referencedColumnName = "TIPO_DOCUMENTO"),
+        @JoinColumn(name = "DOCUMENTO", referencedColumnName = "DOCUMENTO")})
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    private Personas personas;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "estudiantes", fetch = FetchType.LAZY)
+    private List<ClaseEstudiantes> claseEstudiantesList;
 
     public Estudiantes() {
     }
 
     public Estudiantes(Integer idEstudiante) {
         this.idEstudiante = idEstudiante;
-    }
-
-    public Estudiantes(Integer idEstudiante, String tipoDocumento, String documento) {
-        this.idEstudiante = idEstudiante;
-        this.tipoDocumento = tipoDocumento;
-        this.documento = documento;
     }
 
     public Integer getIdEstudiante() {
@@ -64,20 +65,21 @@ public class Estudiantes implements Serializable {
         this.idEstudiante = idEstudiante;
     }
 
-    public String getTipoDocumento() {
-        return tipoDocumento;
+    public Personas getPersonas() {
+        return personas;
     }
 
-    public void setTipoDocumento(String tipoDocumento) {
-        this.tipoDocumento = tipoDocumento;
+    public void setPersonas(Personas personas) {
+        this.personas = personas;
     }
 
-    public String getDocumento() {
-        return documento;
+    @XmlTransient
+    public List<ClaseEstudiantes> getClaseEstudiantesList() {
+        return claseEstudiantesList;
     }
 
-    public void setDocumento(String documento) {
-        this.documento = documento;
+    public void setClaseEstudiantesList(List<ClaseEstudiantes> claseEstudiantesList) {
+        this.claseEstudiantesList = claseEstudiantesList;
     }
 
     @Override
