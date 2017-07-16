@@ -19,7 +19,7 @@
             <p:panel header="Datos Personales">
                 <h:panelGrid id="datosPersonalesPanel" columns="5">
                     <h:outputText value="Tipo Persona:" />
-                    <p:selectOneMenu id="tipoPersona" value="#{datosPersonalesBean.documento}">
+                    <p:selectOneMenu id="tipoPersona" value="#{datosPersonalesBean.tipoPersona}">
                         <f:selectItem itemLabel="Alumno" itemValue="A" />
                         <f:selectItem itemLabel="Docente" itemValue="D" />
                     </p:selectOneMenu>
@@ -27,7 +27,7 @@
                     <p:spacer></p:spacer>
                     <p:spacer></p:spacer>
                     <h:outputText value="Tipo Documento: " />
-                    <p:selectOneMenu id="tipoDocumento" value="#{datosPersonalesBean.documento}">
+                    <p:selectOneMenu id="tipoDocumento" value="#{datosPersonalesBean.tipoDocumento}">
                         <f:selectItem itemLabel="C.I." itemValue="1" />
                         <f:selectItem itemLabel="D.N.I." itemValue="2" />
                         <f:selectItem itemLabel="Pasaporte" itemValue="3" />
@@ -36,47 +36,51 @@
                     <p:inputText id="documento" required="true" requiredMessage="Debe ingresar Documento" value="#{datosPersonalesBean.documento}" ></p:inputText>
                     <p:spacer></p:spacer>
                     <h:outputText value="Apellido 1: " />
-                    <p:inputText id="ape1" required="true" requiredMessage="Debe ingresar Apellido 1" value="#{datosPersonalesBean.documento}" ></p:inputText>
+                    <p:inputText id="ape1" required="true" requiredMessage="Debe ingresar Apellido 1" value="#{datosPersonalesBean.apellido1}" ></p:inputText>
                     <h:outputText value="Apellido 2: " />
-                    <p:inputText id="ape2" required="true" requiredMessage="Debe ingresar Apellido 2" value="#{datosPersonalesBean.documento}" ></p:inputText>
+                    <p:inputText id="ape2" required="true" requiredMessage="Debe ingresar Apellido 2" value="#{datosPersonalesBean.apellido2}" ></p:inputText>
                     <p:spacer></p:spacer>
                     <h:outputText value="Nombre 1: " />
-                    <p:inputText id="nom1" required="true" requiredMessage="Debe ingresar Nombre 1" value="#{datosPersonalesBean.documento}" ></p:inputText>
+                    <p:inputText id="nom1" required="true" requiredMessage="Debe ingresar Nombre 1" value="#{datosPersonalesBean.nombre1}" ></p:inputText>
                     <h:outputText value="Nombre 2: " />
-                    <p:inputText id="nom2" required="true" requiredMessage="Debe ingresar Nombre 2" value="#{datosPersonalesBean.documento}" ></p:inputText>
+                    <p:inputText id="nom2" required="true" requiredMessage="Debe ingresar Nombre 2" value="#{datosPersonalesBean.nombre2}" ></p:inputText>
                     <p:spacer></p:spacer>
                     <h:outputText value="Fecha Nac.: " />
-                    <p:inputText id="fechaNac" required="true" requiredMessage="Debe ingresar Fecha Nacimiento" value="#{datosPersonalesBean.documento}" ></p:inputText>
+                    <p:inputText id="fechaNac" required="true" requiredMessage="Debe ingresar Fecha Nacimiento" value="#{datosPersonalesBean.fechaNacimiento}" ></p:inputText>
                     <h:outputText value="Sexo: " />
-                    <p:inputText id="sexo" required="true" requiredMessage="Debe ingresar Sexo" value="#{datosPersonalesBean.documento}" ></p:inputText>
+                    <p:selectOneMenu id="sexo" value="#{datosPersonalesBean.sexo}">
+                        <f:selectItem itemLabel="Masculino" itemValue="M" />
+                        <f:selectItem itemLabel="Femenino" itemValue="F" />
+                        <f:selectItem itemLabel="Otro" itemValue="O" />
+                    </p:selectOneMenu>
                     <p:spacer></p:spacer>
                     <h:outputText value="E-Mail: " />
-                    <p:inputText id="eMail" required="true" requiredMessage="Debe ingresar e-Mail" value="#{datosPersonalesBean.documento}" ></p:inputText>
+                    <p:inputText id="eMail" required="true" requiredMessage="Debe ingresar e-Mail" value="#{datosPersonalesBean.mail}" ></p:inputText>
                     <p:spacer></p:spacer>
                     <p:spacer></p:spacer>
                     <p:spacer></p:spacer>
                     <h:outputText value="Telefono: " />
-                    <p:inputText id="telefono" required="true" requiredMessage="Debe ingresar Telefono" value="#{datosPersonalesBean.documento}" ></p:inputText>
+                    <p:inputText id="telefono" required="true" requiredMessage="Debe ingresar Telefono" value="#{datosPersonalesBean.telefono}" ></p:inputText>
                     <h:outputText value="Celular: " />
-                    <p:inputText id="celular" required="true" requiredMessage="Debe ingresar Celular" value="#{datosPersonalesBean.documento}" ></p:inputText>
+                    <p:inputText id="celular" required="true" requiredMessage="Debe ingresar Celular" value="#{datosPersonalesBean.celular}" ></p:inputText>
                     <p:spacer></p:spacer>
                     <h:outputText value="Pais: " />
-                    <p:inputText id="pais" required="true" requiredMessage="Debe ingresar Pais" value="#{datosPersonalesBean.documento}" ></p:inputText>
+                    <p:inputText id="pais" required="true" requiredMessage="Debe ingresar Pais" value="#{datosPersonalesBean.pais}" ></p:inputText>
                     <p:spacer></p:spacer>
                     <p:spacer></p:spacer>
                     <p:spacer></p:spacer>
                     <h:outputText value="Departamento: " />
-                    <p:inputText id="departamento" required="true" requiredMessage="Debe ingresar Departamento" value="#{datosPersonalesBean.documento}" ></p:inputText>
+                    <p:inputText id="departamento" required="true" requiredMessage="Debe ingresar Departamento" value="#{datosPersonalesBean.departamento}" ></p:inputText>
                     <p:spacer></p:spacer>
                     <p:spacer></p:spacer>
                     <p:spacer></p:spacer>
                     <h:outputText value="Ciudad " />
-                    <p:inputText id="ciudad" required="true" requiredMessage="Debe ingresar Ciudad" value="#{datosPersonalesBean.documento}" ></p:inputText>
+                    <p:inputText id="ciudad" required="true" requiredMessage="Debe ingresar Ciudad" value="#{datosPersonalesBean.ciudad}" ></p:inputText>
                     <p:spacer></p:spacer>
                     <p:spacer></p:spacer>
                     <p:spacer></p:spacer>
                     <h:outputText value="Direccion: " />
-                    <p:inputText id="direccion" required="true" requiredMessage="Debe ingresar Direccion" value="#{datosPersonalesBean.documento}" ></p:inputText>
+                    <p:inputText id="direccion" required="true" requiredMessage="Debe ingresar Direccion" value="#{datosPersonalesBean.direccion}" ></p:inputText>
                     <p:spacer></p:spacer>
                     <p:spacer></p:spacer>
                     <p:spacer></p:spacer>

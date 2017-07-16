@@ -9,7 +9,10 @@ import com.mibios.dto.usuarios.ParamActualizarDatosPersonales;
 import com.mibios.dto.usuarios.ParamObtenerDatosPersonales;
 import com.mibios.dto.usuarios.ReturnActualizarDatosPersonales;
 import com.mibios.dto.usuarios.ReturnObtenerDatosPersonales;
+import com.mibios.jpa.conexion.ConexionJpa;
+import com.mibios.jpa.peristencia.PersonasJpaPersistencia;
 import javax.ejb.Stateless;
+import javax.persistence.EntityManager;
 
 /**
  *
@@ -27,6 +30,27 @@ public class PersonasBean implements PersonasBeanLocal {
     @Override
     public ReturnObtenerDatosPersonales ObtenerDatosPersonales(ParamObtenerDatosPersonales xParamObtenerDatosPersonales) throws Exception{
         
-        return null;
+        ReturnObtenerDatosPersonales objReturnObtenerDatosPersonales = new ReturnObtenerDatosPersonales();
+        EntityManager em = ConexionJpa.obtenerInstancia().obtenerConeccion();
+        try
+        {
+            em.getTransaction().begin();
+
+            objReturnObtenerDatosPersonales = PersonasJpaPersistencia.ObtenerDatosPersonales(em, xParamObtenerDatosPersonales);
+
+            em.getTransaction().commit();
+        }
+        catch(Exception e)
+        {
+            if(em.getTransaction()!=null && em.getTransaction().isActive())
+            {
+                em.getTransaction().rollback();
+            }
+            e.printStackTrace();
+        }
+        finally{
+            em.close();
+        }
+        return objReturnObtenerDatosPersonales;
     }
 }

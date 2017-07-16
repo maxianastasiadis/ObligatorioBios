@@ -13,7 +13,6 @@ import java.io.Serializable;
  */
 public class ReturnObtenerDatosPersonales  implements Serializable {
     
-    private String tipoPersona;
     private String tipoDocumento;
     private String documento; 
     private String apellido1; 
@@ -29,14 +28,6 @@ public class ReturnObtenerDatosPersonales  implements Serializable {
     private String ciudad;
     private String departamento;
     private String pais;
-
-    public String getTipoPersona() {
-        return tipoPersona;
-    }
-
-    public void setTipoPersona(String tipoPersona) {
-        this.tipoPersona = tipoPersona;
-    }
 
     public String getTipoDocumento() {
         return tipoDocumento;

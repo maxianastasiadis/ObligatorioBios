@@ -13,17 +13,8 @@ import java.io.Serializable;
  */
 public class ParamObtenerDatosPersonales implements Serializable {
     
-    private String tipoPersona;
     private String tipoDocumento;
     private String documento;
-
-    public String getTipoPersona() {
-        return tipoPersona;
-    }
-
-    public void setTipoPersona(String tipoPersona) {
-        this.tipoPersona = tipoPersona;
-    }
 
     public String getTipoDocumento() {
         return tipoDocumento;

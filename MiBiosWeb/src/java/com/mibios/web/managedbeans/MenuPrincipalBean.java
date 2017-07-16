@@ -5,9 +5,11 @@
  */
 package com.mibios.web.managedbeans;
 
+import com.mibios.dto.usuarios.ReturnLogin;
 import java.io.Serializable;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.context.FacesContext;
 
 /**
  *
@@ -18,6 +20,7 @@ import javax.faces.bean.RequestScoped;
 public class MenuPrincipalBean implements Serializable {
 
     private String page;
+    private String nombreUsuario;
 
     public String getPage() {
         return page;
@@ -26,9 +29,18 @@ public class MenuPrincipalBean implements Serializable {
     public void setPage(String page) {
         this.page = page;
     }
-    
+
+    public String getNombreUsuario() {
+        return nombreUsuario;
+    }
+
+    public void setNombreUsuario(String nombreUsuario) {
+        this.nombreUsuario = nombreUsuario;
+    }
     
     public MenuPrincipalBean() {
+        ReturnLogin obj = (ReturnLogin)FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("Usuario");
+        nombreUsuario = obj.getNombreUsuario();
     }
     
     public Boolean Logout() {

@@ -9,6 +9,7 @@ import com.mibios.dto.usuarios.ParamLogin;
 import com.mibios.dto.usuarios.ReturnLogin;
 import com.mibios.jpa.entidades.Usuarios;
 import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
 
 /**
  *
@@ -41,7 +42,7 @@ public class UsuariosJpaPersitencia {
     public static ReturnLogin ObtenerUsuarioLogin(EntityManager em, ParamLogin xParamLogin) {
 
         ReturnLogin objReturnLogin = new ReturnLogin();
-        Usuarios objUsuario = (Usuarios)em.createNamedQuery("Usuarios.obtenerUsuarioLogin")
+        Usuarios objUsuario = em.createNamedQuery("Usuarios.obtenerUsuarioLogin",Usuarios.class)
                 .setParameter("tipoPersona", xParamLogin.getTipoPersona())
                 .setParameter("tipoDocumento", xParamLogin.getTipoDocumento())
                 .setParameter("documento", xParamLogin.getDocumento())

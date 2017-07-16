@@ -5,9 +5,13 @@
  */
 package com.mibios.web.managedbeans;
 
+import com.mibios.dto.usuarios.ParamObtenerDatosPersonales;
 import com.mibios.dto.usuarios.ReturnLogin;
 import com.mibios.dto.usuarios.ReturnObtenerDatosPersonales;
+import com.mibios.web.fachada.PersonasFachada;
 import java.io.Serializable;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
@@ -38,12 +42,38 @@ public class DatosPersonalesBean implements Serializable  {
     private String pais;
     
     public DatosPersonalesBean() {
-        ReturnLogin obj = (ReturnLogin)FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("Usuario");
         
-        tipoPersona = obj.getTipoPersona();
-        tipoDocumento = obj.getTipoDocumento();
-        documento = obj.getDocumento();
+        ReturnLogin objReturnSesion = (ReturnLogin)FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("Usuario");
+        PersonasFachada personasFachada = new PersonasFachada();
+        ParamObtenerDatosPersonales objParamObtenerDatosPersonales = new ParamObtenerDatosPersonales();
         
+        try {
+    
+            objParamObtenerDatosPersonales.setTipoDocumento(objReturnSesion.getTipoDocumento());
+            objParamObtenerDatosPersonales.setDocumento(objReturnSesion.getDocumento());
+
+            ReturnObtenerDatosPersonales objReturnObtenerDatosPersonales = personasFachada.ObtenerDatosPersonales(objParamObtenerDatosPersonales);
+
+            tipoPersona = objReturnSesion.getTipoPersona();
+            tipoDocumento = objReturnSesion.getTipoDocumento();
+            documento = objReturnSesion.getDocumento(); 
+            apellido1 = objReturnObtenerDatosPersonales.getApellido1(); 
+            apellido2 = objReturnObtenerDatosPersonales.getApellido2(); 
+            nombre1 = objReturnObtenerDatosPersonales.getNombre1(); 
+            nombre2 = objReturnObtenerDatosPersonales.getNombre2(); 
+            fechaNacimiento = objReturnObtenerDatosPersonales.getFechaNacimiento(); 
+            sexo = objReturnObtenerDatosPersonales.getSexo(); 
+            mail = objReturnObtenerDatosPersonales.getMail();
+            telefono = objReturnObtenerDatosPersonales.getTelefono();
+            celular = objReturnObtenerDatosPersonales.getCelular();
+            direccion = objReturnObtenerDatosPersonales.getDireccion();
+            ciudad = objReturnObtenerDatosPersonales.getCiudad();
+            departamento = objReturnObtenerDatosPersonales.getDepartamento();
+            pais = objReturnObtenerDatosPersonales.getPais();
+
+        } catch (Exception ex) {
+            Logger.getLogger(DatosPersonalesBean.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public String getTipoPersona() {

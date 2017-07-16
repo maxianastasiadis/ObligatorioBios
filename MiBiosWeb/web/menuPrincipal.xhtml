@@ -5,7 +5,7 @@
       xmlns:p="http://primefaces.org/ui">
 <h:form>
     <p:menubar>
-        <p:menuitem icon="ui-icon-person" value="Datos Personales" action="#{menuPrincipalBean.cargarPagina('datosPersonales.xhtml')}" />
+        <p:menuitem icon="ui-icon-person" value="#{menuPrincipalBean.nombreUsuario}" action="#{menuPrincipalBean.cargarPagina('datosPersonales.xhtml')}" />
         <p:menuitem icon="ui-icon-document" value="Cuenta Corriente" action="#{menuPrincipalBean.cargarPagina('cuentaCorriente.xhtml')}" />
         <p:menuitem icon="ui-icon-pencil" value="Mis Cursos" action="#{menuPrincipalBean.cargarPagina('misCursos.xhtml')}"/>
         <p:menuitem icon="ui-icon-search" value="Ver Cursos" action="#{menuPrincipalBean.cargarPagina('verCursos.xhtml')}"/>
