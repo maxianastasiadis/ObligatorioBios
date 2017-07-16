@@ -46,7 +46,14 @@
                     <p:inputText id="nom2" required="true" requiredMessage="Debe ingresar Nombre 2" value="#{datosPersonalesBean.nombre2}" ></p:inputText>
                     <p:spacer></p:spacer>
                     <h:outputText value="Fecha Nac.: " />
-                    <p:inputText id="fechaNac" required="true" requiredMessage="Debe ingresar Fecha Nacimiento" value="#{datosPersonalesBean.fechaNacimiento}" ></p:inputText>
+                    <p:calendar id="fechaNac" required="true" requiredMessage="Debe ingresar Fecha Nacimiento" value="#{datosPersonalesBean.fechaNacimiento}"
+                            locale="es"
+                            navigator="true" 
+                            pattern="dd/MM/yyyy"
+                            showOn="both" 
+                            showOtherMonths="true"
+                            yearRange="c-70:c+10"
+                    />
                     <h:outputText value="Sexo: " />
                     <p:selectOneMenu id="sexo" value="#{datosPersonalesBean.sexo}">
                         <f:selectItem itemLabel="Masculino" itemValue="M" />

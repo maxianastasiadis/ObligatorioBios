@@ -10,6 +10,9 @@ import com.mibios.dto.usuarios.ReturnLogin;
 import com.mibios.dto.usuarios.ReturnObtenerDatosPersonales;
 import com.mibios.web.fachada.PersonasFachada;
 import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.faces.bean.ManagedBean;
@@ -31,7 +34,7 @@ public class DatosPersonalesBean implements Serializable  {
     private String apellido2; 
     private String nombre1; 
     private String nombre2; 
-    private String fechaNacimiento; 
+    private Date fechaNacimiento; 
     private String sexo; 
     private String mail;
     private String telefono;
@@ -61,7 +64,15 @@ public class DatosPersonalesBean implements Serializable  {
             apellido2 = objReturnObtenerDatosPersonales.getApellido2(); 
             nombre1 = objReturnObtenerDatosPersonales.getNombre1(); 
             nombre2 = objReturnObtenerDatosPersonales.getNombre2(); 
-            fechaNacimiento = objReturnObtenerDatosPersonales.getFechaNacimiento(); 
+            
+            DateFormat sourceFormat = new SimpleDateFormat("dd/MM/yyyy");
+            String a = objReturnObtenerDatosPersonales.getFechaNacimiento().substring(0, 4);
+            String m = objReturnObtenerDatosPersonales.getFechaNacimiento().substring(4, 6);
+            String d = objReturnObtenerDatosPersonales.getFechaNacimiento().substring(6, 8);
+            String fecha = d+"/"+m+"/"+a;
+            Date fechaNacimientoDate = sourceFormat.parse(fecha);
+            
+            fechaNacimiento = fechaNacimientoDate; 
             sexo = objReturnObtenerDatosPersonales.getSexo(); 
             mail = objReturnObtenerDatosPersonales.getMail();
             telefono = objReturnObtenerDatosPersonales.getTelefono();
@@ -132,11 +143,11 @@ public class DatosPersonalesBean implements Serializable  {
         this.nombre2 = nombre2;
     }
 
-    public String getFechaNacimiento() {
+    public Date getFechaNacimiento() {
         return fechaNacimiento;
     }
 
-    public void setFechaNacimiento(String fechaNacimiento) {
+    public void setFechaNacimiento(Date fechaNacimiento) {
         this.fechaNacimiento = fechaNacimiento;
     }
 
