@@ -5,11 +5,11 @@
  */
 package com.mibios.web.managedbeans;
 
-import com.mibios.dto.usuarios.ParamActualizarDatosPersonales;
-import com.mibios.dto.usuarios.ParamObtenerDatosPersonales;
-import com.mibios.dto.usuarios.ReturnActualizarDatosPersonales;
+import com.mibios.dto.personas.ParamActualizarDatosPersonales;
+import com.mibios.dto.personas.ParamObtenerDatosPersonales;
+import com.mibios.dto.personas.ReturnActualizarDatosPersonales;
 import com.mibios.dto.usuarios.ReturnLogin;
-import com.mibios.dto.usuarios.ReturnObtenerDatosPersonales;
+import com.mibios.dto.personas.ReturnObtenerDatosPersonales;
 import com.mibios.web.fachada.PersonasFachada;
 import com.mibios.web.fachada.UsuariosFachada;
 import java.io.Serializable;

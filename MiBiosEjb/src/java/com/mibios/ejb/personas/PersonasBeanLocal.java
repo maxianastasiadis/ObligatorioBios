@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.mibios.ejb.usuarios;
+package com.mibios.ejb.personas;
 
-import com.mibios.dto.usuarios.ParamActualizarDatosPersonales;
-import com.mibios.dto.usuarios.ParamObtenerDatosPersonales;
-import com.mibios.dto.usuarios.ReturnActualizarDatosPersonales;
-import com.mibios.dto.usuarios.ReturnObtenerDatosPersonales;
+import com.mibios.dto.personas.ParamActualizarDatosPersonales;
+import com.mibios.dto.personas.ParamObtenerDatosPersonales;
+import com.mibios.dto.personas.ReturnActualizarDatosPersonales;
+import com.mibios.dto.personas.ReturnObtenerDatosPersonales;
 import javax.ejb.Local;
 import javax.ejb.Remote;
 

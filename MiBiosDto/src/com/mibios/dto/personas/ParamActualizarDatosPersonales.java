@@ -3,23 +3,25 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.mibios.dto.usuarios;
+package com.mibios.dto.personas;
 
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  *
  * @author Maxi
  */
-public class ReturnObtenerDatosPersonales  implements Serializable {
+public class ParamActualizarDatosPersonales implements Serializable {
     
+    private String tipoPersona;
     private String tipoDocumento;
     private String documento; 
     private String apellido1; 
     private String apellido2; 
     private String nombre1; 
     private String nombre2; 
-    private String fechaNacimiento; 
+    private Date fechaNacimiento; 
     private String sexo; 
     private String mail;
     private String telefono;
@@ -28,6 +30,16 @@ public class ReturnObtenerDatosPersonales  implements Serializable {
     private String ciudad;
     private String departamento;
     private String pais;
+    private String fechaIngreso;
+    private String activo;
+
+    public String getTipoPersona() {
+        return tipoPersona;
+    }
+
+    public void setTipoPersona(String tipoPersona) {
+        this.tipoPersona = tipoPersona;
+    }
 
     public String getTipoDocumento() {
         return tipoDocumento;
@@ -77,11 +89,11 @@ public class ReturnObtenerDatosPersonales  implements Serializable {
         this.nombre2 = nombre2;
     }
 
-    public String getFechaNacimiento() {
+    public Date getFechaNacimiento() {
         return fechaNacimiento;
     }
 
-    public void setFechaNacimiento(String fechaNacimiento) {
+    public void setFechaNacimiento(Date fechaNacimiento) {
         this.fechaNacimiento = fechaNacimiento;
     }
 
@@ -147,5 +159,22 @@ public class ReturnObtenerDatosPersonales  implements Serializable {
 
     public void setPais(String pais) {
         this.pais = pais;
-    }    
+    }
+
+    public String getFechaIngreso() {
+        return fechaIngreso;
+    }
+
+    public void setFechaIngreso(String fechaIngreso) {
+        this.fechaIngreso = fechaIngreso;
+    }
+
+    public String getActivo() {
+        return activo;
+    }
+
+    public void setActivo(String activo) {
+        this.activo = activo;
+    }
+    
 }

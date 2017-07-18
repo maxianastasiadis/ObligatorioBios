@@ -5,11 +5,11 @@
  */
 package com.mibios.web.fachada;
 
-import com.mibios.dto.usuarios.ParamActualizarDatosPersonales;
-import com.mibios.dto.usuarios.ParamObtenerDatosPersonales;
-import com.mibios.dto.usuarios.ReturnActualizarDatosPersonales;
-import com.mibios.dto.usuarios.ReturnObtenerDatosPersonales;
-import com.mibios.ejb.usuarios.PersonasBeanLocal;
+import com.mibios.dto.personas.ParamActualizarDatosPersonales;
+import com.mibios.dto.personas.ParamObtenerDatosPersonales;
+import com.mibios.dto.personas.ReturnActualizarDatosPersonales;
+import com.mibios.dto.personas.ReturnObtenerDatosPersonales;
+import com.mibios.ejb.personas.PersonasBeanLocal;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.naming.Context;

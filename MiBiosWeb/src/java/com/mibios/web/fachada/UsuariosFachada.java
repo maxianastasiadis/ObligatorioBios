@@ -6,7 +6,9 @@
 package com.mibios.web.fachada;
 
 import com.mibios.dto.usuarios.ParamLogin;
+import com.mibios.dto.usuarios.ParamRegistro;
 import com.mibios.dto.usuarios.ReturnLogin;
+import com.mibios.dto.usuarios.ReturnRegistro;
 import com.mibios.ejb.usuarios.UsuariosBeanLocal;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -24,6 +26,11 @@ public class UsuariosFachada {
     public ReturnLogin Login(ParamLogin xParamLogin) throws Exception
     {
         return lookupUsuariosBean().Login(xParamLogin);
+    }
+    
+    public ReturnRegistro Registro(ParamRegistro xParamRegistro) throws Exception
+    {
+        return lookupUsuariosBean().Registro(xParamRegistro);
     }
     
     /**********************************/

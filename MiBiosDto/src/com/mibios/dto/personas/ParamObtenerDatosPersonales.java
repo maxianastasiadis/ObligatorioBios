@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.mibios.dto.usuarios;
+package com.mibios.dto.personas;
 
 import java.io.Serializable;
 

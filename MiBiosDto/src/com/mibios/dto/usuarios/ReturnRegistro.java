@@ -11,17 +11,17 @@ import java.io.Serializable;
  *
  * @author Maxi
  */
-public class ReturnActualizarDatosPersonales implements Serializable {
+public class ReturnRegistro implements Serializable{
     
-    private Boolean guardado;
+    private Boolean registro;
     private String respuesta;
 
-    public Boolean getGuardado() {
-        return guardado;
+    public Boolean getRegistro() {
+        return registro;
     }
 
-    public void setGuardado(Boolean guardado) {
-        this.guardado = guardado;
+    public void setRegistro(Boolean registro) {
+        this.registro = registro;
     }
 
     public String getRespuesta() {
