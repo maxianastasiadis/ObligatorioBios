@@ -5,16 +5,20 @@
  */
 package com.mibios.web.managedbeans;
 
+import com.mibios.dto.usuarios.ParamActualizarDatosPersonales;
 import com.mibios.dto.usuarios.ParamObtenerDatosPersonales;
+import com.mibios.dto.usuarios.ReturnActualizarDatosPersonales;
 import com.mibios.dto.usuarios.ReturnLogin;
 import com.mibios.dto.usuarios.ReturnObtenerDatosPersonales;
 import com.mibios.web.fachada.PersonasFachada;
+import com.mibios.web.fachada.UsuariosFachada;
 import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
@@ -43,48 +47,11 @@ public class DatosPersonalesBean implements Serializable  {
     private String ciudad;
     private String departamento;
     private String pais;
+    private String fechaIngreso;
+    private String activo;
     
     public DatosPersonalesBean() {
-        
-        ReturnLogin objReturnSesion = (ReturnLogin)FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("Usuario");
-        PersonasFachada personasFachada = new PersonasFachada();
-        ParamObtenerDatosPersonales objParamObtenerDatosPersonales = new ParamObtenerDatosPersonales();
-        
-        try {
-    
-            objParamObtenerDatosPersonales.setTipoDocumento(objReturnSesion.getTipoDocumento());
-            objParamObtenerDatosPersonales.setDocumento(objReturnSesion.getDocumento());
-
-            ReturnObtenerDatosPersonales objReturnObtenerDatosPersonales = personasFachada.ObtenerDatosPersonales(objParamObtenerDatosPersonales);
-
-            tipoPersona = objReturnSesion.getTipoPersona();
-            tipoDocumento = objReturnSesion.getTipoDocumento();
-            documento = objReturnSesion.getDocumento(); 
-            apellido1 = objReturnObtenerDatosPersonales.getApellido1(); 
-            apellido2 = objReturnObtenerDatosPersonales.getApellido2(); 
-            nombre1 = objReturnObtenerDatosPersonales.getNombre1(); 
-            nombre2 = objReturnObtenerDatosPersonales.getNombre2(); 
-            
-            DateFormat sourceFormat = new SimpleDateFormat("dd/MM/yyyy");
-            String a = objReturnObtenerDatosPersonales.getFechaNacimiento().substring(0, 4);
-            String m = objReturnObtenerDatosPersonales.getFechaNacimiento().substring(4, 6);
-            String d = objReturnObtenerDatosPersonales.getFechaNacimiento().substring(6, 8);
-            String fecha = d+"/"+m+"/"+a;
-            Date fechaNacimientoDate = sourceFormat.parse(fecha);
-            
-            fechaNacimiento = fechaNacimientoDate; 
-            sexo = objReturnObtenerDatosPersonales.getSexo(); 
-            mail = objReturnObtenerDatosPersonales.getMail();
-            telefono = objReturnObtenerDatosPersonales.getTelefono();
-            celular = objReturnObtenerDatosPersonales.getCelular();
-            direccion = objReturnObtenerDatosPersonales.getDireccion();
-            ciudad = objReturnObtenerDatosPersonales.getCiudad();
-            departamento = objReturnObtenerDatosPersonales.getDepartamento();
-            pais = objReturnObtenerDatosPersonales.getPais();
-
-        } catch (Exception ex) {
-            Logger.getLogger(DatosPersonalesBean.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        cargarDatosPersonales();
     }
 
     public String getTipoPersona() {
@@ -214,12 +181,105 @@ public class DatosPersonalesBean implements Serializable  {
     public void setPais(String pais) {
         this.pais = pais;
     }
-    
-    public Boolean ActualizarDatosPersonales() {
-        return true;
+
+    public String getFechaIngreso() {
+        return fechaIngreso;
+    }
+
+    public void setFechaIngreso(String fechaIngreso) {
+        this.fechaIngreso = fechaIngreso;
+    }
+
+    public String getActivo() {
+        return activo;
+    }
+
+    public void setActivo(String activo) {
+        this.activo = activo;
     }
     
-    public ReturnObtenerDatosPersonales ObtenerDatosPersonales() {
-        return null;
+    public Boolean ActualizarDatosPersonales() {
+        ParamActualizarDatosPersonales paramActualizarDatosPersonales = new ParamActualizarDatosPersonales();
+        ReturnActualizarDatosPersonales returnActualizarDatosPersonales = new ReturnActualizarDatosPersonales();
+        PersonasFachada personasFachada = new PersonasFachada();
+        
+        try {
+    
+            paramActualizarDatosPersonales.setTipoPersona(tipoPersona);
+            paramActualizarDatosPersonales.setTipoDocumento(tipoDocumento);
+            paramActualizarDatosPersonales.setDocumento(documento);
+            
+            paramActualizarDatosPersonales.setApellido1(apellido1);
+            paramActualizarDatosPersonales.setApellido2(apellido2);
+            paramActualizarDatosPersonales.setNombre1(nombre1); 
+            paramActualizarDatosPersonales.setNombre2(nombre2);   
+            paramActualizarDatosPersonales.setFechaNacimiento(fechaNacimiento); 
+            paramActualizarDatosPersonales.setSexo(sexo); 
+            paramActualizarDatosPersonales.setMail(mail);
+            paramActualizarDatosPersonales.setTelefono(telefono);
+            paramActualizarDatosPersonales.setCelular(celular);
+            paramActualizarDatosPersonales.setDireccion(direccion);
+            paramActualizarDatosPersonales.setCiudad(ciudad);
+            paramActualizarDatosPersonales.setDepartamento(departamento);
+            paramActualizarDatosPersonales.setPais(pais);
+            paramActualizarDatosPersonales.setFechaIngreso(fechaIngreso);
+            paramActualizarDatosPersonales.setActivo(activo);
+
+            returnActualizarDatosPersonales = personasFachada.ActualizarDatosPersonales(paramActualizarDatosPersonales);
+            if(returnActualizarDatosPersonales.getGuardado())
+            {
+                //FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("Usuario",returnLogin);
+                //ACA DEBERIA TRAER EL NOMBRE QUE HAYEN LA SESION Y CAMBIARLO POR EL NUEVO EN CASO DE QUE HAYA CAMBIADO
+            }
+            else
+            {
+                FacesContext facesContext = FacesContext.getCurrentInstance();
+                facesContext.addMessage(null, new FacesMessage(returnActualizarDatosPersonales.getRespuesta()));
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(DatosPersonalesBean.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return returnActualizarDatosPersonales.getGuardado();
+    }
+    
+    private void cargarDatosPersonales() {
+        try {
+    
+            ReturnLogin objReturnSesion = (ReturnLogin)FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("Usuario");
+            PersonasFachada personasFachada = new PersonasFachada();
+            ParamObtenerDatosPersonales objParamObtenerDatosPersonales = new ParamObtenerDatosPersonales();
+            objParamObtenerDatosPersonales.setTipoDocumento(objReturnSesion.getTipoDocumento());
+            objParamObtenerDatosPersonales.setDocumento(objReturnSesion.getDocumento());
+
+            ReturnObtenerDatosPersonales objReturnObtenerDatosPersonales = personasFachada.ObtenerDatosPersonales(objParamObtenerDatosPersonales);
+
+            tipoPersona = objReturnSesion.getTipoPersona();
+            tipoDocumento = objReturnSesion.getTipoDocumento();
+            documento = objReturnSesion.getDocumento(); 
+            apellido1 = objReturnObtenerDatosPersonales.getApellido1(); 
+            apellido2 = objReturnObtenerDatosPersonales.getApellido2(); 
+            nombre1 = objReturnObtenerDatosPersonales.getNombre1(); 
+            nombre2 = objReturnObtenerDatosPersonales.getNombre2(); 
+            
+            DateFormat sourceFormat = new SimpleDateFormat("dd/MM/yyyy");
+            String a = objReturnObtenerDatosPersonales.getFechaNacimiento().substring(0, 4);
+            String m = objReturnObtenerDatosPersonales.getFechaNacimiento().substring(4, 6);
+            String d = objReturnObtenerDatosPersonales.getFechaNacimiento().substring(6, 8);
+            String fecha = d+"/"+m+"/"+a;
+            Date fechaNacimientoDate = sourceFormat.parse(fecha);
+            
+            fechaNacimiento = fechaNacimientoDate; 
+            sexo = objReturnObtenerDatosPersonales.getSexo(); 
+            mail = objReturnObtenerDatosPersonales.getMail();
+            telefono = objReturnObtenerDatosPersonales.getTelefono();
+            celular = objReturnObtenerDatosPersonales.getCelular();
+            direccion = objReturnObtenerDatosPersonales.getDireccion();
+            ciudad = objReturnObtenerDatosPersonales.getCiudad();
+            departamento = objReturnObtenerDatosPersonales.getDepartamento();
+            pais = objReturnObtenerDatosPersonales.getPais();
+
+        } catch (Exception ex) {
+            Logger.getLogger(DatosPersonalesBean.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }

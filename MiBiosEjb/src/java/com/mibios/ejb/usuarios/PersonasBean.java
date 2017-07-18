@@ -23,8 +23,32 @@ public class PersonasBean implements PersonasBeanLocal {
 
     @Override
     public ReturnActualizarDatosPersonales ActualizarDatosPersonales(ParamActualizarDatosPersonales xParamActualizarDatosPersonales) throws Exception {
-        
-        return null;
+                
+        ReturnActualizarDatosPersonales objReturnActualizarDatosPersonales = new ReturnActualizarDatosPersonales();
+        EntityManager em = ConexionJpa.obtenerInstancia().obtenerConeccion();
+        try
+        {
+            em.getTransaction().begin();
+
+            //ACA TENGO QUE VER PRIMERO SI EXISTE LA PERSONA CON LA CLAVE
+            //SI EXISTE LA ACTUALIZO
+            //SINO MUESTRO MENSAJE DE ERROR QUE LA PERSONA NO EXISTE
+            objReturnActualizarDatosPersonales = PersonasJpaPersistencia.ActualizarDatosPersonales(em, xParamActualizarDatosPersonales);
+
+            em.getTransaction().commit();
+        }
+        catch(Exception e)
+        {
+            if(em.getTransaction()!=null && em.getTransaction().isActive())
+            {
+                em.getTransaction().rollback();
+            }
+            e.printStackTrace();
+        }
+        finally{
+            em.close();
+        }
+        return objReturnActualizarDatosPersonales;
     }
     
     @Override

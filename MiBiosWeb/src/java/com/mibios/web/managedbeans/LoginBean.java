@@ -81,13 +81,11 @@ public class LoginBean implements Serializable{
             if(returnLogin.getLogin())
             {
                 FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("Usuario",returnLogin);
-                return returnLogin.getLogin();
             }
             else
             {
                 FacesContext facesContext = FacesContext.getCurrentInstance();
                 facesContext.addMessage(null, new FacesMessage(returnLogin.getRespuesta()));
-                return returnLogin.getLogin();
             }
         } catch (Exception ex) {
             Logger.getLogger(LoginBean.class.getName()).log(Level.SEVERE, null, ex);

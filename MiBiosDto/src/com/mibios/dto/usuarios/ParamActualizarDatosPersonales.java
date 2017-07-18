@@ -6,6 +6,7 @@
 package com.mibios.dto.usuarios;
 
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  *
@@ -20,7 +21,7 @@ public class ParamActualizarDatosPersonales implements Serializable {
     private String apellido2; 
     private String nombre1; 
     private String nombre2; 
-    private String fechaNacimiento; 
+    private Date fechaNacimiento; 
     private String sexo; 
     private String mail;
     private String telefono;
@@ -29,6 +30,8 @@ public class ParamActualizarDatosPersonales implements Serializable {
     private String ciudad;
     private String departamento;
     private String pais;
+    private String fechaIngreso;
+    private String activo;
 
     public String getTipoPersona() {
         return tipoPersona;
@@ -86,11 +89,11 @@ public class ParamActualizarDatosPersonales implements Serializable {
         this.nombre2 = nombre2;
     }
 
-    public String getFechaNacimiento() {
+    public Date getFechaNacimiento() {
         return fechaNacimiento;
     }
 
-    public void setFechaNacimiento(String fechaNacimiento) {
+    public void setFechaNacimiento(Date fechaNacimiento) {
         this.fechaNacimiento = fechaNacimiento;
     }
 
@@ -156,6 +159,22 @@ public class ParamActualizarDatosPersonales implements Serializable {
 
     public void setPais(String pais) {
         this.pais = pais;
+    }
+
+    public String getFechaIngreso() {
+        return fechaIngreso;
+    }
+
+    public void setFechaIngreso(String fechaIngreso) {
+        this.fechaIngreso = fechaIngreso;
+    }
+
+    public String getActivo() {
+        return activo;
+    }
+
+    public void setActivo(String activo) {
+        this.activo = activo;
     }
     
 }
