@@ -16,7 +16,6 @@ public class ParamLogin implements Serializable{
     private String tipoDocumento;
     private String documento;
     private String clave;
-    private String a;
 
     public String getTipoPersona() {
         return tipoPersona;
