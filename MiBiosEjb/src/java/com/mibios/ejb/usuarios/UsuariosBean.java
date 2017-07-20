@@ -14,6 +14,8 @@ import com.mibios.dto.personas.ReturnObtenerDatosPersonales;
 import com.mibios.dto.usuarios.ParamRegistro;
 import com.mibios.dto.usuarios.ReturnRegistro;
 import com.mibios.jpa.conexion.ConexionJpa;
+import com.mibios.jpa.peristencia.DocentesJpaPersitencia;
+import com.mibios.jpa.peristencia.EstudiantesJpaPersitencia;
 import com.mibios.jpa.peristencia.UsuariosJpaPersitencia;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -35,13 +37,13 @@ public class UsuariosBean implements UsuariosBeanLocal {
             em.getTransaction().begin();
 
             //VERIFICO QUE EL USUARIO EXISTA PARA EL LOGIN
-            login = UsuariosJpaPersitencia.ControlUsuarioLogin(em, xParamLogin);
+            login = UsuariosJpaPersitencia.controlUsuarioLogin(em, xParamLogin);
             
             //SI EXISTE LO OBTENGO
             if(login.getLogin())
             {
                 //OBTENER DATOS DE USUARIO   
-                login = UsuariosJpaPersitencia.ObtenerUsuarioLogin(em, xParamLogin);
+                login = UsuariosJpaPersitencia.obtenerUsuarioLogin(em, xParamLogin);
             }
 
             em.getTransaction().commit();
@@ -65,6 +67,8 @@ public class UsuariosBean implements UsuariosBeanLocal {
     {
         ReturnRegistro registro = new ReturnRegistro();
         EntityManager em = ConexionJpa.obtenerInstancia().obtenerConeccion();
+        Boolean existeComoTipoPersona = false;
+        
         try
         {
             em.getTransaction().begin();
@@ -74,12 +78,39 @@ public class UsuariosBean implements UsuariosBeanLocal {
                 //VERIFICO QUE EL USUARIO NO EXISTA
                 if(!UsuariosJpaPersitencia.existeUsuario(em, xParamRegistro))
                 {
-                    //VERIFICO QUE EXISTA COMO TIPO DE PERSONA, ES DECIR, COMO ALUMNO O DOCENTE
-
-                    //SI SE DAN AMBAS CONDICIONES REGISTRAMOS EL USUARIO
-                    UsuariosJpaPersitencia.altaUsuario(em, xParamRegistro);
-                    registro.setRegistro(true);
-                    registro.setRespuesta("");
+                    //VERIFICO QUE EXISTA COMO TIPO DE PERSONA, ES DECIR, COMO DOCENTE O ESTUDIANTE
+                    if(xParamRegistro.getTipoPersona().equalsIgnoreCase("D"))
+                    {
+                        if(DocentesJpaPersitencia.existeDocente(em, xParamRegistro.getTipoDocumento(), xParamRegistro.getDocumento()))
+                        {
+                            existeComoTipoPersona = true;
+                        }
+                        else
+                        {
+                            registro.setRegistro(false);
+                            registro.setRespuesta("No existe como Docente");
+                        }
+                    }
+                    else
+                    {
+                        if(EstudiantesJpaPersitencia.existeEstudiante(em, xParamRegistro.getTipoDocumento(), xParamRegistro.getDocumento()))
+                        {
+                            existeComoTipoPersona = true;
+                        }
+                        else
+                        {
+                            registro.setRegistro(false);
+                            registro.setRespuesta("No existe como Estudiante");
+                        }
+                    }
+                    
+                    //SI EXISTE REGISTRAMOS EL USUARIO
+                    if(existeComoTipoPersona)
+                    {
+                        UsuariosJpaPersitencia.altaUsuario(em, xParamRegistro);
+                        registro.setRegistro(true);
+                        registro.setRespuesta("Se ha registrado correctamente");                        
+                    }
                 }
                 else
                 {

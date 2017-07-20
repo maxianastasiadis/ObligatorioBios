@@ -18,7 +18,8 @@ import javax.persistence.EntityManager;
  */
 public class UsuariosJpaPersitencia {
     
-    public static ReturnLogin ControlUsuarioLogin(EntityManager em, ParamLogin xParamLogin) {
+    public static ReturnLogin controlUsuarioLogin(EntityManager em, ParamLogin xParamLogin) 
+    {
 
         ReturnLogin objReturnLogin = new ReturnLogin();
         long existe = (Long)em.createNamedQuery("Usuarios.controlUsuarioLogin")
@@ -40,8 +41,8 @@ public class UsuariosJpaPersitencia {
         return objReturnLogin;        
     }
     
-    public static ReturnLogin ObtenerUsuarioLogin(EntityManager em, ParamLogin xParamLogin) {
-
+    public static ReturnLogin obtenerUsuarioLogin(EntityManager em, ParamLogin xParamLogin) 
+    {
         ReturnLogin objReturnLogin = new ReturnLogin();
         
         UsuariosPK objUsuariosPK = new UsuariosPK(xParamLogin.getTipoPersona(), xParamLogin.getTipoDocumento(), xParamLogin.getDocumento());
@@ -61,8 +62,8 @@ public class UsuariosJpaPersitencia {
         return objReturnLogin;        
     }
     
-    public static Boolean existeUsuario(EntityManager em, ParamRegistro xParamRegistro) {
-
+    public static Boolean existeUsuario(EntityManager em, ParamRegistro xParamRegistro) 
+    {
         Boolean existeUsuario = false;
         
         UsuariosPK objUsuariosPK = new UsuariosPK(xParamRegistro.getTipoPersona(), xParamRegistro.getTipoDocumento(), xParamRegistro.getDocumento());
@@ -76,8 +77,8 @@ public class UsuariosJpaPersitencia {
         return existeUsuario;
     }
     
-    public static void altaUsuario(EntityManager em, ParamRegistro xParamRegistro) {
-
+    public static void altaUsuario(EntityManager em, ParamRegistro xParamRegistro) 
+    {
         UsuariosPK objUsuariosPK = new UsuariosPK(xParamRegistro.getTipoPersona(), xParamRegistro.getTipoDocumento(), xParamRegistro.getDocumento());
         Usuarios objUsuario = new Usuarios();
         objUsuario.setUsuariosPK(objUsuariosPK);

@@ -44,7 +44,7 @@ public class MenuPrincipalBean implements Serializable {
     }
     
     public Boolean Logout() {
-        //aca hay que hacer algo para cerrar la sesion
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().remove("Usuario");
         return true;
     }
     
