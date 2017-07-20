@@ -14,39 +14,35 @@
         <ui:include src="menuPublico.xhtml" />
     </ui:define>
     
-    <ui:define name="cabecera">
-        <ui:include src="menuPublico.xhtml" />
-    </ui:define>
-    
     <ui:define name="contenido">
-        <h:form id="registro-form" class="login-form">
-            <p:panel header="Login">
+        <h:form id="registroform" class="login-form">
+            <p:panel header="Registro de Usuario">
                 <h:panelGrid id="registroPanel" columns="2">
                     <h:outputText value="Tipo Persona:" />
-                    <p:selectOneMenu id="tipoPersona" value="#{registroBean.tipoPersona}">
+                    <p:selectOneMenu id="tipoPersona" value="#{regsitroUsuarioBean.tipoPersona}">
                         <f:selectItem itemLabel="Alumno" itemValue="A" />
                         <f:selectItem itemLabel="Docente" itemValue="D" />
                     </p:selectOneMenu>
                     <h:outputText value="Tipo Documento: " />
-                    <p:selectOneMenu id="tipoDocumento" value="#{registroBean.tipoDocumento}">
+                    <p:selectOneMenu id="tipoDocumento" value="#{regsitroUsuarioBean.tipoDocumento}">
                         <f:selectItem itemLabel="C.I." itemValue="1" />
                         <f:selectItem itemLabel="D.N.I." itemValue="2" />
                         <f:selectItem itemLabel="Pasaporte" itemValue="3" />
                     </p:selectOneMenu>
                     <h:outputText value="Documento: " />
-                    <p:inputText id="documento" required="true" requiredMessage="Debe ingresar Documento" value="#{registroBean.documento}" ></p:inputText>
+                    <p:inputText id="documento" required="true" requiredMessage="Debe ingresar Documento" value="#{regsitroUsuarioBean.documento}" ></p:inputText>
                     <p:spacer></p:spacer>
                     <h:message for="documento" class="message"/>
                     <h:outputText value="Clave: " />
-                    <p:password id="password" required="true" requiredMessage="Debe ingresar Clave" value="#{registroBean.clave}"  feedback="true"></p:password>
+                    <p:password id="password" required="true" requiredMessage="Debe ingresar Clave" value="#{regsitroUsuarioBean.clave}"  feedback="true"></p:password>
                     <p:spacer></p:spacer>
                     <h:message for="password" class="message"/>
                     <h:outputText value="Confirmar Clave: " />
-                    <p:password id="password2" required="true" requiredMessage="Debe ingresar Confirmacion de Clave" value="#{registroBean.confirmaClave}"  feedback="false"></p:password>
+                    <p:password id="password2" required="true" requiredMessage="Debe ingresar Confirmacion de Clave" value="#{regsitroUsuarioBean.confirmaClave}"  feedback="false"></p:password>
                     <p:spacer></p:spacer>
                     <h:message for="password2" class="message"/>
                     <p:spacer></p:spacer>
-                    <p:commandButton action="#{registroBean.Registrar}" value="Registrarme" icon="ui-icon-key" ajax="true" update="registroPanel"></p:commandButton>
+                    <p:commandButton action="#{regsitroUsuarioBean.Registro}" value="Registrarme" icon="ui-icon-circle-check" ajax="true" update="registroform"></p:commandButton>
                 </h:panelGrid> 
                 <h:messages class="message" globalOnly="true" />
             </p:panel>

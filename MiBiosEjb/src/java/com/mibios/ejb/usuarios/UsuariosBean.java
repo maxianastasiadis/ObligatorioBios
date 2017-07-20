@@ -17,8 +17,6 @@ import com.mibios.jpa.conexion.ConexionJpa;
 import com.mibios.jpa.peristencia.UsuariosJpaPersitencia;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 
 /**
  *
@@ -62,6 +60,7 @@ public class UsuariosBean implements UsuariosBeanLocal {
         return login;
     }
     
+    @Override
     public ReturnRegistro Registro(ParamRegistro xParamRegistro)
     {
         ReturnRegistro registro = new ReturnRegistro();
@@ -70,12 +69,30 @@ public class UsuariosBean implements UsuariosBeanLocal {
         {
             em.getTransaction().begin();
 
-            //VERIFICO QUE EL USUARIO NO EXISTA
-            
-            //VERIFICO QUE EXISTA COMO TIPO DE PERSONA, ES DECIR, COMO ALUMNO O DOCENTE
-            
-            //SI SE DAN AMBAS CONDICIONES REGISTRAMOS EL USUARIO
+            if(xParamRegistro.getClave().equals(xParamRegistro.getConfirmaClave()))
+            {
+                //VERIFICO QUE EL USUARIO NO EXISTA
+                if(!UsuariosJpaPersitencia.existeUsuario(em, xParamRegistro))
+                {
+                    //VERIFICO QUE EXISTA COMO TIPO DE PERSONA, ES DECIR, COMO ALUMNO O DOCENTE
 
+                    //SI SE DAN AMBAS CONDICIONES REGISTRAMOS EL USUARIO
+                    UsuariosJpaPersitencia.altaUsuario(em, xParamRegistro);
+                    registro.setRegistro(true);
+                    registro.setRespuesta("");
+                }
+                else
+                {
+                    registro.setRegistro(false);
+                    registro.setRespuesta("El Usuario ya existe");
+                }
+            }
+            else
+            {
+                registro.setRegistro(false);
+                registro.setRespuesta("La clave no coincide con la confirmacion");
+            }
+            
             em.getTransaction().commit();
         }
         catch(Exception e)

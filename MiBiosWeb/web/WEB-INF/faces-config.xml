@@ -35,4 +35,18 @@
                     <redirect></redirect>
                 </navigation-case>
         </navigation-rule>
+        <navigation-rule>
+            <from-view-id>*</from-view-id>
+                <navigation-case>
+                    <from-action>#{regsitroUsuarioBean.Registro}</from-action>
+                    <from-outcome>true</from-outcome>
+                    <to-view-id>/index.xhtml</to-view-id>
+                    <redirect></redirect>
+                </navigation-case>
+                <navigation-case>
+                    <from-action>#{regsitroUsuarioBean.Registro}</from-action>
+                    <from-outcome>false</from-outcome>
+                    <to-view-id>/registroUsuario.xhtml</to-view-id>
+                </navigation-case>
+        </navigation-rule>
 </faces-config>

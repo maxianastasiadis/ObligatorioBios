@@ -86,6 +86,7 @@ public class RegsitroUsuarioBean implements Serializable{
             paramRegistro.setDocumento(documento);
             paramRegistro.setClave(clave);
             paramRegistro.setConfirmaClave(confirmaClave);
+            
             returnRegistro = usuarioFachada.Registro(paramRegistro);
             
             if(returnRegistro.getRegistro())

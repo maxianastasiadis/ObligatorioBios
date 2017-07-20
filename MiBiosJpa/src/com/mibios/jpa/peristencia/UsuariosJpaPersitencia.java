@@ -6,10 +6,11 @@
 package com.mibios.jpa.peristencia;
 
 import com.mibios.dto.usuarios.ParamLogin;
+import com.mibios.dto.usuarios.ParamRegistro;
 import com.mibios.dto.usuarios.ReturnLogin;
 import com.mibios.jpa.entidades.Usuarios;
+import com.mibios.jpa.entidades.UsuariosPK;
 import javax.persistence.EntityManager;
-import javax.persistence.TypedQuery;
 
 /**
  *
@@ -42,11 +43,14 @@ public class UsuariosJpaPersitencia {
     public static ReturnLogin ObtenerUsuarioLogin(EntityManager em, ParamLogin xParamLogin) {
 
         ReturnLogin objReturnLogin = new ReturnLogin();
-        Usuarios objUsuario = em.createNamedQuery("Usuarios.obtenerUsuarioLogin",Usuarios.class)
+        
+        UsuariosPK objUsuariosPK = new UsuariosPK(xParamLogin.getTipoPersona(), xParamLogin.getTipoDocumento(), xParamLogin.getDocumento());
+        Usuarios objUsuario = em.find(Usuarios.class, objUsuariosPK);
+        /*Usuarios objUsuario = em.createNamedQuery("Usuarios.obtenerUsuarioLogin",Usuarios.class)
                 .setParameter("tipoPersona", xParamLogin.getTipoPersona())
                 .setParameter("tipoDocumento", xParamLogin.getTipoDocumento())
                 .setParameter("documento", xParamLogin.getDocumento())
-                .getSingleResult();
+                .getSingleResult();*/
         
             objReturnLogin.setLogin(true);
             objReturnLogin.setTipoPersona(objUsuario.getUsuariosPK().getTipoPersona());
@@ -55,5 +59,32 @@ public class UsuariosJpaPersitencia {
             objReturnLogin.setNombreUsuario(objUsuario.getPersonas().getNombre1() + " " + objUsuario.getPersonas().getApellido1());
         
         return objReturnLogin;        
+    }
+    
+    public static Boolean existeUsuario(EntityManager em, ParamRegistro xParamRegistro) {
+
+        Boolean existeUsuario = false;
+        
+        UsuariosPK objUsuariosPK = new UsuariosPK(xParamRegistro.getTipoPersona(), xParamRegistro.getTipoDocumento(), xParamRegistro.getDocumento());
+        Usuarios objUsuario = em.find(Usuarios.class, objUsuariosPK);
+        
+        if(objUsuario!=null)
+        {
+            existeUsuario = true;
+        }
+        
+        return existeUsuario;
+    }
+    
+    public static void altaUsuario(EntityManager em, ParamRegistro xParamRegistro) {
+
+        UsuariosPK objUsuariosPK = new UsuariosPK(xParamRegistro.getTipoPersona(), xParamRegistro.getTipoDocumento(), xParamRegistro.getDocumento());
+        Usuarios objUsuario = new Usuarios();
+        objUsuario.setUsuariosPK(objUsuariosPK);
+        objUsuario.setClave(xParamRegistro.getClave());
+        objUsuario.setActivo("S");
+        objUsuario.setFechaIngreso("20170719");
+        
+        em.persist(objUsuario);
     }
 }
