@@ -6,8 +6,10 @@
 package com.mibios.web.fachada;
 
 import com.mibios.dto.usuarios.ParamLogin;
+import com.mibios.dto.usuarios.ParamRecuperarContrasena;
 import com.mibios.dto.usuarios.ParamRegistro;
 import com.mibios.dto.usuarios.ReturnLogin;
+import com.mibios.dto.usuarios.ReturnRecuperarContrasena;
 import com.mibios.dto.usuarios.ReturnRegistro;
 import com.mibios.ejb.usuarios.UsuariosBeanLocal;
 import java.util.logging.Level;
@@ -31,6 +33,11 @@ public class UsuariosFachada {
     public ReturnRegistro Registro(ParamRegistro xParamRegistro) throws Exception
     {
         return lookupUsuariosBean().Registro(xParamRegistro);
+    }
+    
+    public ReturnRecuperarContrasena RecuperarContrasena(ParamRecuperarContrasena xParamRecuperarContrasena) throws Exception
+    {
+        return lookupUsuariosBean().RecuperarContrasena(xParamRecuperarContrasena);
     }
     
     /**********************************/

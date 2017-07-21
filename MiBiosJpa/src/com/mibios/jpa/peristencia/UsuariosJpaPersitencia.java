@@ -62,11 +62,10 @@ public class UsuariosJpaPersitencia {
         return objReturnLogin;        
     }
     
-    public static Boolean existeUsuario(EntityManager em, ParamRegistro xParamRegistro) 
+    public static Boolean existeUsuario(EntityManager em, UsuariosPK objUsuariosPK) 
     {
         Boolean existeUsuario = false;
         
-        UsuariosPK objUsuariosPK = new UsuariosPK(xParamRegistro.getTipoPersona(), xParamRegistro.getTipoDocumento(), xParamRegistro.getDocumento());
         Usuarios objUsuario = em.find(Usuarios.class, objUsuariosPK);
         
         if(objUsuario!=null)

@@ -11,9 +11,12 @@ import com.mibios.dto.personas.ParamObtenerDatosPersonales;
 import com.mibios.dto.personas.ReturnActualizarDatosPersonales;
 import com.mibios.dto.usuarios.ReturnLogin;
 import com.mibios.dto.personas.ReturnObtenerDatosPersonales;
+import com.mibios.dto.usuarios.ParamRecuperarContrasena;
 import com.mibios.dto.usuarios.ParamRegistro;
+import com.mibios.dto.usuarios.ReturnRecuperarContrasena;
 import com.mibios.dto.usuarios.ReturnRegistro;
 import com.mibios.jpa.conexion.ConexionJpa;
+import com.mibios.jpa.entidades.UsuariosPK;
 import com.mibios.jpa.peristencia.DocentesJpaPersitencia;
 import com.mibios.jpa.peristencia.EstudiantesJpaPersitencia;
 import com.mibios.jpa.peristencia.UsuariosJpaPersitencia;
@@ -76,7 +79,8 @@ public class UsuariosBean implements UsuariosBeanLocal {
             if(xParamRegistro.getClave().equals(xParamRegistro.getConfirmaClave()))
             {
                 //VERIFICO QUE EL USUARIO NO EXISTA
-                if(!UsuariosJpaPersitencia.existeUsuario(em, xParamRegistro))
+                UsuariosPK objUsuariosPK = new UsuariosPK(xParamRegistro.getTipoPersona(), xParamRegistro.getTipoDocumento(), xParamRegistro.getDocumento());
+                if(!UsuariosJpaPersitencia.existeUsuario(em, objUsuariosPK))
                 {
                     //VERIFICO QUE EXISTA COMO TIPO DE PERSONA, ES DECIR, COMO DOCENTE O ESTUDIANTE
                     if(xParamRegistro.getTipoPersona().equalsIgnoreCase("D"))
@@ -138,6 +142,45 @@ public class UsuariosBean implements UsuariosBeanLocal {
             em.close();
         }
         return registro;
+    }
+    
+    @Override
+    public ReturnRecuperarContrasena RecuperarContrasena(ParamRecuperarContrasena xParamRecuperarContrasena) throws Exception
+    {
+        ReturnRecuperarContrasena recuperar = new ReturnRecuperarContrasena();
+        EntityManager em = ConexionJpa.obtenerInstancia().obtenerConeccion();
+        
+        try
+        {
+            em.getTransaction().begin();
+
+            // VERIFICAR SI EXISTE USUARIO PARA TIPO PERSONA, TIPO DOCUMENTO Y DOCUMENTO
+            UsuariosPK objUsuariosPK = new UsuariosPK(xParamRecuperarContrasena.getTipoPersona(), xParamRecuperarContrasena.getTipoDocumento(), xParamRecuperarContrasena.getDocumento());
+            if(UsuariosJpaPersitencia.existeUsuario(em, objUsuariosPK))
+            {
+                // SI EXISTE LE HAGO UPDATE A LA CLAVE, LE PONGO ingresarnueva
+                recuperar.setRecuperar(true);
+            }
+            else
+            {
+                recuperar.setRecuperar(false);
+                recuperar.setRespuesta("El Usuario no existe");
+            }
+            
+            em.getTransaction().commit();
+        }
+        catch(Exception e)
+        {
+            if(em.getTransaction()!=null && em.getTransaction().isActive())
+            {
+                em.getTransaction().rollback();
+            }
+            e.printStackTrace();
+        }
+        finally{
+            em.close();
+        }
+        return recuperar;
     }
    
 }
