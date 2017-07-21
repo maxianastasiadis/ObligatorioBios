@@ -8,6 +8,7 @@ package com.mibios.web.managedbeans;
 import com.mibios.dto.usuarios.ParamRecuperarContrasena;
 import com.mibios.dto.usuarios.ReturnRecuperarContrasena;
 import com.mibios.web.fachada.UsuariosFachada;
+import java.io.Serializable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.faces.application.FacesMessage;
@@ -21,7 +22,7 @@ import javax.faces.context.FacesContext;
  */
 @ManagedBean
 @RequestScoped
-public class RecuperarContrasenaBean {
+public class RecuperarContrasenaBean implements Serializable {
 
     private String tipoPersona;
     private String tipoDocumento;
