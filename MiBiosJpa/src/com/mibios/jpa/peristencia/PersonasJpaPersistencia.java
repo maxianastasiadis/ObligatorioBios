@@ -9,6 +9,7 @@ import com.mibios.dto.personas.ParamActualizarDatosPersonales;
 import com.mibios.dto.personas.ParamObtenerDatosPersonales;
 import com.mibios.dto.personas.ReturnActualizarDatosPersonales;
 import com.mibios.dto.personas.ReturnObtenerDatosPersonales;
+import com.mibios.funciones.FuncionesFecha;
 import com.mibios.jpa.entidades.Personas;
 import com.mibios.jpa.entidades.PersonasPK;
 import java.text.SimpleDateFormat;
@@ -55,13 +56,6 @@ public class PersonasJpaPersistencia {
         Personas objPersonas = new Personas();
         PersonasPK objPersonasPK = new PersonasPK();
         
-        SimpleDateFormat sdFormat = new SimpleDateFormat("dd/MM/yyyy");
-	String fechaNacimiento = sdFormat.format(xParamActualizarDatosPersonales.getFechaNacimiento()).replace("/", "");
-        String a = fechaNacimiento.substring(4, 8);
-        String m = fechaNacimiento.substring(2, 4);
-        String d = fechaNacimiento.substring(0, 2);
-        fechaNacimiento = a+m+d;
-        
         objPersonas.setActivo(xParamActualizarDatosPersonales.getActivo());
         objPersonas.setApellido1(xParamActualizarDatosPersonales.getApellido1());
         objPersonas.setApellido2(xParamActualizarDatosPersonales.getApellido2());
@@ -70,7 +64,7 @@ public class PersonasJpaPersistencia {
         objPersonas.setDepartamento(xParamActualizarDatosPersonales.getDepartamento());
         objPersonas.setDireccion(xParamActualizarDatosPersonales.getDireccion());
         objPersonas.setFechaIngreso(xParamActualizarDatosPersonales.getFechaIngreso());
-        objPersonas.setFechaNacimiento(fechaNacimiento);
+        objPersonas.setFechaNacimiento(FuncionesFecha.guardarFechaAAAAMMDD(xParamActualizarDatosPersonales.getFechaNacimiento()));
         objPersonas.setMail(xParamActualizarDatosPersonales.getMail());
         objPersonas.setNombre1(xParamActualizarDatosPersonales.getNombre1());
         objPersonas.setNombre2(xParamActualizarDatosPersonales.getNombre2());

@@ -10,6 +10,7 @@ import com.mibios.dto.personas.ParamObtenerDatosPersonales;
 import com.mibios.dto.personas.ReturnActualizarDatosPersonales;
 import com.mibios.dto.usuarios.ReturnLogin;
 import com.mibios.dto.personas.ReturnObtenerDatosPersonales;
+import com.mibios.funciones.FuncionesFecha;
 import com.mibios.web.fachada.PersonasFachada;
 import com.mibios.web.fachada.UsuariosFachada;
 import java.io.Serializable;
@@ -260,15 +261,7 @@ public class DatosPersonalesBean implements Serializable  {
             apellido2 = objReturnObtenerDatosPersonales.getApellido2(); 
             nombre1 = objReturnObtenerDatosPersonales.getNombre1(); 
             nombre2 = objReturnObtenerDatosPersonales.getNombre2(); 
-            
-            DateFormat sourceFormat = new SimpleDateFormat("dd/MM/yyyy");
-            String a = objReturnObtenerDatosPersonales.getFechaNacimiento().substring(0, 4);
-            String m = objReturnObtenerDatosPersonales.getFechaNacimiento().substring(4, 6);
-            String d = objReturnObtenerDatosPersonales.getFechaNacimiento().substring(6, 8);
-            String fecha = d+"/"+m+"/"+a;
-            Date fechaNacimientoDate = sourceFormat.parse(fecha);
-            
-            fechaNacimiento = fechaNacimientoDate; 
+            fechaNacimiento = FuncionesFecha.mostrarFechaDDMMAAAA(objReturnObtenerDatosPersonales.getFechaNacimiento());
             sexo = objReturnObtenerDatosPersonales.getSexo(); 
             mail = objReturnObtenerDatosPersonales.getMail();
             telefono = objReturnObtenerDatosPersonales.getTelefono();

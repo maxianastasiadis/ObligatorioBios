@@ -16,6 +16,7 @@ import com.mibios.dto.usuarios.ParamRegistro;
 import com.mibios.dto.usuarios.ReturnRecuperarContrasena;
 import com.mibios.dto.usuarios.ReturnRegistro;
 import com.mibios.jpa.conexion.ConexionJpa;
+import com.mibios.jpa.entidades.Usuarios;
 import com.mibios.jpa.entidades.UsuariosPK;
 import com.mibios.jpa.peristencia.DocentesJpaPersitencia;
 import com.mibios.jpa.peristencia.EstudiantesJpaPersitencia;
@@ -159,6 +160,9 @@ public class UsuariosBean implements UsuariosBeanLocal {
             if(UsuariosJpaPersitencia.existeUsuario(em, objUsuariosPK))
             {
                 // SI EXISTE LE HAGO UPDATE A LA CLAVE, LE PONGO ingresarnueva
+                Usuarios objUsuario = UsuariosJpaPersitencia.obtenerUsuario(em, objUsuariosPK);
+                objUsuario.setClave("ingresarnueva");
+                UsuariosJpaPersitencia.modificaClave(em, objUsuario);
                 recuperar.setRecuperar(true);
             }
             else

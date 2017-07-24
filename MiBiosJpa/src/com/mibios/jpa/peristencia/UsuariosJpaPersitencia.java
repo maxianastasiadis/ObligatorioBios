@@ -87,4 +87,14 @@ public class UsuariosJpaPersitencia {
         
         em.persist(objUsuario);
     }
+    
+    public static void modificaClave(EntityManager em, Usuarios objUsuarios) 
+    {   
+        em.merge(objUsuarios);
+    }
+    
+    public static Usuarios obtenerUsuario(EntityManager em, UsuariosPK objUsuariosPK) 
+    {   
+        return em.find(Usuarios.class, objUsuariosPK);     
+    }
 }
