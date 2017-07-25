@@ -12,7 +12,6 @@ import com.mibios.dto.personas.ReturnObtenerDatosPersonales;
 import com.mibios.funciones.FuncionesFecha;
 import com.mibios.jpa.entidades.Personas;
 import com.mibios.jpa.entidades.PersonasPK;
-import java.text.SimpleDateFormat;
 import javax.persistence.EntityManager;
 
 /**
@@ -91,5 +90,19 @@ public class PersonasJpaPersistencia {
         objReturnActualizarDatosPersonales.setRespuesta(respuesta);
         
         return objReturnActualizarDatosPersonales;    
+    }
+    
+    public static Boolean existePersona(EntityManager em, PersonasPK objPersonasPK) 
+    {
+        Boolean existePersona = false;
+        
+        Personas objPersonas = em.find(Personas.class, objPersonasPK);
+        
+        if(objPersonas!=null)
+        {
+            existePersona = true;
+        }
+        
+        return existePersona;
     }
 }

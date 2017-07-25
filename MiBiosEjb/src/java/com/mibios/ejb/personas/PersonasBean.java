@@ -10,6 +10,7 @@ import com.mibios.dto.personas.ParamObtenerDatosPersonales;
 import com.mibios.dto.personas.ReturnActualizarDatosPersonales;
 import com.mibios.dto.personas.ReturnObtenerDatosPersonales;
 import com.mibios.jpa.conexion.ConexionJpa;
+import com.mibios.jpa.entidades.PersonasPK;
 import com.mibios.jpa.peristencia.PersonasJpaPersistencia;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -30,10 +31,19 @@ public class PersonasBean implements PersonasBeanLocal {
         {
             em.getTransaction().begin();
 
-            //ACA TENGO QUE VER PRIMERO SI EXISTE LA PERSONA CON LA CLAVE
+            //ACA TENGO QUE VER PRIMERO SI EXISTE LA PERSONA
+            PersonasPK objPersonasPK = new PersonasPK(xParamActualizarDatosPersonales.getTipoDocumento(), xParamActualizarDatosPersonales.getDocumento());
             //SI EXISTE LA ACTUALIZO
+            if(PersonasJpaPersistencia.existePersona(em, objPersonasPK))
+            {
+                objReturnActualizarDatosPersonales = PersonasJpaPersistencia.ActualizarDatosPersonales(em, xParamActualizarDatosPersonales);
+            }
             //SINO MUESTRO MENSAJE DE ERROR QUE LA PERSONA NO EXISTE
-            objReturnActualizarDatosPersonales = PersonasJpaPersistencia.ActualizarDatosPersonales(em, xParamActualizarDatosPersonales);
+            else
+            {
+                objReturnActualizarDatosPersonales.setGuardado(false);
+                objReturnActualizarDatosPersonales.setRespuesta("No Existe Persona");
+            }
 
             em.getTransaction().commit();
         }
