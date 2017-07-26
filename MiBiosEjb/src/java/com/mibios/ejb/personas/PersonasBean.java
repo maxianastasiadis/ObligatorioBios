@@ -5,13 +5,19 @@
  */
 package com.mibios.ejb.personas;
 
+import com.mibios.dto.cuentaCorriente.ParamCuentaCorriente;
+import com.mibios.dto.cuentaCorriente.ReturnCuentaCorriente;
 import com.mibios.dto.personas.ParamActualizarDatosPersonales;
 import com.mibios.dto.personas.ParamObtenerDatosPersonales;
 import com.mibios.dto.personas.ReturnActualizarDatosPersonales;
 import com.mibios.dto.personas.ReturnObtenerDatosPersonales;
 import com.mibios.jpa.conexion.ConexionJpa;
+import com.mibios.jpa.entidades.CuentaCorriente;
 import com.mibios.jpa.entidades.PersonasPK;
 import com.mibios.jpa.peristencia.PersonasJpaPersistencia;
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 
@@ -86,5 +92,56 @@ public class PersonasBean implements PersonasBeanLocal {
             em.close();
         }
         return objReturnObtenerDatosPersonales;
+    }
+    
+    @Override
+    public List<ReturnCuentaCorriente> obtenerCuentaCorriente(ParamCuentaCorriente xParamCuentaCorriente) throws Exception{
+        
+        List<ReturnCuentaCorriente> colReturnCuentaCorriente = new ArrayList<>();
+        List<CuentaCorriente> colCuentaCorriente = null;
+        EntityManager em = ConexionJpa.obtenerInstancia().obtenerConeccion();
+        try
+        {
+            em.getTransaction().begin();
+
+            colCuentaCorriente = PersonasJpaPersistencia.obtenerCuentaCorriente(em, xParamCuentaCorriente);
+            BigDecimal saldo = new BigDecimal(0);
+            for(CuentaCorriente cuentaCorriente : colCuentaCorriente)
+            {
+                ReturnCuentaCorriente obj = new ReturnCuentaCorriente();
+                
+                obj.setConcepto(cuentaCorriente.getConcepto());
+                obj.setFecha(cuentaCorriente.getFecha());
+                obj.setHora(cuentaCorriente.getHora());
+                if(cuentaCorriente.getTipoMovimiento().equalsIgnoreCase("D"))
+                {
+                    obj.setDebe(cuentaCorriente.getImporte());
+                    saldo.add(cuentaCorriente.getImporte());
+                }
+                else
+                {
+                    obj.setHaber(cuentaCorriente.getImporte());
+                    saldo.subtract(cuentaCorriente.getImporte());
+                }
+                obj.setSaldo(saldo);
+                obj.setRespuesta("");
+                
+                colReturnCuentaCorriente.add(obj);
+            }
+
+            em.getTransaction().commit();
+        }
+        catch(Exception e)
+        {
+            if(em.getTransaction()!=null && em.getTransaction().isActive())
+            {
+                em.getTransaction().rollback();
+            }
+            e.printStackTrace();
+        }
+        finally{
+            em.close();
+        }
+        return colReturnCuentaCorriente;
     }
 }

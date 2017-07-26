@@ -5,11 +5,15 @@
  */
 package com.mibios.web.fachada;
 
+import com.mibios.dto.cuentaCorriente.ParamCuentaCorriente;
+import com.mibios.dto.cuentaCorriente.ReturnCuentaCorriente;
 import com.mibios.dto.personas.ParamActualizarDatosPersonales;
 import com.mibios.dto.personas.ParamObtenerDatosPersonales;
 import com.mibios.dto.personas.ReturnActualizarDatosPersonales;
 import com.mibios.dto.personas.ReturnObtenerDatosPersonales;
 import com.mibios.ejb.personas.PersonasBeanLocal;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.naming.Context;
@@ -32,6 +36,10 @@ public class PersonasFachada {
         return lookupPersonasBean().ObtenerDatosPersonales(xParamObtenerDatosPersonales);
     }
     
+    public List<ReturnCuentaCorriente> obtenerCuentaCorriente(ParamCuentaCorriente xParamCuentaCorriente) throws Exception
+    {
+        return lookupPersonasBean().obtenerCuentaCorriente(xParamCuentaCorriente);
+    }
         
     /**********************************/
     /*ACA ESTAN LAS LLAMADAS A LOS EJB*/

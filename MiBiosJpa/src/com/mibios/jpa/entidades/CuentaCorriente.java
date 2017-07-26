@@ -30,6 +30,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Table(name = "cuenta_corriente")
 @XmlRootElement
 @NamedQueries({
+    @NamedQuery(name = "CuentaCorriente.obtenerTransacciones", query = "SELECT c FROM CuentaCorriente c where c.personas.personasPK.tipoDocumento = :tipoDocumento and c.personas.personasPK.documento = :documento"),
     @NamedQuery(name = "CuentaCorriente.findAll", query = "SELECT c FROM CuentaCorriente c"),
     @NamedQuery(name = "CuentaCorriente.findByTransaccion", query = "SELECT c FROM CuentaCorriente c WHERE c.transaccion = :transaccion"),
     @NamedQuery(name = "CuentaCorriente.findByImporte", query = "SELECT c FROM CuentaCorriente c WHERE c.importe = :importe"),

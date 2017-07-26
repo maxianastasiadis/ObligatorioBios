@@ -5,10 +5,14 @@
  */
 package com.mibios.ejb.personas;
 
+import com.mibios.dto.cuentaCorriente.ParamCuentaCorriente;
+import com.mibios.dto.cuentaCorriente.ReturnCuentaCorriente;
 import com.mibios.dto.personas.ParamActualizarDatosPersonales;
 import com.mibios.dto.personas.ParamObtenerDatosPersonales;
 import com.mibios.dto.personas.ReturnActualizarDatosPersonales;
 import com.mibios.dto.personas.ReturnObtenerDatosPersonales;
+import java.util.ArrayList;
+import java.util.List;
 import javax.ejb.Local;
 import javax.ejb.Remote;
 
@@ -22,5 +26,7 @@ public interface PersonasBeanLocal {
     public ReturnActualizarDatosPersonales ActualizarDatosPersonales(ParamActualizarDatosPersonales xParamActualizarDatosPersonales) throws Exception;
     
     public ReturnObtenerDatosPersonales ObtenerDatosPersonales(ParamObtenerDatosPersonales xParamObtenerDatosPersonales) throws Exception;
+    
+    public List<ReturnCuentaCorriente> obtenerCuentaCorriente(ParamCuentaCorriente xParamCuentaCorriente) throws Exception;
     
 }

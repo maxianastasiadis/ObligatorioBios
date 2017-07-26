@@ -5,13 +5,18 @@
  */
 package com.mibios.jpa.peristencia;
 
+import com.mibios.dto.cuentaCorriente.ParamCuentaCorriente;
+import com.mibios.dto.cuentaCorriente.ReturnCuentaCorriente;
 import com.mibios.dto.personas.ParamActualizarDatosPersonales;
 import com.mibios.dto.personas.ParamObtenerDatosPersonales;
 import com.mibios.dto.personas.ReturnActualizarDatosPersonales;
 import com.mibios.dto.personas.ReturnObtenerDatosPersonales;
 import com.mibios.funciones.FuncionesFecha;
+import com.mibios.jpa.entidades.CuentaCorriente;
 import com.mibios.jpa.entidades.Personas;
 import com.mibios.jpa.entidades.PersonasPK;
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.EntityManager;
 
 /**
@@ -104,5 +109,17 @@ public class PersonasJpaPersistencia {
         }
         
         return existePersona;
+    }
+    
+    public static List<CuentaCorriente> obtenerCuentaCorriente(EntityManager em, ParamCuentaCorriente xParamCuentaCorriente){
+     
+        
+        List<CuentaCorriente> colCuentaCorriente = em.createNamedQuery("CuentaCorriente.obtenerTransacciones",CuentaCorriente.class)
+                .setParameter("tipoDocumento", xParamCuentaCorriente.getTipoDocumento())
+                .setParameter("documento", xParamCuentaCorriente.getDocumento())
+                .getResultList();
+        
+        
+        return colCuentaCorriente;    
     }
 }
