@@ -62,12 +62,12 @@ public class Clases implements Serializable {
     private String duracionHoras;
     @Column(name = "SALON")
     private String salon;
-    @JoinColumn(name = "ID_CURSO", referencedColumnName = "ID_CURSO")
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Cursos idCurso;
     @JoinColumn(name = "ID_DOCENTE", referencedColumnName = "ID_DOCENTE")
     @ManyToOne(fetch = FetchType.LAZY)
     private Docentes idDocente;
+    @JoinColumn(name = "ID_CURSO", referencedColumnName = "ID_CURSO")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Cursos idCurso;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "clases", fetch = FetchType.LAZY)
     private List<ClaseEstudiantes> claseEstudiantesList;
 
@@ -142,20 +142,20 @@ public class Clases implements Serializable {
         this.salon = salon;
     }
 
-    public Cursos getIdCurso() {
-        return idCurso;
-    }
-
-    public void setIdCurso(Cursos idCurso) {
-        this.idCurso = idCurso;
-    }
-
     public Docentes getIdDocente() {
         return idDocente;
     }
 
     public void setIdDocente(Docentes idDocente) {
         this.idDocente = idDocente;
+    }
+
+    public Cursos getIdCurso() {
+        return idCurso;
+    }
+
+    public void setIdCurso(Cursos idCurso) {
+        this.idCurso = idCurso;
     }
 
     @XmlTransient

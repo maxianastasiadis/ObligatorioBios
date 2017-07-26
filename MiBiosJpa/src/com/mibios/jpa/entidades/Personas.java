@@ -27,7 +27,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @Table(name = "personas")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Personas.obtenerPersona", query = "SELECT p FROM Personas p WHERE p.personasPK.tipoDocumento = :tipoDocumento and p.personasPK.documento = :documento"),
+    @NamedQuery(name = "Personas.obtenerPersona", query = "SELECT p FROM Personas p where p.personasPK.tipoDocumento = :tipoDocumento and p.personasPK.documento = :documento"),
     @NamedQuery(name = "Personas.findAll", query = "SELECT p FROM Personas p"),
     @NamedQuery(name = "Personas.findByTipoDocumento", query = "SELECT p FROM Personas p WHERE p.personasPK.tipoDocumento = :tipoDocumento"),
     @NamedQuery(name = "Personas.findByDocumento", query = "SELECT p FROM Personas p WHERE p.personasPK.documento = :documento"),
@@ -84,6 +84,8 @@ public class Personas implements Serializable {
     private List<Docentes> docentesList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "personas", fetch = FetchType.LAZY)
     private List<Estudiantes> estudiantesList;
+    @OneToMany(mappedBy = "personas", fetch = FetchType.LAZY)
+    private List<CuentaCorriente> cuentaCorrienteList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "personas", fetch = FetchType.LAZY)
     private List<Usuarios> usuariosList;
 
@@ -242,6 +244,15 @@ public class Personas implements Serializable {
 
     public void setEstudiantesList(List<Estudiantes> estudiantesList) {
         this.estudiantesList = estudiantesList;
+    }
+
+    @XmlTransient
+    public List<CuentaCorriente> getCuentaCorrienteList() {
+        return cuentaCorrienteList;
+    }
+
+    public void setCuentaCorrienteList(List<CuentaCorriente> cuentaCorrienteList) {
+        this.cuentaCorrienteList = cuentaCorrienteList;
     }
 
     @XmlTransient

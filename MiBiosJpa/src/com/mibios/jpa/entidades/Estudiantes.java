@@ -33,7 +33,6 @@ import javax.xml.bind.annotation.XmlTransient;
 @Table(name = "estudiantes")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Estudiantes.existeEstudiante", query = "SELECT count(e) FROM Estudiantes e WHERE e.personas.personasPK.tipoDocumento = :tipoDocumento AND e.personas.personasPK.documento = :documento"),
     @NamedQuery(name = "Estudiantes.findAll", query = "SELECT e FROM Estudiantes e"),
     @NamedQuery(name = "Estudiantes.findByIdEstudiante", query = "SELECT e FROM Estudiantes e WHERE e.idEstudiante = :idEstudiante")})
 public class Estudiantes implements Serializable {

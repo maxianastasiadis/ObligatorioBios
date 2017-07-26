@@ -9,6 +9,7 @@
     <class>com.mibios.jpa.entidades.Docentes</class>
     <class>com.mibios.jpa.entidades.Clases</class>
     <class>com.mibios.jpa.entidades.Cursos</class>
+    <class>com.mibios.jpa.entidades.CuentaCorriente</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/bios_bd"/>
       <property name="javax.persistence.jdbc.password" value="admin"/>

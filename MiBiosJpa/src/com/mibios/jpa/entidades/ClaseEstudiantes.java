@@ -6,6 +6,7 @@
 package com.mibios.jpa.entidades;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
@@ -35,10 +36,11 @@ public class ClaseEstudiantes implements Serializable {
     private static final long serialVersionUID = 1L;
     @EmbeddedId
     protected ClaseEstudiantesPK claseEstudiantesPK;
+    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "IMPORTE_CUOTA")
-    private Long importeCuota;
+    private BigDecimal importeCuota;
     @Column(name = "PORCENTAJE_BECA")
-    private Long porcentajeBeca;
+    private BigDecimal porcentajeBeca;
     @Column(name = "APROBADO_SN")
     private String aprobadoSn;
     @JoinColumn(name = "ID_ESTUDIANTE", referencedColumnName = "ID_ESTUDIANTE", insertable = false, updatable = false)
@@ -67,19 +69,19 @@ public class ClaseEstudiantes implements Serializable {
         this.claseEstudiantesPK = claseEstudiantesPK;
     }
 
-    public Long getImporteCuota() {
+    public BigDecimal getImporteCuota() {
         return importeCuota;
     }
 
-    public void setImporteCuota(Long importeCuota) {
+    public void setImporteCuota(BigDecimal importeCuota) {
         this.importeCuota = importeCuota;
     }
 
-    public Long getPorcentajeBeca() {
+    public BigDecimal getPorcentajeBeca() {
         return porcentajeBeca;
     }
 
-    public void setPorcentajeBeca(Long porcentajeBeca) {
+    public void setPorcentajeBeca(BigDecimal porcentajeBeca) {
         this.porcentajeBeca = porcentajeBeca;
     }
 
