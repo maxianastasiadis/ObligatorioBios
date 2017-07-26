@@ -7,13 +7,14 @@ package com.mibios.web.managedbeans;
 
 import com.mibios.dto.cuentaCorriente.CuentaCorrienteDatos;
 import com.mibios.dto.cuentaCorriente.ParamCuentaCorriente;
+import com.mibios.dto.cuentaCorriente.ReturnCuentaCorriente;
 import com.mibios.dto.usuarios.ReturnLogin;
-import com.mibios.ejb.personas.PersonasBeanLocal;
 import com.mibios.web.fachada.PersonasFachada;
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
@@ -29,13 +30,33 @@ public class CuentaCorrienteBean implements Serializable{
     private List<CuentaCorrienteDatos> transacciones;
     
     public CuentaCorrienteBean() {
-        PersonasFachada personasFachada = new PersonasFachada();
-        ReturnLogin obj = (ReturnLogin)FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("Usuario");
-        ParamCuentaCorriente xParamCuentaCorriente = new ParamCuentaCorriente();
-        
-        xParamCuentaCorriente.setTipoDocumento(obj.getTipoDocumento());
-        xParamCuentaCorriente.setDocumento(obj.getDocumento());
-        transacciones = personasFachada.obtenerCuentaCorriente(xParamCuentaCorriente);
+        try {
+            transacciones = new ArrayList();
+            PersonasFachada personasFachada = new PersonasFachada();
+            ReturnLogin obj = (ReturnLogin)FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("Usuario");
+            ParamCuentaCorriente xParamCuentaCorriente = new ParamCuentaCorriente();
+            
+            xParamCuentaCorriente.setTipoDocumento(obj.getTipoDocumento());
+            xParamCuentaCorriente.setDocumento(obj.getDocumento());
+            List<ReturnCuentaCorriente> listaRetorno = personasFachada.obtenerCuentaCorriente(xParamCuentaCorriente);
+            for(ReturnCuentaCorriente cuentaCorriente : listaRetorno)
+            {
+                CuentaCorrienteDatos ctaCte = new CuentaCorrienteDatos();
+                
+                ctaCte.setConcepto(cuentaCorriente.getConcepto());
+                ctaCte.setFecha(cuentaCorriente.getFecha());
+                ctaCte.setHora(cuentaCorriente.getHora());
+                ctaCte.setDebe(cuentaCorriente.getDebe());
+                ctaCte.setHaber(cuentaCorriente.getHaber());
+                ctaCte.setSaldo(cuentaCorriente.getSaldo());
+                
+                transacciones.add(ctaCte);
+            }
+            
+            
+        } catch (Exception ex) {
+            Logger.getLogger(CuentaCorrienteBean.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
 }
