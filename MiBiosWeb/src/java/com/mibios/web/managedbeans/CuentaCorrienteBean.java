@@ -9,6 +9,7 @@ import com.mibios.dto.cuentaCorriente.CuentaCorrienteDatos;
 import com.mibios.dto.cuentaCorriente.ParamCuentaCorriente;
 import com.mibios.dto.cuentaCorriente.ReturnCuentaCorriente;
 import com.mibios.dto.usuarios.ReturnLogin;
+import com.mibios.funciones.FuncionesFecha;
 import com.mibios.web.fachada.PersonasFachada;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -34,18 +35,19 @@ public class CuentaCorrienteBean implements Serializable{
             transacciones = new ArrayList();
             PersonasFachada personasFachada = new PersonasFachada();
             ReturnLogin obj = (ReturnLogin)FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("Usuario");
-            ParamCuentaCorriente xParamCuentaCorriente = new ParamCuentaCorriente();
             
+            ParamCuentaCorriente xParamCuentaCorriente = new ParamCuentaCorriente();
             xParamCuentaCorriente.setTipoDocumento(obj.getTipoDocumento());
             xParamCuentaCorriente.setDocumento(obj.getDocumento());
-            List<ReturnCuentaCorriente> listaRetorno = personasFachada.obtenerCuentaCorriente(xParamCuentaCorriente);
-            for(ReturnCuentaCorriente cuentaCorriente : listaRetorno)
+            
+            List<ReturnCuentaCorriente> colReturnCuentaCorriente = personasFachada.obtenerCuentaCorriente(xParamCuentaCorriente);
+            for(ReturnCuentaCorriente cuentaCorriente : colReturnCuentaCorriente)
             {
                 CuentaCorrienteDatos ctaCte = new CuentaCorrienteDatos();
                 
                 ctaCte.setConcepto(cuentaCorriente.getConcepto());
-                ctaCte.setFecha(cuentaCorriente.getFecha());
-                ctaCte.setHora(cuentaCorriente.getHora());
+                ctaCte.setFecha(FuncionesFecha.mostrarFechaDDMMAAAAString(cuentaCorriente.getFecha()));
+                ctaCte.setHora(FuncionesFecha.mostrarHoraHHMMSS(cuentaCorriente.getHora()));
                 ctaCte.setDebe(cuentaCorriente.getDebe());
                 ctaCte.setHaber(cuentaCorriente.getHaber());
                 ctaCte.setSaldo(cuentaCorriente.getSaldo());
@@ -58,5 +60,8 @@ public class CuentaCorrienteBean implements Serializable{
             Logger.getLogger(CuentaCorrienteBean.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
+    public List<CuentaCorrienteDatos> getTransacciones() {
+        return transacciones;
+    }
 }

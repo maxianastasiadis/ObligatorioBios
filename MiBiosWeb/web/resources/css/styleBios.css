@@ -49,4 +49,8 @@ and open the template in the editor.
     position: relative;
     overflow: hidden;
     padding: 20px;
-}  
+}
+
+.alinearALaDerecha{
+    text-align: right;
+}

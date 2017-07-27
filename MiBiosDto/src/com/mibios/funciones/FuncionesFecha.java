@@ -41,6 +41,27 @@ public class FuncionesFecha {
         return fechaFormateada;
     }
     
+    /**
+     * Da un formato para mostar al usuario.
+     * @param xFecha
+     * @return una fecha String con un formato (dd/MM/yyyy)
+     */
+    public static String mostrarFechaDDMMAAAAString(String xFecha)
+    {
+        String fecha = "";
+        try {
+            
+            String a = xFecha.substring(0, 4);
+            String m = xFecha.substring(4, 6);
+            String d = xFecha.substring(6, 8);
+            fecha = d+"/"+m+"/"+a;
+            
+        } catch (Exception ex) {
+            Logger.getLogger(FuncionesFecha.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+        return fecha;
+    }
+    
     
     /**
      * Da un formato para mostar al usuario.
@@ -59,6 +80,27 @@ public class FuncionesFecha {
         fechaFormateada = a+m+d; 
         
         return fechaFormateada;
+    }
+    
+    /**
+     * Da un formato para mostar al usuario.
+     * @param xHora
+     * @return una hora String con un formato (hh:mm:ss)
+     */
+    public static String mostrarHoraHHMMSS(String xHora)
+    {
+        String hora = "";
+        try {
+            
+            String h = xHora.substring(0, 2);
+            String m = xHora.substring(2, 4);
+            String s = xHora.substring(4, 6);
+            hora = h+":"+m+":"+s;
+            
+        } catch (Exception ex) {
+            Logger.getLogger(FuncionesFecha.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+        return hora;
     }
     
 }

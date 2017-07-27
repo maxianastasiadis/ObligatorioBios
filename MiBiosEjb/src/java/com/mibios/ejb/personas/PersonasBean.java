@@ -109,20 +109,20 @@ public class PersonasBean implements PersonasBeanLocal {
             for(CuentaCorriente cuentaCorriente : colCuentaCorriente)
             {
                 ReturnCuentaCorriente obj = new ReturnCuentaCorriente();
-                
                 obj.setConcepto(cuentaCorriente.getConcepto());
                 obj.setFecha(cuentaCorriente.getFecha());
                 obj.setHora(cuentaCorriente.getHora());
                 if(cuentaCorriente.getTipoMovimiento().equalsIgnoreCase("D"))
                 {
                     obj.setDebe(cuentaCorriente.getImporte());
-                    saldo.add(cuentaCorriente.getImporte());
+                    saldo = saldo.add(cuentaCorriente.getImporte());
                 }
                 else
                 {
                     obj.setHaber(cuentaCorriente.getImporte());
-                    saldo.subtract(cuentaCorriente.getImporte());
+                    saldo = saldo.subtract(cuentaCorriente.getImporte());
                 }
+                System.out.println("saldo = " + saldo);
                 obj.setSaldo(saldo);
                 obj.setRespuesta("");
                 
