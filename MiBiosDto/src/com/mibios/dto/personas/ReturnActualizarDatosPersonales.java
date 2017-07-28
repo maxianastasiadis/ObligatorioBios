@@ -5,6 +5,7 @@
  */
 package com.mibios.dto.personas;
 
+import com.mibios.dto.usuarios.ReturnLogin;
 import java.io.Serializable;
 
 /**
@@ -14,6 +15,7 @@ import java.io.Serializable;
 public class ReturnActualizarDatosPersonales implements Serializable {
     
     private Boolean guardado;
+    private ReturnLogin datosUsuario;
     private String respuesta;
 
     public Boolean getGuardado() {
@@ -30,6 +32,14 @@ public class ReturnActualizarDatosPersonales implements Serializable {
 
     public void setRespuesta(String respuesta) {
         this.respuesta = respuesta;
+    }
+
+    public ReturnLogin getDatosUsuario() {
+        return datosUsuario;
+    }
+
+    public void setDatosUsuario(ReturnLogin datosUsuario) {
+        this.datosUsuario = datosUsuario;
     }
     
     

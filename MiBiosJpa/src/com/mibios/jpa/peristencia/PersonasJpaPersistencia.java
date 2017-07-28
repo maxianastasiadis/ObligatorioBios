@@ -11,6 +11,7 @@ import com.mibios.dto.personas.ParamActualizarDatosPersonales;
 import com.mibios.dto.personas.ParamObtenerDatosPersonales;
 import com.mibios.dto.personas.ReturnActualizarDatosPersonales;
 import com.mibios.dto.personas.ReturnObtenerDatosPersonales;
+import com.mibios.dto.usuarios.ReturnLogin;
 import com.mibios.funciones.FuncionesFecha;
 import com.mibios.jpa.entidades.CuentaCorriente;
 import com.mibios.jpa.entidades.Personas;
@@ -83,16 +84,22 @@ public class PersonasJpaPersistencia {
         
         Boolean guardadoOk = false;
         String respuesta = "No se han podido guardar los datos";
+        ReturnLogin datosUsuario = new ReturnLogin();
         
         if(objPersonas.getPersonasPK().getTipoDocumento().equalsIgnoreCase(xParamActualizarDatosPersonales.getTipoDocumento()) && 
            objPersonas.getPersonasPK().getDocumento().equalsIgnoreCase(xParamActualizarDatosPersonales.getDocumento()))
         {
             guardadoOk = true;
+            datosUsuario.setTipoPersona(xParamActualizarDatosPersonales.getTipoPersona());
+            datosUsuario.setTipoDocumento(xParamActualizarDatosPersonales.getTipoDocumento());
+            datosUsuario.setDocumento(xParamActualizarDatosPersonales.getDocumento());
+            datosUsuario.setNombreUsuario(objPersonas.getNombre1()+ " " + objPersonas.getApellido1());
             respuesta = "";
         }
             
         objReturnActualizarDatosPersonales.setGuardado(guardadoOk);
         objReturnActualizarDatosPersonales.setRespuesta(respuesta);
+        objReturnActualizarDatosPersonales.setDatosUsuario(datosUsuario);
         
         return objReturnActualizarDatosPersonales;    
     }

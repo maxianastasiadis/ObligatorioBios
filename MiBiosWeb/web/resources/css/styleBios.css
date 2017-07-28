@@ -43,6 +43,9 @@ and open the template in the editor.
     clear: left;
     text-align: center;
     padding: 10px;
+    bottom: 0;
+    position: absolute;
+    height: 40px;
 }
 
 .contenido{

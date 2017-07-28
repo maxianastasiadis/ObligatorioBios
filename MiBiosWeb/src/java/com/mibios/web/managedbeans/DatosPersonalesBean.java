@@ -229,8 +229,8 @@ public class DatosPersonalesBean implements Serializable  {
             returnActualizarDatosPersonales = personasFachada.ActualizarDatosPersonales(paramActualizarDatosPersonales);
             if(returnActualizarDatosPersonales.getGuardado())
             {
-                //FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("Usuario",returnLogin);
-                //ACA DEBERIA TRAER EL NOMBRE QUE HAYEN LA SESION Y CAMBIARLO POR EL NUEVO EN CASO DE QUE HAYA CAMBIADO
+                FacesContext.getCurrentInstance().getExternalContext().getSessionMap().remove("Usuario");
+                FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("Usuario", returnActualizarDatosPersonales.getDatosUsuario());
             }
             else
             {
