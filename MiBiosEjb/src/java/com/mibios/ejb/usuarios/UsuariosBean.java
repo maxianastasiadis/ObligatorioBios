@@ -7,10 +7,7 @@ package com.mibios.ejb.usuarios;
 
 
 import com.mibios.dto.usuarios.ParamLogin;
-import com.mibios.dto.personas.ParamObtenerDatosPersonales;
-import com.mibios.dto.personas.ReturnActualizarDatosPersonales;
 import com.mibios.dto.usuarios.ReturnLogin;
-import com.mibios.dto.personas.ReturnObtenerDatosPersonales;
 import com.mibios.dto.usuarios.ParamRecuperarContrasena;
 import com.mibios.dto.usuarios.ParamRegistro;
 import com.mibios.dto.usuarios.ReturnRecuperarContrasena;
@@ -21,6 +18,8 @@ import com.mibios.jpa.entidades.UsuariosPK;
 import com.mibios.jpa.peristencia.DocentesJpaPersitencia;
 import com.mibios.jpa.peristencia.EstudiantesJpaPersitencia;
 import com.mibios.jpa.peristencia.UsuariosJpaPersitencia;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 
@@ -32,8 +31,8 @@ import javax.persistence.EntityManager;
 public class UsuariosBean implements UsuariosBeanLocal {
 
     @Override
-    public ReturnLogin Login(ParamLogin xParamLogin) {
-        
+    public ReturnLogin Login(ParamLogin xParamLogin) throws Exception
+    {
         ReturnLogin login = new ReturnLogin();
         EntityManager em = ConexionJpa.obtenerInstancia().obtenerConeccion();
         try
@@ -41,13 +40,22 @@ public class UsuariosBean implements UsuariosBeanLocal {
             em.getTransaction().begin();
 
             //VERIFICO QUE EL USUARIO EXISTA PARA EL LOGIN
-            login = UsuariosJpaPersitencia.controlUsuarioLogin(em, xParamLogin);
-            
-            //SI EXISTE LO OBTENGO
-            if(login.getLogin())
+            if(UsuariosJpaPersitencia.existeUsuarioLogin(em, xParamLogin))
             {
+                UsuariosPK objUsuariosPk = new UsuariosPK(xParamLogin.getTipoPersona(), xParamLogin.getTipoDocumento(), xParamLogin.getDocumento());
                 //OBTENER DATOS DE USUARIO   
-                login = UsuariosJpaPersitencia.obtenerUsuarioLogin(em, xParamLogin);
+                Usuarios objUsuario = UsuariosJpaPersitencia.obtenerUsuario(em, objUsuariosPk);
+                
+                login.setLogin(true);
+                login.setTipoPersona(objUsuario.getUsuariosPK().getTipoPersona());
+                login.setTipoDocumento(objUsuario.getUsuariosPK().getTipoDocumento());
+                login.setDocumento(objUsuario.getUsuariosPK().getDocumento());
+                login.setNombreUsuario(objUsuario.getPersonas().getNombre1() + " " + objUsuario.getPersonas().getApellido1());
+            }
+            else
+            {
+                login.setLogin(false);
+                login.setRespuesta("Usuario o Clave incorrectos");
             }
 
             em.getTransaction().commit();
@@ -58,7 +66,8 @@ public class UsuariosBean implements UsuariosBeanLocal {
             {
                 em.getTransaction().rollback();
             }
-            e.printStackTrace();
+            Logger.getLogger(UsuariosBean.class.getName()).log(Level.SEVERE, null, e);
+            throw new Exception("Beans--> " + e.getMessage() + " [" + this.getClass().getSimpleName() + "]");
         }
         finally{
             em.close();
@@ -67,7 +76,7 @@ public class UsuariosBean implements UsuariosBeanLocal {
     }
     
     @Override
-    public ReturnRegistro Registro(ParamRegistro xParamRegistro)
+    public ReturnRegistro Registro(ParamRegistro xParamRegistro) throws Exception
     {
         ReturnRegistro registro = new ReturnRegistro();
         EntityManager em = ConexionJpa.obtenerInstancia().obtenerConeccion();
@@ -137,7 +146,8 @@ public class UsuariosBean implements UsuariosBeanLocal {
             {
                 em.getTransaction().rollback();
             }
-            e.printStackTrace();
+            Logger.getLogger(UsuariosBean.class.getName()).log(Level.SEVERE, null, e);
+            throw new Exception("Beans--> " + e.getMessage() + " [" + this.getClass().getSimpleName() + "]");
         }
         finally{
             em.close();
@@ -162,7 +172,7 @@ public class UsuariosBean implements UsuariosBeanLocal {
                 // SI EXISTE LE HAGO UPDATE A LA CLAVE, LE PONGO ingresarnueva
                 Usuarios objUsuario = UsuariosJpaPersitencia.obtenerUsuario(em, objUsuariosPK);
                 objUsuario.setClave("ingresarnueva");
-                UsuariosJpaPersitencia.modificaClave(em, objUsuario);
+                UsuariosJpaPersitencia.modificarUsuario(em, objUsuario);
                 recuperar.setRecuperar(true);
             }
             else
@@ -179,12 +189,12 @@ public class UsuariosBean implements UsuariosBeanLocal {
             {
                 em.getTransaction().rollback();
             }
-            e.printStackTrace();
+            Logger.getLogger(UsuariosBean.class.getName()).log(Level.SEVERE, null, e);
+            throw new Exception("Beans--> " + e.getMessage() + " [" + this.getClass().getSimpleName() + "]");
         }
         finally{
             em.close();
         }
         return recuperar;
     }
-   
 }

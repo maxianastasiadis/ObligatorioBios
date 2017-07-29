@@ -40,7 +40,7 @@ public class CuentaCorrienteBean implements Serializable{
             xParamCuentaCorriente.setTipoDocumento(obj.getTipoDocumento());
             xParamCuentaCorriente.setDocumento(obj.getDocumento());
             
-            List<ReturnCuentaCorriente> colReturnCuentaCorriente = personasFachada.obtenerCuentaCorriente(xParamCuentaCorriente);
+            List<ReturnCuentaCorriente> colReturnCuentaCorriente = personasFachada.ObtenerCuentaCorriente(xParamCuentaCorriente);
             for(ReturnCuentaCorriente cuentaCorriente : colReturnCuentaCorriente)
             {
                 CuentaCorrienteDatos ctaCte = new CuentaCorrienteDatos();

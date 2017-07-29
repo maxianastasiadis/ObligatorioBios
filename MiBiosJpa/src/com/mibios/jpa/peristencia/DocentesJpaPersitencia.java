@@ -15,21 +15,26 @@ import javax.persistence.TypedQuery;
  */
 public class DocentesJpaPersitencia {
     
-    public static Boolean existeDocente(EntityManager em, String xTipoDocumento, String xDocumento) 
+    public static Boolean existeDocente(EntityManager em, String xTipoDocumento, String xDocumento) throws Exception 
     {
-        long existe = (Long)em.createNamedQuery("Docentes.existeDocente")
-                .setParameter("tipoDocumento", xTipoDocumento)
-                .setParameter("documento", xDocumento)
-                .getSingleResult();
-        
-        if(existe > 0)
+        Boolean existeDocente = false;
+        try
         {
-            return true;
+            long existe = (Long)em.createNamedQuery("Docentes.existeDocente")
+                    .setParameter("tipoDocumento", xTipoDocumento)
+                    .setParameter("documento", xDocumento)
+                    .getSingleResult();
+
+            if(existe > 0)
+            {
+                existeDocente = true;
+            }
         }
-        else
+        catch(Exception e)
         {
-            return false;
+            throw new Exception("Persistencia--> " + e);
         }
+        return existeDocente;
     }
     
 }

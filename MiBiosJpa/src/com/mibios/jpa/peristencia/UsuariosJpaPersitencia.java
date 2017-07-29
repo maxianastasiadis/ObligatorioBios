@@ -7,7 +7,6 @@ package com.mibios.jpa.peristencia;
 
 import com.mibios.dto.usuarios.ParamLogin;
 import com.mibios.dto.usuarios.ParamRegistro;
-import com.mibios.dto.usuarios.ReturnLogin;
 import com.mibios.jpa.entidades.Usuarios;
 import com.mibios.jpa.entidades.UsuariosPK;
 import javax.persistence.EntityManager;
@@ -17,84 +16,95 @@ import javax.persistence.EntityManager;
  * @author Maxi
  */
 public class UsuariosJpaPersitencia {
-    
-    public static ReturnLogin controlUsuarioLogin(EntityManager em, ParamLogin xParamLogin) 
-    {
 
-        ReturnLogin objReturnLogin = new ReturnLogin();
-        long existe = (Long)em.createNamedQuery("Usuarios.controlUsuarioLogin")
-                .setParameter("tipoPersona", xParamLogin.getTipoPersona())
-                .setParameter("tipoDocumento", xParamLogin.getTipoDocumento())
-                .setParameter("documento", xParamLogin.getDocumento())
-                .setParameter("clave", xParamLogin.getClave())
-                .getSingleResult();
-        
-        if(existe>0)
-        {
-            objReturnLogin.setLogin(true);
-        }
-        else
-        {
-            objReturnLogin.setLogin(false);
-            objReturnLogin.setRespuesta("Usuario o Clave incorrectos");
-        }
-        return objReturnLogin;        
-    }
-    
-    public static ReturnLogin obtenerUsuarioLogin(EntityManager em, ParamLogin xParamLogin) 
+    public static Boolean existeUsuarioLogin(EntityManager em, ParamLogin xParamLogin) throws Exception
     {
-        ReturnLogin objReturnLogin = new ReturnLogin();
+        Boolean existeUsuarioLogin = false;
+        try
+        {
+            long existe = (Long)em.createNamedQuery("Usuarios.controlUsuarioLogin")
+                    .setParameter("tipoPersona", xParamLogin.getTipoPersona())
+                    .setParameter("tipoDocumento", xParamLogin.getTipoDocumento())
+                    .setParameter("documento", xParamLogin.getDocumento())
+                    .setParameter("clave", xParamLogin.getClave())
+                    .getSingleResult();
+
+            if(existe>0)
+            {
+                existeUsuarioLogin = true;
+            }
+        }
+        catch(Exception e)
+        {
+            throw new Exception("Persistencia--> " + e);
+        }
         
-        UsuariosPK objUsuariosPK = new UsuariosPK(xParamLogin.getTipoPersona(), xParamLogin.getTipoDocumento(), xParamLogin.getDocumento());
-        Usuarios objUsuario = em.find(Usuarios.class, objUsuariosPK);
-        /*Usuarios objUsuario = em.createNamedQuery("Usuarios.obtenerUsuarioLogin",Usuarios.class)
-                .setParameter("tipoPersona", xParamLogin.getTipoPersona())
-                .setParameter("tipoDocumento", xParamLogin.getTipoDocumento())
-                .setParameter("documento", xParamLogin.getDocumento())
-                .getSingleResult();*/
-        
-            objReturnLogin.setLogin(true);
-            objReturnLogin.setTipoPersona(objUsuario.getUsuariosPK().getTipoPersona());
-            objReturnLogin.setTipoDocumento(objUsuario.getUsuariosPK().getTipoDocumento());
-            objReturnLogin.setDocumento(objUsuario.getUsuariosPK().getDocumento());
-            objReturnLogin.setNombreUsuario(objUsuario.getPersonas().getNombre1() + " " + objUsuario.getPersonas().getApellido1());
-        
-        return objReturnLogin;        
+        return existeUsuarioLogin;
     }
     
-    public static Boolean existeUsuario(EntityManager em, UsuariosPK objUsuariosPK) 
+    public static Boolean existeUsuario(EntityManager em, UsuariosPK objUsuariosPK) throws Exception 
     {
         Boolean existeUsuario = false;
-        
-        Usuarios objUsuario = em.find(Usuarios.class, objUsuariosPK);
-        
-        if(objUsuario!=null)
+        try
         {
-            existeUsuario = true;
+            Usuarios objUsuario = em.find(Usuarios.class, objUsuariosPK);
+
+            if(objUsuario!=null)
+            {
+                existeUsuario = true;
+            }
         }
-        
+        catch(Exception e)
+        {
+            throw new Exception("Persistencia--> " + e);
+        }
         return existeUsuario;
     }
     
-    public static void altaUsuario(EntityManager em, ParamRegistro xParamRegistro) 
+    public static void altaUsuario(EntityManager em, ParamRegistro xParamRegistro) throws Exception 
     {
-        UsuariosPK objUsuariosPK = new UsuariosPK(xParamRegistro.getTipoPersona(), xParamRegistro.getTipoDocumento(), xParamRegistro.getDocumento());
+        try
+        {
+            UsuariosPK objUsuariosPK = new UsuariosPK(xParamRegistro.getTipoPersona(), xParamRegistro.getTipoDocumento(), xParamRegistro.getDocumento());
+            Usuarios objUsuario = new Usuarios();
+            objUsuario.setUsuariosPK(objUsuariosPK);
+            objUsuario.setClave(xParamRegistro.getClave());
+            objUsuario.setActivo("S");
+            objUsuario.setFechaIngreso("20170719");
+
+            em.persist(objUsuario);
+        }
+        catch(Exception e)
+        {
+            throw new Exception("Persistencia--> " + e);
+        }
+    }
+    
+    public static void modificarUsuario(EntityManager em, Usuarios objUsuarios) throws Exception 
+    {   
+        try
+        {
+            em.merge(objUsuarios);
+        }
+        catch(Exception e)
+        {
+            throw new Exception("Persistencia--> " + e);
+        }
+    }
+    
+    public static Usuarios obtenerUsuario(EntityManager em, UsuariosPK objUsuariosPK) throws Exception 
+    {   
         Usuarios objUsuario = new Usuarios();
-        objUsuario.setUsuariosPK(objUsuariosPK);
-        objUsuario.setClave(xParamRegistro.getClave());
-        objUsuario.setActivo("S");
-        objUsuario.setFechaIngreso("20170719");
+    
+        try
+        {
+            objUsuario = em.find(Usuarios.class, objUsuariosPK);
+        }
+        catch(Exception e)
+        {
+            throw new Exception("Persistencia--> " + e);
+        } 
         
-        em.persist(objUsuario);
-    }
-    
-    public static void modificaClave(EntityManager em, Usuarios objUsuarios) 
-    {   
-        em.merge(objUsuarios);
-    }
-    
-    public static Usuarios obtenerUsuario(EntityManager em, UsuariosPK objUsuariosPK) 
-    {   
-        return em.find(Usuarios.class, objUsuariosPK);     
+        return objUsuario;
     }
 }

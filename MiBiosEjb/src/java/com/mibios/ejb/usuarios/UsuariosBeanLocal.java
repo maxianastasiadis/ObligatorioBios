@@ -20,9 +20,9 @@ import javax.ejb.Remote;
 @Remote
 public interface UsuariosBeanLocal {
     
-    public ReturnLogin Login(ParamLogin xParamLogin);
+    public ReturnLogin Login(ParamLogin xParamLogin) throws Exception;
     
-    public ReturnRegistro Registro(ParamRegistro xParamRegistro);
+    public ReturnRegistro Registro(ParamRegistro xParamRegistro) throws Exception;
     
     public ReturnRecuperarContrasena RecuperarContrasena(ParamRecuperarContrasena xParamRecuperarContrasena) throws Exception;
     

@@ -66,7 +66,8 @@ public class LoginBean implements Serializable{
         this.clave = clave;
     }
     
-    public Boolean Login() {
+    public Boolean Login() 
+    {
         ParamLogin paramLogin = new ParamLogin();
         ReturnLogin returnLogin = new ReturnLogin();
         UsuariosFachada usuarioFachada = new UsuariosFachada();
@@ -89,6 +90,7 @@ public class LoginBean implements Serializable{
             }
         } catch (Exception ex) {
             Logger.getLogger(LoginBean.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
         }
         return returnLogin.getLogin();
     }    

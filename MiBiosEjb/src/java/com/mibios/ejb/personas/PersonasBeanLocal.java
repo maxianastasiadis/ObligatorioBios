@@ -11,9 +11,7 @@ import com.mibios.dto.personas.ParamActualizarDatosPersonales;
 import com.mibios.dto.personas.ParamObtenerDatosPersonales;
 import com.mibios.dto.personas.ReturnActualizarDatosPersonales;
 import com.mibios.dto.personas.ReturnObtenerDatosPersonales;
-import java.util.ArrayList;
 import java.util.List;
-import javax.ejb.Local;
 import javax.ejb.Remote;
 
 /**
@@ -27,6 +25,6 @@ public interface PersonasBeanLocal {
     
     public ReturnObtenerDatosPersonales ObtenerDatosPersonales(ParamObtenerDatosPersonales xParamObtenerDatosPersonales) throws Exception;
     
-    public List<ReturnCuentaCorriente> obtenerCuentaCorriente(ParamCuentaCorriente xParamCuentaCorriente) throws Exception;
+    public List<ReturnCuentaCorriente> ObtenerCuentaCorriente(ParamCuentaCorriente xParamCuentaCorriente) throws Exception;
     
 }

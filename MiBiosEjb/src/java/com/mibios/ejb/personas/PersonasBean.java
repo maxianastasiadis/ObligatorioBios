@@ -11,13 +11,18 @@ import com.mibios.dto.personas.ParamActualizarDatosPersonales;
 import com.mibios.dto.personas.ParamObtenerDatosPersonales;
 import com.mibios.dto.personas.ReturnActualizarDatosPersonales;
 import com.mibios.dto.personas.ReturnObtenerDatosPersonales;
+import com.mibios.dto.usuarios.ReturnLogin;
+import com.mibios.funciones.FuncionesFecha;
 import com.mibios.jpa.conexion.ConexionJpa;
 import com.mibios.jpa.entidades.CuentaCorriente;
+import com.mibios.jpa.entidades.Personas;
 import com.mibios.jpa.entidades.PersonasPK;
 import com.mibios.jpa.peristencia.PersonasJpaPersistencia;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 
@@ -29,8 +34,8 @@ import javax.persistence.EntityManager;
 public class PersonasBean implements PersonasBeanLocal {
 
     @Override
-    public ReturnActualizarDatosPersonales ActualizarDatosPersonales(ParamActualizarDatosPersonales xParamActualizarDatosPersonales) throws Exception {
-                
+    public ReturnActualizarDatosPersonales ActualizarDatosPersonales(ParamActualizarDatosPersonales xParamActualizarDatosPersonales) throws Exception 
+    {            
         ReturnActualizarDatosPersonales objReturnActualizarDatosPersonales = new ReturnActualizarDatosPersonales();
         EntityManager em = ConexionJpa.obtenerInstancia().obtenerConeccion();
         try
@@ -40,9 +45,47 @@ public class PersonasBean implements PersonasBeanLocal {
             //ACA TENGO QUE VER PRIMERO SI EXISTE LA PERSONA
             PersonasPK objPersonasPK = new PersonasPK(xParamActualizarDatosPersonales.getTipoDocumento(), xParamActualizarDatosPersonales.getDocumento());
             //SI EXISTE LA ACTUALIZO
-            if(PersonasJpaPersistencia.existePersona(em, objPersonasPK))
+            if(PersonasJpaPersistencia.ExistePersona(em, objPersonasPK))
             {
-                objReturnActualizarDatosPersonales = PersonasJpaPersistencia.ActualizarDatosPersonales(em, xParamActualizarDatosPersonales);
+                Personas objPersonas = new Personas();
+
+                objPersonas.setActivo(xParamActualizarDatosPersonales.getActivo());
+                objPersonas.setApellido1(xParamActualizarDatosPersonales.getApellido1());
+                objPersonas.setApellido2(xParamActualizarDatosPersonales.getApellido2());
+                objPersonas.setCelular(xParamActualizarDatosPersonales.getCelular());
+                objPersonas.setCiudad(xParamActualizarDatosPersonales.getCiudad());
+                objPersonas.setDepartamento(xParamActualizarDatosPersonales.getDepartamento());
+                objPersonas.setDireccion(xParamActualizarDatosPersonales.getDireccion());
+                objPersonas.setFechaIngreso(xParamActualizarDatosPersonales.getFechaIngreso());
+                objPersonas.setFechaNacimiento(FuncionesFecha.guardarFechaAAAAMMDD(xParamActualizarDatosPersonales.getFechaNacimiento()));
+                objPersonas.setMail(xParamActualizarDatosPersonales.getMail());
+                objPersonas.setNombre1(xParamActualizarDatosPersonales.getNombre1());
+                objPersonas.setNombre2(xParamActualizarDatosPersonales.getNombre2());
+                objPersonas.setPais(xParamActualizarDatosPersonales.getPais());
+                objPersonas.setPersonasPK(objPersonasPK);
+                objPersonas.setSexo(xParamActualizarDatosPersonales.getSexo());
+                objPersonas.setTelefono(xParamActualizarDatosPersonales.getTelefono());
+                
+                objPersonas = PersonasJpaPersistencia.ModificarPersona(em, objPersonas);
+                
+                Boolean guardadoOk = false;
+                String respuesta = "No se han podido guardar los datos";
+                ReturnLogin datosUsuario = new ReturnLogin();
+        
+                if(objPersonas.getPersonasPK().getTipoDocumento().equalsIgnoreCase(xParamActualizarDatosPersonales.getTipoDocumento()) && 
+                   objPersonas.getPersonasPK().getDocumento().equalsIgnoreCase(xParamActualizarDatosPersonales.getDocumento()))
+                {
+                    guardadoOk = true;
+                    datosUsuario.setTipoPersona(xParamActualizarDatosPersonales.getTipoPersona());
+                    datosUsuario.setTipoDocumento(xParamActualizarDatosPersonales.getTipoDocumento());
+                    datosUsuario.setDocumento(xParamActualizarDatosPersonales.getDocumento());
+                    datosUsuario.setNombreUsuario(objPersonas.getNombre1()+ " " + objPersonas.getApellido1());
+                    respuesta = "";
+                }
+
+                objReturnActualizarDatosPersonales.setGuardado(guardadoOk);
+                objReturnActualizarDatosPersonales.setRespuesta(respuesta);
+                objReturnActualizarDatosPersonales.setDatosUsuario(datosUsuario);
             }
             //SINO MUESTRO MENSAJE DE ERROR QUE LA PERSONA NO EXISTE
             else
@@ -59,7 +102,8 @@ public class PersonasBean implements PersonasBeanLocal {
             {
                 em.getTransaction().rollback();
             }
-            e.printStackTrace();
+            Logger.getLogger(PersonasBean.class.getName()).log(Level.SEVERE, null, e);
+            throw new Exception("Beans--> " + e.getMessage() + " [" + this.getClass().getSimpleName() + "]");
         }
         finally{
             em.close();
@@ -76,7 +120,24 @@ public class PersonasBean implements PersonasBeanLocal {
         {
             em.getTransaction().begin();
 
-            objReturnObtenerDatosPersonales = PersonasJpaPersistencia.ObtenerDatosPersonales(em, xParamObtenerDatosPersonales);
+            PersonasPK objPersonasPK = new PersonasPK(xParamObtenerDatosPersonales.getTipoDocumento(), xParamObtenerDatosPersonales.getDocumento());
+            Personas objPersonas = PersonasJpaPersistencia.ObtenerPersona(em, objPersonasPK);
+            
+            objReturnObtenerDatosPersonales.setTipoDocumento(objPersonas.getPersonasPK().getTipoDocumento());
+            objReturnObtenerDatosPersonales.setDocumento(objPersonas.getPersonasPK().getDocumento());
+            objReturnObtenerDatosPersonales.setApellido1(objPersonas.getApellido1());
+            objReturnObtenerDatosPersonales.setApellido2(objPersonas.getApellido2());
+            objReturnObtenerDatosPersonales.setNombre1(objPersonas.getNombre1());
+            objReturnObtenerDatosPersonales.setNombre2(objPersonas.getNombre2());
+            objReturnObtenerDatosPersonales.setFechaNacimiento(objPersonas.getFechaNacimiento());
+            objReturnObtenerDatosPersonales.setSexo(objPersonas.getSexo());
+            objReturnObtenerDatosPersonales.setCelular(objPersonas.getCelular());
+            objReturnObtenerDatosPersonales.setTelefono(objPersonas.getTelefono());
+            objReturnObtenerDatosPersonales.setMail(objPersonas.getMail());
+            objReturnObtenerDatosPersonales.setPais(objPersonas.getPais());
+            objReturnObtenerDatosPersonales.setDepartamento(objPersonas.getDepartamento());
+            objReturnObtenerDatosPersonales.setCiudad(objPersonas.getCiudad());
+            objReturnObtenerDatosPersonales.setDireccion(objPersonas.getDireccion());
 
             em.getTransaction().commit();
         }
@@ -86,7 +147,8 @@ public class PersonasBean implements PersonasBeanLocal {
             {
                 em.getTransaction().rollback();
             }
-            e.printStackTrace();
+            Logger.getLogger(PersonasBean.class.getName()).log(Level.SEVERE, null, e);
+            throw new Exception("Beans--> " + e.getMessage() + " [" + this.getClass().getSimpleName() + "]");
         }
         finally{
             em.close();
@@ -95,7 +157,7 @@ public class PersonasBean implements PersonasBeanLocal {
     }
     
     @Override
-    public List<ReturnCuentaCorriente> obtenerCuentaCorriente(ParamCuentaCorriente xParamCuentaCorriente) throws Exception{
+    public List<ReturnCuentaCorriente> ObtenerCuentaCorriente(ParamCuentaCorriente xParamCuentaCorriente) throws Exception{
         
         List<ReturnCuentaCorriente> colReturnCuentaCorriente = new ArrayList<>();
         List<CuentaCorriente> colCuentaCorriente = null;
@@ -104,7 +166,7 @@ public class PersonasBean implements PersonasBeanLocal {
         {
             em.getTransaction().begin();
 
-            colCuentaCorriente = PersonasJpaPersistencia.obtenerCuentaCorriente(em, xParamCuentaCorriente);
+            colCuentaCorriente = PersonasJpaPersistencia.ObtenerCuentaCorriente(em, xParamCuentaCorriente);
             BigDecimal saldo = new BigDecimal(0);
             for(CuentaCorriente cuentaCorriente : colCuentaCorriente)
             {
@@ -122,7 +184,6 @@ public class PersonasBean implements PersonasBeanLocal {
                     obj.setHaber(cuentaCorriente.getImporte());
                     saldo = saldo.subtract(cuentaCorriente.getImporte());
                 }
-                System.out.println("saldo = " + saldo);
                 obj.setSaldo(saldo);
                 obj.setRespuesta("");
                 
@@ -137,7 +198,8 @@ public class PersonasBean implements PersonasBeanLocal {
             {
                 em.getTransaction().rollback();
             }
-            e.printStackTrace();
+            Logger.getLogger(PersonasBean.class.getName()).log(Level.SEVERE, null, e);
+            throw new Exception("Beans--> " + e.getMessage() + " [" + this.getClass().getSimpleName() + "]");
         }
         finally{
             em.close();

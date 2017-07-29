@@ -5,7 +5,6 @@
  */
 package com.mibios.jpa.peristencia;
 
-import com.mibios.jpa.entidades.Estudiantes;
 import javax.persistence.EntityManager;
 
 /**
@@ -14,20 +13,26 @@ import javax.persistence.EntityManager;
  */
 public class EstudiantesJpaPersitencia {
     
-    public static Boolean existeEstudiante(EntityManager em, String xTipoDocumento, String xDocumento) 
-    {        
-        long existe = (Long)em.createNamedQuery("Estudiantes.existeEstudiante")
-                .setParameter("tipoDocumento", xTipoDocumento)
-                .setParameter("documento", xDocumento)
-                .getSingleResult();
+    public static Boolean existeEstudiante(EntityManager em, String xTipoDocumento, String xDocumento) throws Exception 
+    {
+        Boolean existeEstudiante = false;
         
-        if(existe > 0)
+        try
         {
-            return true;
+            long existe = (Long)em.createNamedQuery("Estudiantes.existeEstudiante")
+                    .setParameter("tipoDocumento", xTipoDocumento)
+                    .setParameter("documento", xDocumento)
+                    .getSingleResult();
+
+            if(existe > 0)
+            {
+                existeEstudiante =  true;
+            }
         }
-        else
+        catch(Exception e)
         {
-            return false;
+            throw new Exception("Persistencia--> " + e);
         }
+        return existeEstudiante;
     }
 }

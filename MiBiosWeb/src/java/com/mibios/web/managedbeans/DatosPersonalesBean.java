@@ -12,10 +12,7 @@ import com.mibios.dto.usuarios.ReturnLogin;
 import com.mibios.dto.personas.ReturnObtenerDatosPersonales;
 import com.mibios.funciones.FuncionesFecha;
 import com.mibios.web.fachada.PersonasFachada;
-import com.mibios.web.fachada.UsuariosFachada;
 import java.io.Serializable;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -243,7 +240,8 @@ public class DatosPersonalesBean implements Serializable  {
         return returnActualizarDatosPersonales.getGuardado();
     }
     
-    private void cargarDatosPersonales() {
+    private void cargarDatosPersonales() 
+    {
         try {
     
             ReturnLogin objReturnSesion = (ReturnLogin)FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("Usuario");
@@ -271,7 +269,9 @@ public class DatosPersonalesBean implements Serializable  {
             departamento = objReturnObtenerDatosPersonales.getDepartamento();
             pais = objReturnObtenerDatosPersonales.getPais();
 
-        } catch (Exception ex) {
+        } 
+        catch (Exception ex) 
+        {
             Logger.getLogger(DatosPersonalesBean.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

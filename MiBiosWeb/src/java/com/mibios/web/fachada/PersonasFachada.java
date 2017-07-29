@@ -36,9 +36,9 @@ public class PersonasFachada {
         return lookupPersonasBean().ObtenerDatosPersonales(xParamObtenerDatosPersonales);
     }
     
-    public List<ReturnCuentaCorriente> obtenerCuentaCorriente(ParamCuentaCorriente xParamCuentaCorriente) throws Exception
+    public List<ReturnCuentaCorriente> ObtenerCuentaCorriente(ParamCuentaCorriente xParamCuentaCorriente) throws Exception
     {
-        return lookupPersonasBean().obtenerCuentaCorriente(xParamCuentaCorriente);
+        return lookupPersonasBean().ObtenerCuentaCorriente(xParamCuentaCorriente);
     }
         
     /**********************************/
