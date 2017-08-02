@@ -12,7 +12,6 @@ import com.mibios.dto.usuarios.ParamRecuperarContrasena;
 import com.mibios.dto.usuarios.ParamRegistro;
 import com.mibios.dto.usuarios.ReturnRecuperarContrasena;
 import com.mibios.dto.usuarios.ReturnRegistro;
-import com.mibios.jpa.conexion.ConexionJpa;
 import com.mibios.jpa.entidades.CuentaCorriente;
 import com.mibios.jpa.entidades.Usuarios;
 import com.mibios.jpa.entidades.UsuariosPK;
@@ -76,13 +75,11 @@ public class UsuariosBean implements UsuariosBeanLocal {
     public ReturnRegistro Registro(ParamRegistro xParamRegistro) throws Exception
     {
         ReturnRegistro registro = new ReturnRegistro();
-        EntityManager em = ConexionJpa.obtenerInstancia().obtenerConeccion();
+
         Boolean existeComoTipoPersona = false;
         
         try
         {
-            em.getTransaction().begin();
-
             if(xParamRegistro.getClave().equals(xParamRegistro.getConfirmaClave()))
             {
                 //VERIFICO QUE EL USUARIO NO EXISTA
@@ -134,21 +131,15 @@ public class UsuariosBean implements UsuariosBeanLocal {
                 registro.setRegistro(false);
                 registro.setRespuesta("La clave no coincide con la confirmacion");
             }
-            
-            em.getTransaction().commit();
         }
         catch(Exception e)
         {
-            if(em.getTransaction()!=null && em.getTransaction().isActive())
-            {
-                em.getTransaction().rollback();
-            }
             Logger.getLogger(UsuariosBean.class.getName()).log(Level.SEVERE, null, e);
             throw new Exception("Beans--> " + e.getMessage() + " [" + this.getClass().getSimpleName() + "]");
         }
         finally{
-            em.close();
         }
+        
         return registro;
     }
     
@@ -156,12 +147,9 @@ public class UsuariosBean implements UsuariosBeanLocal {
     public ReturnRecuperarContrasena RecuperarContrasena(ParamRecuperarContrasena xParamRecuperarContrasena) throws Exception
     {
         ReturnRecuperarContrasena recuperar = new ReturnRecuperarContrasena();
-        EntityManager em = ConexionJpa.obtenerInstancia().obtenerConeccion();
         
         try
         {
-            em.getTransaction().begin();
-
             // VERIFICAR SI EXISTE USUARIO PARA TIPO PERSONA, TIPO DOCUMENTO Y DOCUMENTO
             UsuariosPK objUsuariosPK = new UsuariosPK(xParamRecuperarContrasena.getTipoPersona(), xParamRecuperarContrasena.getTipoDocumento(), xParamRecuperarContrasena.getDocumento());
             if(UsuariosJpaPersitencia.existeUsuario(em, objUsuariosPK))
@@ -177,21 +165,15 @@ public class UsuariosBean implements UsuariosBeanLocal {
                 recuperar.setRecuperar(false);
                 recuperar.setRespuesta("El Usuario no existe");
             }
-            
-            em.getTransaction().commit();
         }
         catch(Exception e)
         {
-            if(em.getTransaction()!=null && em.getTransaction().isActive())
-            {
-                em.getTransaction().rollback();
-            }
             Logger.getLogger(UsuariosBean.class.getName()).log(Level.SEVERE, null, e);
             throw new Exception("Beans--> " + e.getMessage() + " [" + this.getClass().getSimpleName() + "]");
         }
         finally{
-            em.close();
         }
+        
         return recuperar;
     }
 }

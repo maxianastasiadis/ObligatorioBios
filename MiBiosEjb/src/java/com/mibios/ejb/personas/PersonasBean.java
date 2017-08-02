@@ -13,7 +13,6 @@ import com.mibios.dto.personas.ReturnActualizarDatosPersonales;
 import com.mibios.dto.personas.ReturnObtenerDatosPersonales;
 import com.mibios.dto.usuarios.ReturnLogin;
 import com.mibios.funciones.FuncionesFecha;
-import com.mibios.jpa.conexion.ConexionJpa;
 import com.mibios.jpa.entidades.CuentaCorriente;
 import com.mibios.jpa.entidades.Personas;
 import com.mibios.jpa.entidades.PersonasPK;
@@ -25,6 +24,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
 /**
  *
@@ -33,15 +33,15 @@ import javax.persistence.EntityManager;
 @Stateless(mappedName="PersonasBean")
 public class PersonasBean implements PersonasBeanLocal {
 
+    @PersistenceContext(unitName = "MiBiosJpaPU")
+    private EntityManager em;
+    
     @Override
     public ReturnActualizarDatosPersonales ActualizarDatosPersonales(ParamActualizarDatosPersonales xParamActualizarDatosPersonales) throws Exception 
     {            
         ReturnActualizarDatosPersonales objReturnActualizarDatosPersonales = new ReturnActualizarDatosPersonales();
-        EntityManager em = ConexionJpa.obtenerInstancia().obtenerConeccion();
         try
         {
-            em.getTransaction().begin();
-
             //ACA TENGO QUE VER PRIMERO SI EXISTE LA PERSONA
             PersonasPK objPersonasPK = new PersonasPK(xParamActualizarDatosPersonales.getTipoDocumento(), xParamActualizarDatosPersonales.getDocumento());
             //SI EXISTE LA ACTUALIZO
@@ -93,20 +93,13 @@ public class PersonasBean implements PersonasBeanLocal {
                 objReturnActualizarDatosPersonales.setGuardado(false);
                 objReturnActualizarDatosPersonales.setRespuesta("No Existe Persona");
             }
-
-            em.getTransaction().commit();
         }
         catch(Exception e)
         {
-            if(em.getTransaction()!=null && em.getTransaction().isActive())
-            {
-                em.getTransaction().rollback();
-            }
             Logger.getLogger(PersonasBean.class.getName()).log(Level.SEVERE, null, e);
             throw new Exception("Beans--> " + e.getMessage() + " [" + this.getClass().getSimpleName() + "]");
         }
         finally{
-            em.close();
         }
         return objReturnActualizarDatosPersonales;
     }
@@ -115,11 +108,8 @@ public class PersonasBean implements PersonasBeanLocal {
     public ReturnObtenerDatosPersonales ObtenerDatosPersonales(ParamObtenerDatosPersonales xParamObtenerDatosPersonales) throws Exception{
         
         ReturnObtenerDatosPersonales objReturnObtenerDatosPersonales = new ReturnObtenerDatosPersonales();
-        EntityManager em = ConexionJpa.obtenerInstancia().obtenerConeccion();
         try
         {
-            em.getTransaction().begin();
-
             PersonasPK objPersonasPK = new PersonasPK(xParamObtenerDatosPersonales.getTipoDocumento(), xParamObtenerDatosPersonales.getDocumento());
             Personas objPersonas = PersonasJpaPersistencia.ObtenerPersona(em, objPersonasPK);
             
@@ -138,20 +128,13 @@ public class PersonasBean implements PersonasBeanLocal {
             objReturnObtenerDatosPersonales.setDepartamento(objPersonas.getDepartamento());
             objReturnObtenerDatosPersonales.setCiudad(objPersonas.getCiudad());
             objReturnObtenerDatosPersonales.setDireccion(objPersonas.getDireccion());
-
-            em.getTransaction().commit();
         }
         catch(Exception e)
         {
-            if(em.getTransaction()!=null && em.getTransaction().isActive())
-            {
-                em.getTransaction().rollback();
-            }
             Logger.getLogger(PersonasBean.class.getName()).log(Level.SEVERE, null, e);
             throw new Exception("Beans--> " + e.getMessage() + " [" + this.getClass().getSimpleName() + "]");
         }
         finally{
-            em.close();
         }
         return objReturnObtenerDatosPersonales;
     }
@@ -161,11 +144,8 @@ public class PersonasBean implements PersonasBeanLocal {
         
         List<ReturnCuentaCorriente> colReturnCuentaCorriente = new ArrayList<>();
         List<CuentaCorriente> colCuentaCorriente = null;
-        EntityManager em = ConexionJpa.obtenerInstancia().obtenerConeccion();
         try
         {
-            em.getTransaction().begin();
-
             colCuentaCorriente = PersonasJpaPersistencia.ObtenerCuentaCorriente(em, xParamCuentaCorriente);
             BigDecimal saldo = new BigDecimal(0);
             for(CuentaCorriente cuentaCorriente : colCuentaCorriente)
@@ -189,20 +169,13 @@ public class PersonasBean implements PersonasBeanLocal {
                 
                 colReturnCuentaCorriente.add(obj);
             }
-
-            em.getTransaction().commit();
         }
         catch(Exception e)
         {
-            if(em.getTransaction()!=null && em.getTransaction().isActive())
-            {
-                em.getTransaction().rollback();
-            }
             Logger.getLogger(PersonasBean.class.getName()).log(Level.SEVERE, null, e);
             throw new Exception("Beans--> " + e.getMessage() + " [" + this.getClass().getSimpleName() + "]");
         }
         finally{
-            em.close();
         }
         return colReturnCuentaCorriente;
     }
