@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.mibios.dto.cuentaCorriente;
+package com.mibios.dto.cursos;
 
 import java.io.Serializable;
 
@@ -11,8 +11,8 @@ import java.io.Serializable;
  *
  * @author Maxi
  */
-public class ParamCuentaCorriente implements Serializable{
-    
+public class ParamMisCursos implements Serializable{
+   
     private String tipoDocumento;
     private String documento;
 
