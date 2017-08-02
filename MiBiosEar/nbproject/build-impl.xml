@@ -397,9 +397,6 @@ exists or setup the property manually. For example like this:
         </condition>
     </target>
     <target depends="-get-browser" if="do.display.browser.cl" name="-display-browser-cl">
-        <fail unless="browser">
-            Browser not found, cannot launch the deployed application. Try to set the BROWSER environment variable.
-        </fail>
         <property name="browse.url" value="${deploy.ant.client.url}${client.urlPart}"/>
         <echo>Launching ${browse.url}</echo>
         <exec executable="${browser}" spawn="true">

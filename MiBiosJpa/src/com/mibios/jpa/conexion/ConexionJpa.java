@@ -8,6 +8,7 @@ package com.mibios.jpa.conexion;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.persistence.PersistenceContext;
 
 /**
  *
@@ -15,12 +16,13 @@ import javax.persistence.Persistence;
  */
 public class ConexionJpa {
     
+    private EntityManager em;
     private EntityManagerFactory emf;
     private static ConexionJpa instancia;
     
     private ConexionJpa()
     {
-        emf = Persistence.createEntityManagerFactory("MiBiosJpaPU");
+        //emf = Persistence.createEntityManagerFactory("MiBiosJpaPU");
     }
     
     public static ConexionJpa obtenerInstancia()
@@ -34,7 +36,12 @@ public class ConexionJpa {
     
     public EntityManager obtenerConeccion()
     {
-        EntityManager em = emf.createEntityManager();   
+        //EntityManager em;// = emf.createEntityManager();   
         return em;
+    }
+    
+    public void cerrarConeccion()
+    {
+        emf.close();
     }
 }

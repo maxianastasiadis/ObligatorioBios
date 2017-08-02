@@ -13,15 +13,18 @@ import com.mibios.dto.usuarios.ParamRegistro;
 import com.mibios.dto.usuarios.ReturnRecuperarContrasena;
 import com.mibios.dto.usuarios.ReturnRegistro;
 import com.mibios.jpa.conexion.ConexionJpa;
+import com.mibios.jpa.entidades.CuentaCorriente;
 import com.mibios.jpa.entidades.Usuarios;
 import com.mibios.jpa.entidades.UsuariosPK;
 import com.mibios.jpa.peristencia.DocentesJpaPersitencia;
 import com.mibios.jpa.peristencia.EstudiantesJpaPersitencia;
 import com.mibios.jpa.peristencia.UsuariosJpaPersitencia;
+import java.math.BigDecimal;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
 /**
  *
@@ -30,15 +33,16 @@ import javax.persistence.EntityManager;
 @Stateless(mappedName="UsuariosBean")
 public class UsuariosBean implements UsuariosBeanLocal {
 
+    @PersistenceContext(unitName = "MiBiosJpaPU")
+    private EntityManager em;
+    
     @Override
     public ReturnLogin Login(ParamLogin xParamLogin) throws Exception
     {
         ReturnLogin login = new ReturnLogin();
-        EntityManager em = ConexionJpa.obtenerInstancia().obtenerConeccion();
+        
         try
         {
-            em.getTransaction().begin();
-
             //VERIFICO QUE EL USUARIO EXISTA PARA EL LOGIN
             if(UsuariosJpaPersitencia.existeUsuarioLogin(em, xParamLogin))
             {
@@ -57,20 +61,13 @@ public class UsuariosBean implements UsuariosBeanLocal {
                 login.setLogin(false);
                 login.setRespuesta("Usuario o Clave incorrectos");
             }
-
-            em.getTransaction().commit();
         }
         catch(Exception e)
         {
-            if(em.getTransaction()!=null && em.getTransaction().isActive())
-            {
-                em.getTransaction().rollback();
-            }
             Logger.getLogger(UsuariosBean.class.getName()).log(Level.SEVERE, null, e);
             throw new Exception("Beans--> " + e.getMessage() + " [" + this.getClass().getSimpleName() + "]");
         }
         finally{
-            em.close();
         }
         return login;
     }
