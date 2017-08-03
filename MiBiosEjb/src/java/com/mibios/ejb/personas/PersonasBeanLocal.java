@@ -8,8 +8,10 @@ package com.mibios.ejb.personas;
 import com.mibios.dto.cuentaCorriente.ParamCuentaCorriente;
 import com.mibios.dto.cuentaCorriente.ReturnCuentaCorriente;
 import com.mibios.dto.personas.ParamActualizarDatosPersonales;
+import com.mibios.dto.personas.ParamIngresarPago;
 import com.mibios.dto.personas.ParamObtenerDatosPersonales;
 import com.mibios.dto.personas.ReturnActualizarDatosPersonales;
+import com.mibios.dto.personas.ReturnIngresarPago;
 import com.mibios.dto.personas.ReturnObtenerDatosPersonales;
 import java.util.List;
 import javax.ejb.Remote;
@@ -26,5 +28,7 @@ public interface PersonasBeanLocal {
     public ReturnObtenerDatosPersonales ObtenerDatosPersonales(ParamObtenerDatosPersonales xParamObtenerDatosPersonales) throws Exception;
     
     public List<ReturnCuentaCorriente> ObtenerCuentaCorriente(ParamCuentaCorriente xParamCuentaCorriente) throws Exception;
+    
+    public ReturnIngresarPago IngresarPago(ParamIngresarPago xParamIngresarPago) throws Exception;
     
 }

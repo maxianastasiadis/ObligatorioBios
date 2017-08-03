@@ -75,6 +75,20 @@
                         <h:outputText value="#{transaccion.saldo}" />
                     </p:column>
                 </p:dataTable>
+                <p:spacer></p:spacer>
+                <h:panelGrid id="ingresoPagoPanel" columns="2">
+                    <h:outputText value="Concepto:" />
+                    <p:inputText id="concepto" value="#{pagoBean.concepto}" ></p:inputText>
+                    <h:outputText value="Tipo Movimiento:" />
+                    <p:selectOneMenu id="tipoPersona" value="#{pagoBean.tipoMovimiento}">
+                        <f:selectItem itemLabel="Debe" itemValue="D" />
+                        <f:selectItem itemLabel="Haber" itemValue="H" />
+                    </p:selectOneMenu>
+                    <h:outputText value="Importe:" />
+                    <p:inputText id="importe" value="#{pagoBean.importe}"/>
+                    <p:spacer></p:spacer>
+                    <p:commandButton action="#{pagoBean.IngresarPago}" value="Ingresar Pago" icon="ui-icon-check" ajax="true"></p:commandButton>
+                </h:panelGrid>
             </p:panel>
         </h:form>
     </ui:define>

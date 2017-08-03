@@ -85,4 +85,16 @@ public class PersonasJpaPersistencia {
         }
         return colCuentaCorriente; 
     }
+    
+    public static void IngresarPago(EntityManager em, CuentaCorriente objCuentaCorriente) throws Exception 
+    {   
+        try
+        {
+            em.persist(objCuentaCorriente);
+        }
+        catch(Exception e)
+        {
+            throw new Exception("Persistencia--> " + e);
+        }
+    }
 }

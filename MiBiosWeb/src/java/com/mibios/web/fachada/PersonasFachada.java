@@ -8,8 +8,10 @@ package com.mibios.web.fachada;
 import com.mibios.dto.cuentaCorriente.ParamCuentaCorriente;
 import com.mibios.dto.cuentaCorriente.ReturnCuentaCorriente;
 import com.mibios.dto.personas.ParamActualizarDatosPersonales;
+import com.mibios.dto.personas.ParamIngresarPago;
 import com.mibios.dto.personas.ParamObtenerDatosPersonales;
 import com.mibios.dto.personas.ReturnActualizarDatosPersonales;
+import com.mibios.dto.personas.ReturnIngresarPago;
 import com.mibios.dto.personas.ReturnObtenerDatosPersonales;
 import com.mibios.ejb.personas.PersonasBeanLocal;
 import java.util.ArrayList;
@@ -39,6 +41,11 @@ public class PersonasFachada {
     public List<ReturnCuentaCorriente> ObtenerCuentaCorriente(ParamCuentaCorriente xParamCuentaCorriente) throws Exception
     {
         return lookupPersonasBean().ObtenerCuentaCorriente(xParamCuentaCorriente);
+    }
+    
+    public ReturnIngresarPago IngresarPago(ParamIngresarPago xParamIngresarPago) throws Exception
+    {
+        return lookupPersonasBean().IngresarPago(xParamIngresarPago);
     }
         
     /**********************************/

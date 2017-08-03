@@ -8,9 +8,11 @@ package com.mibios.funciones;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import static javax.print.attribute.Size2DSyntax.MM;
 
 /**
  *
@@ -101,6 +103,53 @@ public class FuncionesFecha {
             Logger.getLogger(FuncionesFecha.class.getName()).log(Level.SEVERE, null, ex);
         } 
         return hora;
+    }
+    
+    /**
+     * Da un formato para guardar en la base.
+     * @param xFecha
+     * @return una fecha String con un formato (yyyyMMdd)
+     */
+    public static String mostrarFechaAAAAMMDDString(String xFecha)
+    {
+        String fecha = "";
+        try {
+            xFecha = xFecha.replace("/", "");
+            String a = xFecha.substring(4, 8);
+            String m = xFecha.substring(2, 4);
+            String d = xFecha.substring(0, 2);
+            fecha = a+m+d;
+            
+        } catch (Exception ex) {
+            Logger.getLogger(FuncionesFecha.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+        return fecha;
+    }
+    
+    /**
+     * Fecha del sistema.
+     * @param
+     * @return fecha del sistema
+     */
+    public static String getFechaSistema()
+    {
+        Date dtFechaActual = new Date();
+        DateFormat dfLocal = new SimpleDateFormat("dd/MM/yyyy");
+
+        return dfLocal.format(dtFechaActual);
+    }
+    
+    /**
+     * Hora del sistema.
+     * @param
+     * @return hora del sistema
+     */
+    public static String getHoraSistema()
+    {
+        Date dtFechaActual = new Date();
+        DateFormat dfLocal = new SimpleDateFormat("HH:mm:ss");
+
+        return dfLocal.format(dtFechaActual);
     }
     
 }

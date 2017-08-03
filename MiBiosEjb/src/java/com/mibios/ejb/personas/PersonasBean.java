@@ -8,8 +8,10 @@ package com.mibios.ejb.personas;
 import com.mibios.dto.cuentaCorriente.ParamCuentaCorriente;
 import com.mibios.dto.cuentaCorriente.ReturnCuentaCorriente;
 import com.mibios.dto.personas.ParamActualizarDatosPersonales;
+import com.mibios.dto.personas.ParamIngresarPago;
 import com.mibios.dto.personas.ParamObtenerDatosPersonales;
 import com.mibios.dto.personas.ReturnActualizarDatosPersonales;
+import com.mibios.dto.personas.ReturnIngresarPago;
 import com.mibios.dto.personas.ReturnObtenerDatosPersonales;
 import com.mibios.dto.usuarios.ReturnLogin;
 import com.mibios.funciones.FuncionesFecha;
@@ -178,5 +180,43 @@ public class PersonasBean implements PersonasBeanLocal {
         finally{
         }
         return colReturnCuentaCorriente;
+    }
+    
+    @Override
+    public ReturnIngresarPago IngresarPago(ParamIngresarPago xParamIngresarPago) throws Exception{
+        
+        ReturnIngresarPago objReturnIngresarPago = new ReturnIngresarPago();
+        try
+        {
+            PersonasPK objPersonasPK = new PersonasPK(xParamIngresarPago.getTipoDocumento(), xParamIngresarPago.getDocumento());
+            Personas objPersonas = PersonasJpaPersistencia.ObtenerPersona(em, objPersonasPK);
+
+            CuentaCorriente objCuentaCorriente = new CuentaCorriente();
+
+            objCuentaCorriente.setPersonas(objPersonas);
+            objCuentaCorriente.setConcepto(xParamIngresarPago.getConcepto());
+            objCuentaCorriente.setTipoMovimiento(xParamIngresarPago.getTipoMovimiento());
+            objCuentaCorriente.setFecha(FuncionesFecha.mostrarFechaAAAAMMDDString(FuncionesFecha.getFechaSistema()));
+            objCuentaCorriente.setHora(FuncionesFecha.getHoraSistema().replace(":", ""));
+            objCuentaCorriente.setImporte(xParamIngresarPago.getImporte());
+
+            PersonasJpaPersistencia.IngresarPago(em, objCuentaCorriente);
+
+            Boolean guardadoOk = true;
+            ReturnLogin datosUsuario = new ReturnLogin();
+
+            objReturnIngresarPago.setGuardado(guardadoOk);
+            objReturnIngresarPago.setRespuesta("");
+            objReturnIngresarPago.setDatosUsuario(datosUsuario);
+        }
+        catch(Exception e)
+        {
+            objReturnIngresarPago.setRespuesta("Error al ingresar el pago");
+            Logger.getLogger(PersonasBean.class.getName()).log(Level.SEVERE, null, e);
+            throw new Exception("Beans--> " + e.getMessage() + " [" + this.getClass().getSimpleName() + "]");
+        }
+        finally{
+        }
+        return objReturnIngresarPago;
     }
 }
