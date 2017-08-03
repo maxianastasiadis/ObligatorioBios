@@ -23,7 +23,7 @@ import javax.persistence.PersistenceContext;
  *
  * @author Maxi
  */
-@Stateless
+@Stateless(mappedName="CursosBean")
 public class CursosBean implements CursosBeanLocal {
 
     @PersistenceContext(unitName = "MiBiosJpaPU")
@@ -38,7 +38,12 @@ public class CursosBean implements CursosBeanLocal {
             List<ClaseEstudiantes> colClaseEstudiante = EstudiantesJpaPersitencia.ObtenerEstudiante(em, xParamMisCursos.getTipoDocumento(), xParamMisCursos.getDocumento()).getClaseEstudiantesList();
             for(ClaseEstudiantes clase: colClaseEstudiante)
             {
-                System.out.println("clase = " + clase.getClaseEstudiantesPK().getIdClase());
+                ReturnMisCursos misCursos = new ReturnMisCursos();
+                misCursos.setIdCurso(clase.getClases().getIdCurso().getIdCurso());
+                misCursos.setNombre(clase.getClases().getIdCurso().getNombre());
+                misCursos.setDescripcion(clase.getClases().getIdCurso().getDescripcion());
+                
+                colReturnMisCursos.add(misCursos);
             }
         }
         catch(Exception e)
