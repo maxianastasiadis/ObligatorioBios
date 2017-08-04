@@ -42,6 +42,10 @@ public class CursosBean implements CursosBeanLocal {
                 misCursos.setIdCurso(clase.getClases().getIdCurso().getIdCurso());
                 misCursos.setNombre(clase.getClases().getIdCurso().getNombre());
                 misCursos.setDescripcion(clase.getClases().getIdCurso().getDescripcion());
+                misCursos.setFechaComienzo(clase.getClases().getFechaComienzo());
+                misCursos.setFechaFin(clase.getClases().getFechaFin());
+                misCursos.setHorario(clase.getClases().getHorarioComienzo() + " A " + clase.getClases().getDuracionHoras());
+                misCursos.setDias(clase.getClases().getDiasClase());
                 
                 colReturnMisCursos.add(misCursos);
             }
