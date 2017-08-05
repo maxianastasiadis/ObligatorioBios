@@ -9,6 +9,7 @@ import com.mibios.dto.cuentaCorriente.ParamCuentaCorriente;
 import com.mibios.dto.cuentaCorriente.ReturnCuentaCorriente;
 import com.mibios.dto.personas.ParamActualizarDatosPersonales;
 import com.mibios.dto.personas.ParamIngresarPago;
+import com.mibios.dto.personas.ParamModificarPago;
 import com.mibios.dto.personas.ParamObtenerDatosPersonales;
 import com.mibios.dto.personas.ReturnActualizarDatosPersonales;
 import com.mibios.dto.personas.ReturnIngresarPago;
@@ -46,6 +47,11 @@ public class PersonasFachada {
     public ReturnIngresarPago IngresarPago(ParamIngresarPago xParamIngresarPago) throws Exception
     {
         return lookupPersonasBean().IngresarPago(xParamIngresarPago);
+    }
+    
+    public ReturnIngresarPago ModificarPago(ParamModificarPago xParamModificarPago) throws Exception
+    {
+        return lookupPersonasBean().ModificarPago(xParamModificarPago);
     }
         
     /**********************************/

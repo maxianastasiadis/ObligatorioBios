@@ -7,6 +7,7 @@ package com.mibios.jpa.peristencia;
 
 import com.mibios.dto.cuentaCorriente.ParamCuentaCorriente;
 import com.mibios.jpa.entidades.CuentaCorriente;
+import com.mibios.jpa.entidades.CuentaCorrientePK;
 import com.mibios.jpa.entidades.Personas;
 import com.mibios.jpa.entidades.PersonasPK;
 import java.util.ArrayList;
@@ -86,11 +87,40 @@ public class PersonasJpaPersistencia {
         return colCuentaCorriente; 
     }
     
+    public static CuentaCorriente ObtenerPago(EntityManager em, CuentaCorrientePK objCunCorrientePK) throws Exception
+    {
+        CuentaCorriente colCuentaCorriente = new CuentaCorriente();
+        try
+        {
+            colCuentaCorriente = em.createNamedQuery("CuentaCorriente.obtenerTransaccion",CuentaCorriente.class)
+                    .setParameter("fecha", objCunCorrientePK.getFecha())
+                    .setParameter("hora", objCunCorrientePK.getHora())
+                    .getSingleResult();
+        }
+        catch(Exception e)
+        {
+            throw new Exception("Persistencia--> " + e);
+        }
+        return colCuentaCorriente; 
+    }
+    
     public static void IngresarPago(EntityManager em, CuentaCorriente objCuentaCorriente) throws Exception 
     {   
         try
         {
             em.persist(objCuentaCorriente);
+        }
+        catch(Exception e)
+        {
+            throw new Exception("Persistencia--> " + e);
+        }
+    }
+    
+    public static void ModificarPago(EntityManager em, CuentaCorriente objCuentaCorriente) throws Exception 
+    {   
+        try
+        {
+            em.merge(objCuentaCorriente);
         }
         catch(Exception e)
         {

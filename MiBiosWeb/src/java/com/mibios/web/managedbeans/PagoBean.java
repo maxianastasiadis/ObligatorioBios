@@ -5,11 +5,14 @@
  */
 package com.mibios.web.managedbeans;
 
+import com.mibios.dto.cuentaCorriente.CuentaCorrienteDatos;
 import com.mibios.dto.personas.ParamIngresarPago;
+import com.mibios.dto.personas.ParamModificarPago;
 import com.mibios.dto.personas.ParamObtenerDatosPersonales;
 import com.mibios.dto.personas.ReturnIngresarPago;
 import com.mibios.dto.personas.ReturnObtenerDatosPersonales;
 import com.mibios.dto.usuarios.ReturnLogin;
+import com.mibios.funciones.FuncionesFecha;
 import com.mibios.web.fachada.PersonasFachada;
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -21,7 +24,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
-
+import org.primefaces.event.RowEditEvent;
 /**
  *
  * @author General
@@ -94,13 +97,13 @@ public class PagoBean implements Serializable {
             objParamIngresarPago.setConcepto(concepto);
             objParamIngresarPago.setTipoMovimiento(tipoMovimiento);
             objParamIngresarPago.setImporte(importe);
-            System.out.println("concepto = " + concepto);
-            System.out.println("tipoMovimiento = " + tipoMovimiento);
-            System.out.println("importe = " + importe);
+            
             objReturnIngresarPago = personasFachada.IngresarPago(objParamIngresarPago);
 
             if(objReturnIngresarPago.getGuardado()){
                 //mensaje Se ingreso el pago correctamente
+                FacesContext facesContext = FacesContext.getCurrentInstance();
+                facesContext.addMessage(null, new FacesMessage(objReturnIngresarPago.getRespuesta()));
             }
             else
             {
@@ -114,6 +117,43 @@ public class PagoBean implements Serializable {
             Logger.getLogger(DatosPersonalesBean.class.getName()).log(Level.SEVERE, null, ex);
         }
         return objReturnIngresarPago.getGuardado();
+    }
+    
+    public void onRowEdit(RowEditEvent event) throws Exception {
+        ReturnIngresarPago objReturnIngresarPago = new ReturnIngresarPago();
+        PersonasFachada personasFachada = new PersonasFachada();
+        CuentaCorrienteDatos objCorrienteDatos = (CuentaCorrienteDatos) event.getObject();
+        ParamModificarPago objParamModificarPago = new ParamModificarPago();
+        objParamModificarPago.setFecha(FuncionesFecha.mostrarFechaAAAAMMDDString(objCorrienteDatos.getFecha()));
+        objParamModificarPago.setHora(objCorrienteDatos.getHora().replace(":", ""));
+        objParamModificarPago.setConcepto(objCorrienteDatos.getConcepto());
+        
+        if(objCorrienteDatos.getDebe() != null && objCorrienteDatos.getDebe().doubleValue() > 0)
+        {
+            objParamModificarPago.setImporte(objCorrienteDatos.getDebe());
+            objParamModificarPago.setTipoMovimiento("D");
+        }
+        else
+        {
+            objParamModificarPago.setImporte(objCorrienteDatos.getHaber());
+            objParamModificarPago.setTipoMovimiento("H");
+        }
+        objReturnIngresarPago = personasFachada.ModificarPago(objParamModificarPago);
+        
+        if(objReturnIngresarPago.getGuardado()){
+            FacesMessage msg = new FacesMessage("Pago editado correctamente", "");
+            FacesContext.getCurrentInstance().addMessage(null, msg);
+        }
+        else
+        {
+            FacesContext facesContext = FacesContext.getCurrentInstance();
+            facesContext.addMessage(null, new FacesMessage(objReturnIngresarPago.getRespuesta()));
+        }
+    }
+     
+    public void onRowCancel(RowEditEvent event) {
+        FacesMessage msg = new FacesMessage("Editado cancelado", ((CuentaCorrienteDatos) event.getObject()).getFecha() + " " + ((CuentaCorrienteDatos) event.getObject()).getHora());
+        FacesContext.getCurrentInstance().addMessage(null, msg);
     }
     
 }

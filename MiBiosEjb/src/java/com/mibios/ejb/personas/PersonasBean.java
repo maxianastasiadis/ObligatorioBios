@@ -9,6 +9,7 @@ import com.mibios.dto.cuentaCorriente.ParamCuentaCorriente;
 import com.mibios.dto.cuentaCorriente.ReturnCuentaCorriente;
 import com.mibios.dto.personas.ParamActualizarDatosPersonales;
 import com.mibios.dto.personas.ParamIngresarPago;
+import com.mibios.dto.personas.ParamModificarPago;
 import com.mibios.dto.personas.ParamObtenerDatosPersonales;
 import com.mibios.dto.personas.ReturnActualizarDatosPersonales;
 import com.mibios.dto.personas.ReturnIngresarPago;
@@ -16,6 +17,7 @@ import com.mibios.dto.personas.ReturnObtenerDatosPersonales;
 import com.mibios.dto.usuarios.ReturnLogin;
 import com.mibios.funciones.FuncionesFecha;
 import com.mibios.jpa.entidades.CuentaCorriente;
+import com.mibios.jpa.entidades.CuentaCorrientePK;
 import com.mibios.jpa.entidades.Personas;
 import com.mibios.jpa.entidades.PersonasPK;
 import com.mibios.jpa.peristencia.PersonasJpaPersistencia;
@@ -206,12 +208,48 @@ public class PersonasBean implements PersonasBeanLocal {
             ReturnLogin datosUsuario = new ReturnLogin();
 
             objReturnIngresarPago.setGuardado(guardadoOk);
-            objReturnIngresarPago.setRespuesta("");
+            objReturnIngresarPago.setRespuesta("Pago ingresado correctamente");
             objReturnIngresarPago.setDatosUsuario(datosUsuario);
         }
         catch(Exception e)
         {
             objReturnIngresarPago.setRespuesta("Error al ingresar el pago");
+            Logger.getLogger(PersonasBean.class.getName()).log(Level.SEVERE, null, e);
+            throw new Exception("Beans--> " + e.getMessage() + " [" + this.getClass().getSimpleName() + "]");
+        }
+        finally{
+        }
+        return objReturnIngresarPago;
+    }
+    
+    @Override
+    public ReturnIngresarPago ModificarPago(ParamModificarPago xParamModificarPago) throws Exception{
+        
+        ReturnIngresarPago objReturnIngresarPago = new ReturnIngresarPago();
+        try
+        {
+            //ACA OBTENGO EL PAGO A MODIFICAR
+            CuentaCorrientePK objCuentaCorrientePK = new CuentaCorrientePK(xParamModificarPago.getFecha(), xParamModificarPago.getHora());
+            CuentaCorriente objPago = PersonasJpaPersistencia.ObtenerPago(em, objCuentaCorrientePK);
+            //MODIFICO LOS DATOS DEL PAGO
+            objPago.setConcepto(xParamModificarPago.getConcepto());
+            objPago.setTipoMovimiento(xParamModificarPago.getTipoMovimiento());
+            objPago.setFecha(FuncionesFecha.mostrarFechaAAAAMMDDString(FuncionesFecha.getFechaSistema()));
+            objPago.setHora(FuncionesFecha.getHoraSistema().replace(":", ""));
+            objPago.setImporte(xParamModificarPago.getImporte());
+            //MODIFICO EL PAGO
+            PersonasJpaPersistencia.ModificarPago(em, objPago);
+
+            Boolean guardadoOk = true;
+            ReturnLogin datosUsuario = new ReturnLogin();
+
+            objReturnIngresarPago.setGuardado(guardadoOk);
+            objReturnIngresarPago.setRespuesta("");
+            objReturnIngresarPago.setDatosUsuario(datosUsuario);
+        }
+        catch(Exception e)
+        {
+            objReturnIngresarPago.setRespuesta("Error al modificar el pago");
             Logger.getLogger(PersonasBean.class.getName()).log(Level.SEVERE, null, e);
             throw new Exception("Beans--> " + e.getMessage() + " [" + this.getClass().getSimpleName() + "]");
         }

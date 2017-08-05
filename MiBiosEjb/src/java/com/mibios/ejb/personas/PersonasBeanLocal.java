@@ -9,6 +9,7 @@ import com.mibios.dto.cuentaCorriente.ParamCuentaCorriente;
 import com.mibios.dto.cuentaCorriente.ReturnCuentaCorriente;
 import com.mibios.dto.personas.ParamActualizarDatosPersonales;
 import com.mibios.dto.personas.ParamIngresarPago;
+import com.mibios.dto.personas.ParamModificarPago;
 import com.mibios.dto.personas.ParamObtenerDatosPersonales;
 import com.mibios.dto.personas.ReturnActualizarDatosPersonales;
 import com.mibios.dto.personas.ReturnIngresarPago;
@@ -30,5 +31,7 @@ public interface PersonasBeanLocal {
     public List<ReturnCuentaCorriente> ObtenerCuentaCorriente(ParamCuentaCorriente xParamCuentaCorriente) throws Exception;
     
     public ReturnIngresarPago IngresarPago(ParamIngresarPago xParamIngresarPago) throws Exception;
+    
+    public ReturnIngresarPago ModificarPago(ParamModificarPago xParamModificarPago) throws Exception;
     
 }

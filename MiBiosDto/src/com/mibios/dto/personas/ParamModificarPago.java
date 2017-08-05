@@ -12,28 +12,28 @@ import java.math.BigDecimal;
  *
  * @author General
  */
-public class ParamIngresarPago implements Serializable {
+public class ParamModificarPago implements Serializable {
     
-    private String tipoDocumento;
-    private String documento;
+    private String fecha;
+    private String hora;
     private String concepto;
     private String tipoMovimiento;
     private BigDecimal importe;
 
-    public String getTipoDocumento() {
-        return tipoDocumento;
+    public String getFecha() {
+        return fecha;
     }
 
-    public void setTipoDocumento(String tipoDocumento) {
-        this.tipoDocumento = tipoDocumento;
+    public void setFecha(String fecha) {
+        this.fecha = fecha;
     }
 
-    public String getDocumento() {
-        return documento;
+    public String getHora() {
+        return hora;
     }
 
-    public void setDocumento(String documento) {
-        this.documento = documento;
+    public void setHora(String hora) {
+        this.hora = hora;
     }
 
     public String getConcepto() {
@@ -59,5 +59,4 @@ public class ParamIngresarPago implements Serializable {
     public void setImporte(BigDecimal importe) {
         this.importe = importe;
     }
-    
 }

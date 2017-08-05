@@ -14,12 +14,34 @@
     </ui:define>
     
     <ui:define name="contenido">
-        <h:form>
-            <p:panel header="Cuenta Corriente">
+        <h:form id="IngresoPagoForm">
+            <h:panelGrid id="ingresoPagoPanel" columns="2">
+                <h:outputText value="Concepto:" />
+                <p:inputText id="concepto" required="true" requiredMessage="Debe ingresar concepto" maxlength="500" value="#{pagoBean.concepto}"></p:inputText>
+                <p:spacer></p:spacer>
+                <h:message for="concepto" class="message"/>
+                <h:outputText value="Tipo Movimiento:" />
+                <p:selectOneMenu id="tipoPersona" value="#{pagoBean.tipoMovimiento}">
+                    <f:selectItem itemLabel="Debe" itemValue="D" />
+                    <f:selectItem itemLabel="Haber" itemValue="H" />
+                </p:selectOneMenu>
+                <h:outputText value="Importe:" />
+                <p:inputText id="importe" required="true" requiredMessage="Debe ingresar importe" maxlength="15" converterMessage="El importe debe ser numérico" value="#{pagoBean.importe}"/>
+                <p:spacer></p:spacer>
+                <h:message for="importe" class="message"/>
+                <p:spacer></p:spacer>
+                <p:commandButton action="#{pagoBean.IngresarPago}" value="Ingresar Pago" icon="ui-icon-check" ajax="true" update="IngresoPagoForm"></p:commandButton>
+            </h:panelGrid>
+        </h:form>
+        <h:form id="CuentaCorrienteForm">
+            <p:remoteCommand name="onCellEditCuentaCorrienteTableComplete"  update=":CuentaCorrienteForm:tbl"/>
+            <p:growl id="msgs" showDetail="true"/>
+            <p:panel id="CuentaCorrientePanel" header="Cuenta Corriente" rendered="true">
                 <p:dataTable id="tbl" var="transaccion" value="#{cuentaCorrienteBean.transacciones}"
                              paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}"
                              paginator="true" rows="10" style="margin-bottom:20px"
-                             emptyMessage="No hay movimientos en su cuenta Corriente">
+                             emptyMessage="No hay movimientos en su cuenta Corriente"
+                             editable="true">
                     <f:facet name="{Exporters}">
                         <h:commandLink>
                             <p:graphicImage name="/img/excel.png" width="24"/>
@@ -38,35 +60,38 @@
                             <p:dataExporter type="xml" target="tbl" fileName="lineaCuentaCorriente" />
                         </h:commandLink>
                     </f:facet>
+                    <p:ajax event="rowEdit" listener="#{pagoBean.onRowEdit}" update=":CuentaCorrienteForm:msgs" oncomplete="onCellEditCuentaCorrienteTableComplete()"/>
+                    <p:ajax event="rowEditCancel" listener="#{pagoBean.onRowCancel}" update=":CuentaCorrienteForm:msgs" />
+                    
                     <p:column>
-                        <f:facet name="header">
-                            <h:outputText value="Fecha" />
-                        </f:facet>
-                        <h:outputText value="#{transaccion.fecha}" />
-                    </p:column>
-                    <p:column>
-                        <f:facet name="header">
-                            <h:outputText value="Hora"/>
-                        </f:facet>
-                        <h:outputText value="#{transaccion.hora}" />
+                            <f:facet name="header">
+                                <h:outputText value="Fecha" />
+                            </f:facet>
+                            <h:outputText value="#{transaccion.fecha}"/>
                     </p:column>
                     <p:column>
-                        <f:facet name="header">
-                            <h:outputText value="Concepto" />
-                        </f:facet>
-                        <h:outputText value="#{transaccion.concepto}" />
+                            <f:facet name="header">
+                                <h:outputText value="Hora"/>
+                            </f:facet>
+                            <h:outputText value="#{transaccion.hora}" />
                     </p:column>
-                    <p:column class="alinearALaDerecha">
-                        <f:facet name="header">
-                            <h:outputText value="Debe" />
-                        </f:facet>
-                        <h:outputText value="#{transaccion.debe}" />
+                    <p:column headerText="Concepto">
+                        <p:cellEditor>
+                            <f:facet name="output"><h:outputText value="#{transaccion.concepto}" /></f:facet>
+                            <f:facet name="input"><p:inputText id="msgs" required="true" requiredMessage="Debe ingresar concepto" maxlength="500" value="#{transaccion.concepto}" /></f:facet>
+                        </p:cellEditor>
                     </p:column>
-                    <p:column class="alinearALaDerecha">
-                        <f:facet name="header">
-                            <h:outputText value="Haber" />
-                        </f:facet>
-                        <h:outputText value="#{transaccion.haber}" />
+                    <p:column headerText="Debe" class="alinearALaDerecha">
+                        <p:cellEditor>
+                            <f:facet name="output"><h:outputText value="#{transaccion.debe}" /></f:facet>
+                            <f:facet name="input"><p:inputText id="debe" required="true" requiredMessage="Debe ingresar importe debe" converterMessage="El importe debe ser numérico" maxlength="15" value="#{transaccion.debe}"/></f:facet>
+                        </p:cellEditor>
+                    </p:column>
+                    <p:column headerText="Haber" class="alinearALaDerecha">
+                        <p:cellEditor>
+                            <f:facet name="output"><h:outputText value="#{transaccion.haber}" /></f:facet>
+                            <f:facet name="input"><p:inputText id="haber" required="true" requiredMessage="Debe ingresar importe haber" converterMessage="El importe debe ser numérico" maxlength="15" value="#{transaccion.haber}"/></f:facet>
+                        </p:cellEditor>
                     </p:column>
                     <p:column class="alinearALaDerecha">
                         <f:facet name="header">
@@ -74,21 +99,10 @@
                         </f:facet>
                         <h:outputText value="#{transaccion.saldo}" />
                     </p:column>
+                    <p:column style="width:32px">
+                        <p:rowEditor/>
+                    </p:column>
                 </p:dataTable>
-                <p:spacer></p:spacer>
-                <h:panelGrid id="ingresoPagoPanel" columns="2">
-                    <h:outputText value="Concepto:" />
-                    <p:inputText id="concepto" value="#{pagoBean.concepto}" ></p:inputText>
-                    <h:outputText value="Tipo Movimiento:" />
-                    <p:selectOneMenu id="tipoPersona" value="#{pagoBean.tipoMovimiento}">
-                        <f:selectItem itemLabel="Debe" itemValue="D" />
-                        <f:selectItem itemLabel="Haber" itemValue="H" />
-                    </p:selectOneMenu>
-                    <h:outputText value="Importe:" />
-                    <p:inputText id="importe" value="#{pagoBean.importe}"/>
-                    <p:spacer></p:spacer>
-                    <p:commandButton action="#{pagoBean.IngresarPago}" value="Ingresar Pago" icon="ui-icon-check" ajax="true"></p:commandButton>
-                </h:panelGrid>
             </p:panel>
         </h:form>
     </ui:define>
