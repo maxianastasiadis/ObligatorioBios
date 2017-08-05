@@ -41,21 +41,33 @@
                     </f:facet>
                     <p:column>
                         <f:facet name="header">
-                            <h:outputText value="Id Curso" />
-                        </f:facet>
-                        <h:outputText value="#{curso.idCurso}" />
-                    </p:column>
-                    <p:column>
-                        <f:facet name="header">
-                            <h:outputText value="Nombre"/>
+                            <h:outputText value="Curso" />
                         </f:facet>
                         <h:outputText value="#{curso.nombre}" />
                     </p:column>
                     <p:column>
                         <f:facet name="header">
-                            <h:outputText value="Descripcion" />
+                            <h:outputText value="Comienzo"/>
                         </f:facet>
-                        <h:outputText value="#{curso.descripcion}" />
+                        <h:outputText value="#{curso.fechaComienzo}" />
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Finaliza" />
+                        </f:facet>
+                        <h:outputText value="#{curso.fechaFin}" />
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Dias" />
+                        </f:facet>
+                        <h:outputText value="#{curso.dias}" />
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Horario" />
+                        </f:facet>
+                        <h:outputText value="#{curso.horario}" />
                     </p:column>
                 </p:dataTable>
             </p:panel>

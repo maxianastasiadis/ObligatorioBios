@@ -9,6 +9,7 @@ import com.mibios.dto.cursos.MisCursosDatos;
 import com.mibios.dto.cursos.ParamMisCursos;
 import com.mibios.dto.cursos.ReturnMisCursos;
 import com.mibios.dto.usuarios.ReturnLogin;
+import com.mibios.funciones.FuncionesFecha;
 import com.mibios.web.fachada.CursosFachada;
 import com.mibios.web.fachada.PersonasFachada;
 import java.util.ArrayList;
@@ -45,8 +46,11 @@ public class MisCursosBean {
                 MisCursosDatos cursoDatos = new MisCursosDatos();
                 
                 cursoDatos.setIdCurso(cursos.getIdCurso());
-                cursoDatos.setNombre(cursos.getNombre());
-                cursoDatos.setDescripcion(cursos.getDescripcion());
+                cursoDatos.setNombre(cursos.getNombre() + " - " + cursos.getDescripcion());
+                cursoDatos.setFechaComienzo(FuncionesFecha.mostrarFechaDDMMAAAAString(cursos.getFechaComienzo()));
+                cursoDatos.setFechaFin(FuncionesFecha.mostrarFechaDDMMAAAAString(cursos.getFechaFin()));
+                cursoDatos.setDias(cursos.getDias());
+                cursoDatos.setHorario(cursos.getHorario());
                 
                 misCursos.add(cursoDatos);
             }
