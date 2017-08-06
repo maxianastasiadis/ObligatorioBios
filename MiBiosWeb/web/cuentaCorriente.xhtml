@@ -15,23 +15,25 @@
     
     <ui:define name="contenido">
         <h:form id="IngresoPagoForm">
-            <h:panelGrid id="ingresoPagoPanel" columns="2">
-                <h:outputText value="Concepto:" />
-                <p:inputText id="concepto" required="true" requiredMessage="Debe ingresar concepto" maxlength="500" value="#{pagoBean.concepto}"></p:inputText>
-                <p:spacer></p:spacer>
-                <h:message for="concepto" class="message"/>
-                <h:outputText value="Tipo Movimiento:" />
-                <p:selectOneMenu id="tipoPersona" value="#{pagoBean.tipoMovimiento}">
-                    <f:selectItem itemLabel="Debe" itemValue="D" />
-                    <f:selectItem itemLabel="Haber" itemValue="H" />
-                </p:selectOneMenu>
-                <h:outputText value="Importe:" />
-                <p:inputText id="importe" required="true" requiredMessage="Debe ingresar importe" maxlength="15" converterMessage="El importe debe ser numérico" value="#{pagoBean.importe}"/>
-                <p:spacer></p:spacer>
-                <h:message for="importe" class="message"/>
-                <p:spacer></p:spacer>
-                <p:commandButton action="#{pagoBean.IngresarPago}" value="Ingresar Pago" icon="ui-icon-check" ajax="true" update="IngresoPagoForm"></p:commandButton>
-            </h:panelGrid>
+            <p:panel id="IngresoPagoPanel" header="Ingreso Pago">
+                <h:panelGrid id="ingresoPagoPanel" columns="2">
+                    <h:outputText value="Concepto:" />
+                    <p:inputText id="concepto" required="true" requiredMessage="Debe ingresar concepto" maxlength="500" value="#{pagoBean.concepto}"></p:inputText>
+                    <p:spacer></p:spacer>
+                    <h:message for="concepto" class="message"/>
+                    <h:outputText value="Tipo Movimiento:" />
+                    <p:selectOneMenu id="tipoPersona" value="#{pagoBean.tipoMovimiento}">
+                        <f:selectItem itemLabel="Debe" itemValue="D" />
+                        <f:selectItem itemLabel="Haber" itemValue="H" />
+                    </p:selectOneMenu>
+                    <h:outputText value="Importe:" />
+                    <p:inputText id="importe" required="true" requiredMessage="Debe ingresar importe" maxlength="15" converterMessage="El importe debe ser numérico" value="#{pagoBean.importe}"/>
+                    <p:spacer></p:spacer>
+                    <h:message for="importe" class="message"/>
+                    <p:spacer></p:spacer>
+                    <p:commandButton action="#{pagoBean.IngresarPago}" value="Ingresar Pago" icon="ui-icon-check" ajax="true" update="IngresoPagoForm"></p:commandButton>
+                </h:panelGrid>
+            </p:panel>
         </h:form>
         <h:form id="CuentaCorrienteForm">
             <p:remoteCommand name="onCellEditCuentaCorrienteTableComplete"  update=":CuentaCorrienteForm:tbl"/>
