@@ -9,6 +9,7 @@ import com.mibios.dto.cursos.ParamCursos;
 import com.mibios.dto.cursos.ParamMisCursos;
 import com.mibios.dto.cursos.ReturnCursos;
 import com.mibios.dto.cursos.ReturnMisCursos;
+import com.mibios.funciones.FuncionesFecha;
 import com.mibios.jpa.entidades.ClaseEstudiantes;
 import com.mibios.jpa.peristencia.EstudiantesJpaPersitencia;
 import java.util.ArrayList;
@@ -44,8 +45,13 @@ public class CursosBean implements CursosBeanLocal {
                 misCursos.setDescripcion(clase.getClases().getIdCurso().getDescripcion());
                 misCursos.setFechaComienzo(clase.getClases().getFechaComienzo());
                 misCursos.setFechaFin(clase.getClases().getFechaFin());
-                misCursos.setHorario(clase.getClases().getHorarioComienzo() + " A " + clase.getClases().getDuracionHoras());
+                misCursos.setHorario(FuncionesFecha.mostrarHoraHHMM(clase.getClases().getHorarioComienzo()) + " A " + FuncionesFecha.mostrarHoraHHMM(FuncionesFecha.incrementarHora(clase.getClases().getHorarioComienzo(), clase.getClases().getDuracionHoras())));
                 misCursos.setDias(clase.getClases().getDiasClase());
+                misCursos.setDocente(clase.getClases().getIdDocente().getPersonas().getNombre1() + " " + clase.getClases().getIdDocente().getPersonas().getApellido1());
+                misCursos.setSalon(clase.getClases().getSalon());
+                misCursos.setBeca(clase.getPorcentajeBeca().toString());
+                misCursos.setCuota(clase.getImporteCuota().toString());
+                misCursos.setAprobadoSn(clase.getAprobadoSn());
                 
                 colReturnMisCursos.add(misCursos);
             }

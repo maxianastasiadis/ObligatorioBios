@@ -15,12 +15,12 @@
     </ui:define>
     
     <ui:define name="contenido">
-        <h:form>
+        <h:form id="form">
             <p:panel header="Mis Cursos">
                 <p:dataTable id="tbl" var="curso" value="#{misCursosBean.misCursos}"
                              paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}"
                              paginator="true" rows="10" style="margin-bottom:20px"
-                             emptyMessage="No hay movimientos en su cuenta Corriente">
+                             emptyMessage="No tiene cursos asignados">
                     <f:facet name="{Exporters}">
                         <h:commandLink>
                             <p:graphicImage name="/img/excel.png" width="24"/>
@@ -69,8 +69,40 @@
                         </f:facet>
                         <h:outputText value="#{curso.horario}" />
                     </p:column>
+                    <p:column style="width:32px;text-align: center">
+                        <p:commandButton update=":form:carDetail" oncomplete="PF('carDialog').show()" icon="ui-icon-search" title="View">
+                            <f:setPropertyActionListener value="#{curso.datosCursoDetalle}" target="#{misCursosBean.verDetalles}" />
+                       </p:commandButton>
+                   </p:column>
                 </p:dataTable>
             </p:panel>
+            
+            <p:dialog header="Car Info" widgetVar="carDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+                <p:outputPanel id="carDetail" style="text-align:center;">
+                    <p:panelGrid  columns="2" rendered="#{not empty misCursosBean.verDetalles}" columnClasses="label,value">
+                        <f:facet name="header">
+                            <h:outputText value="#{misCursosBean.verDetalles.detalleNombre}" /> 
+                        </f:facet>
+
+                        <h:outputText value="Docente:" />
+                        <h:outputText value="#{misCursosBean.verDetalles.detalleDocente}" />
+
+                        <h:outputText value="Salon" />
+                        <h:outputText value="#{misCursosBean.verDetalles.detalleSalon}" />
+                        
+                        <h:outputText value="Cuota" />
+                        <h:outputText value="$#{misCursosBean.verDetalles.detalleCuota}" />
+                        
+                        <h:outputText value="Beca" />
+                        <h:outputText value="#{misCursosBean.verDetalles.detalleBeca}%" />
+                        
+                        <h:outputText value="Aprobado" />
+                        <h:outputText value="#{misCursosBean.verDetalles.detalleAprobado}" />
+
+                    </p:panelGrid>
+                </p:outputPanel>
+            </p:dialog>
+        
         </h:form>
     </ui:define>
 </ui:composition>

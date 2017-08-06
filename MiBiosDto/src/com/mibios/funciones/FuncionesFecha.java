@@ -12,7 +12,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import static javax.print.attribute.Size2DSyntax.MM;
 
 /**
  *
@@ -106,6 +105,43 @@ public class FuncionesFecha {
     }
     
     /**
+     * Da un formato para mostar al usuario.
+     * @param xHora
+     * @return una fecha con un formato (hh:mm)
+     * @throws java.lang.Exception
+     */
+    public static String mostrarHoraHHMM(String xHora) throws Exception
+    {
+        try
+        {
+            if (xHora != null)
+            {
+                xHora = xHora.trim();
+
+                if (!(xHora.equals("")) && xHora.length() > 3)
+                {
+                    String h, m;
+
+                    h = xHora.substring(0, 2);
+                    m = xHora.substring(2, 4);
+
+                    return h + ":" + m;
+                } 
+                else
+                {
+                    return "00:00";
+                }
+            } 
+            else
+            {
+                return "00:00";
+            }
+        } catch (Exception ex) {
+            throw new Exception("Genericos--> " + ex.getMessage());
+        }
+    }
+    
+    /**
      * Da un formato para guardar en la base.
      * @param xFecha
      * @return una fecha String con un formato (yyyyMMdd)
@@ -150,6 +186,55 @@ public class FuncionesFecha {
         DateFormat dfLocal = new SimpleDateFormat("HH:mm:ss");
 
         return dfLocal.format(dtFechaActual);
+    }
+    
+    /**
+     * Incrementar Hora
+     * @param xFecha
+     * @param xTipo
+     * @return
+     * @throws java.lang.Exception
+     */
+    public static String incrementarHora(String xHora, String xIncremento) throws Exception
+    {
+        String f = "";
+        Calendar hora = convertirStringACalendarHHmm(xHora);
+
+        int intHH = Integer.parseInt(xIncremento.substring(0, 2));
+        int intMM = Integer.parseInt(xIncremento.substring(2, 4));
+
+        hora.add(Calendar.HOUR, intHH);
+        hora.add(Calendar.MINUTE, intMM);
+
+        SimpleDateFormat formato = new SimpleDateFormat("HHmm");
+        f = formato.format(hora.getTime());
+
+        return f.trim();
+    }
+    
+    /**
+     * Convierte una hora de tipo String a Calendar con un formato (HHmm).
+     * @param xFecha
+     * @return
+     * @throws java.lang.Exception
+     */
+    public static Calendar convertirStringACalendarHHmm(String xHora) throws Exception
+    {
+        try
+        {
+            Date date;
+            DateFormat formato;
+            formato = new SimpleDateFormat("HHmm");
+            date = (Date) formato.parse(xHora);
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(date);
+
+            return cal;
+        } 
+        catch (Exception ex)
+        {
+            throw new Exception("Genericos--> " + ex.getMessage());
+        }
     }
     
 }
