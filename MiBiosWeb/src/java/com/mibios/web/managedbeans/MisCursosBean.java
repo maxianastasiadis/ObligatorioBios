@@ -12,13 +12,12 @@ import com.mibios.dto.cursos.ReturnMisCursos;
 import com.mibios.dto.usuarios.ReturnLogin;
 import com.mibios.funciones.FuncionesFecha;
 import com.mibios.web.fachada.CursosFachada;
-import com.mibios.web.fachada.PersonasFachada;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 
@@ -63,6 +62,11 @@ public class MisCursosBean {
                 datosDetalle.setDetalleBeca(cursos.getBeca());
                 datosDetalle.setDetalleCuota(cursos.getCuota());
                 
+                BigDecimal importeCuota = BigDecimal.valueOf(Double.parseDouble(cursos.getCuota()));
+                BigDecimal porcentajeBeca = BigDecimal.valueOf(Double.parseDouble(cursos.getBeca()));
+                BigDecimal total = importeCuota.subtract(importeCuota.multiply(porcentajeBeca.divide(new BigDecimal(100))));
+                datosDetalle.setDetalleTotal(total.toString());
+                //total = cuota-(cuota*(beca/100))
                 cursoDatos.setDatosCursoDetalle(datosDetalle);
                 
                 misCursos.add(cursoDatos);

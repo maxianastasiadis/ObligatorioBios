@@ -70,15 +70,15 @@
                         <h:outputText value="#{curso.horario}" />
                     </p:column>
                     <p:column style="width:32px;text-align: center">
-                        <p:commandButton update=":form:carDetail" oncomplete="PF('carDialog').show()" icon="ui-icon-search" title="View">
+                        <p:commandButton update=":form:cursoDetalle" oncomplete="PF('cursoDialogo').show()" icon="ui-icon-search" title="View">
                             <f:setPropertyActionListener value="#{curso.datosCursoDetalle}" target="#{misCursosBean.verDetalles}" />
                        </p:commandButton>
                    </p:column>
                 </p:dataTable>
             </p:panel>
             
-            <p:dialog header="Car Info" widgetVar="carDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
-                <p:outputPanel id="carDetail" style="text-align:center;">
+            <p:dialog header="Detalles Curso" widgetVar="cursoDialogo" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+                <p:outputPanel id="cursoDetalle" style="text-align:center;">
                     <p:panelGrid  columns="2" rendered="#{not empty misCursosBean.verDetalles}" columnClasses="label,value">
                         <f:facet name="header">
                             <h:outputText value="#{misCursosBean.verDetalles.detalleNombre}" /> 
@@ -95,6 +95,9 @@
                         
                         <h:outputText value="Beca" />
                         <h:outputText value="#{misCursosBean.verDetalles.detalleBeca}%" />
+                        
+                        <h:outputText value="Total" />
+                        <h:outputText value="$#{misCursosBean.verDetalles.detalleTotal}" />
                         
                         <h:outputText value="Aprobado" />
                         <h:outputText value="#{misCursosBean.verDetalles.detalleAprobado}" />

@@ -5,7 +5,6 @@
  */
 package com.mibios.ejb.cursos;
 
-import com.mibios.dto.cursos.ParamCursos;
 import com.mibios.dto.cursos.ParamMisCursos;
 import com.mibios.dto.cursos.ReturnCursos;
 import com.mibios.dto.cursos.ReturnMisCursos;
@@ -21,5 +20,5 @@ public interface CursosBeanLocal {
  
     public List<ReturnMisCursos> ObtenerMisCursos(ParamMisCursos xParamMisCursos) throws Exception;
     
-    public List<ReturnCursos> ObtenerCursos(ParamCursos xParamCursos) throws Exception;
+    public List<ReturnCursos> ObtenerCursos() throws Exception;
 }

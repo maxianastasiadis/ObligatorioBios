@@ -11,15 +11,12 @@ import java.io.Serializable;
  *
  * @author Maxi
  */
-public class MisCursosDetalles implements Serializable{
+public class CursosDetalles implements Serializable{
     
     private String detalleNombre;
     private String detalleSalon;
     private String detalleDocente;
     private String detalleCuota;
-    private String detalleBeca;
-    private String detalleTotal;
-    private String detalleAprobado;
 
     public String getDetalleNombre() {
         return detalleNombre;
@@ -52,29 +49,5 @@ public class MisCursosDetalles implements Serializable{
     public void setDetalleCuota(String detalleCuota) {
         this.detalleCuota = detalleCuota;
     }
-
-    public String getDetalleBeca() {
-        return detalleBeca;
-    }
-
-    public void setDetalleBeca(String detalleBeca) {
-        this.detalleBeca = detalleBeca;
-    }
-
-    public String getDetalleAprobado() {
-        return detalleAprobado;
-    }
-
-    public void setDetalleAprobado(String detalleAprobado) {
-        this.detalleAprobado = detalleAprobado;
-    }
-
-    public String getDetalleTotal() {
-        return detalleTotal;
-    }
-
-    public void setDetalleTotal(String detalleTotal) {
-        this.detalleTotal = detalleTotal;
-    }
-
+    
 }

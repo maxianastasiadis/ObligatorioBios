@@ -5,12 +5,15 @@
  */
 package com.mibios.ejb.cursos;
 
-import com.mibios.dto.cursos.ParamCursos;
+import com.mibios.dto.cursos.ClaseDatos;
 import com.mibios.dto.cursos.ParamMisCursos;
 import com.mibios.dto.cursos.ReturnCursos;
 import com.mibios.dto.cursos.ReturnMisCursos;
 import com.mibios.funciones.FuncionesFecha;
 import com.mibios.jpa.entidades.ClaseEstudiantes;
+import com.mibios.jpa.entidades.Clases;
+import com.mibios.jpa.entidades.Cursos;
+import com.mibios.jpa.peristencia.CursosJpaPersistencia;
 import com.mibios.jpa.peristencia.EstudiantesJpaPersitencia;
 import java.util.ArrayList;
 import java.util.List;
@@ -67,12 +70,36 @@ public class CursosBean implements CursosBeanLocal {
     }
     
     @Override
-    public List<ReturnCursos> ObtenerCursos(ParamCursos xParamCursos) throws Exception
+    public List<ReturnCursos> ObtenerCursos() throws Exception
     {    
         List<ReturnCursos> colReturnCursos = new ArrayList<>();
         try
         {
-            
+            List<Cursos> colCursos = CursosJpaPersistencia.ObtenerCursos(em);
+            for(Cursos curso: colCursos)
+            {
+                ReturnCursos cursos = new ReturnCursos();
+                cursos.setIdCurso(curso.getIdCurso());
+                cursos.setNombre(curso.getNombre());
+                cursos.setDescripcion(curso.getDescripcion());
+                List<ClaseDatos> listaClases = new ArrayList<>();
+                
+                for(Clases clase: curso.getClasesList())
+                {
+                    ClaseDatos claseDatos = new ClaseDatos();
+                    claseDatos.setNombreCurso(cursos.getNombre());
+                    claseDatos.setCuota("1000.00");
+                    claseDatos.setDias(clase.getDiasClase());
+                    claseDatos.setFechaComienzo(clase.getFechaComienzo());
+                    claseDatos.setFechaFin(clase.getFechaFin());
+                    claseDatos.setHorario(FuncionesFecha.mostrarHoraHHMM(clase.getHorarioComienzo()) + " A " + FuncionesFecha.mostrarHoraHHMM(FuncionesFecha.incrementarHora(clase.getHorarioComienzo(), clase.getDuracionHoras())));
+                    claseDatos.setDocente(clase.getIdDocente().getPersonas().getNombre1() + " " + clase.getIdDocente().getPersonas().getApellido1());
+                    claseDatos.setSalon(clase.getSalon());
+                    listaClases.add(claseDatos);
+                }
+                cursos.setListaClases(listaClases);
+                colReturnCursos.add(cursos);
+            }
         }
         catch(Exception e)
         {

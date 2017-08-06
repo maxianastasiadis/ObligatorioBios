@@ -12,12 +12,12 @@ import java.util.List;
  *
  * @author Maxi
  */
-public class ReturnCursos implements Serializable{
+public class CursosDatos implements Serializable{
     
     private int idCurso;
     private String nombre;
-    private String descripcion;
     private List<ClaseDatos> listaClases;
+    
 
     public int getIdCurso() {
         return idCurso;
@@ -35,14 +35,6 @@ public class ReturnCursos implements Serializable{
         this.nombre = nombre;
     }
 
-    public String getDescripcion() {
-        return descripcion;
-    }
-
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
-    }
-
     public List<ClaseDatos> getListaClases() {
         return listaClases;
     }
@@ -51,4 +43,5 @@ public class ReturnCursos implements Serializable{
         this.listaClases = listaClases;
     }
 
+    
 }

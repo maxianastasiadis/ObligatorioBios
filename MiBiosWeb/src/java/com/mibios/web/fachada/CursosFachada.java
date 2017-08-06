@@ -6,6 +6,7 @@
 package com.mibios.web.fachada;
 
 import com.mibios.dto.cursos.ParamMisCursos;
+import com.mibios.dto.cursos.ReturnCursos;
 import com.mibios.dto.cursos.ReturnMisCursos;
 import com.mibios.ejb.cursos.CursosBeanLocal;
 import java.util.List;
@@ -24,6 +25,11 @@ public class CursosFachada {
     public List<ReturnMisCursos> ObtenerMisCursos(ParamMisCursos xParamMisCursos) throws Exception
     {
         return lookupCursosBean().ObtenerMisCursos(xParamMisCursos);
+    }
+    
+    public List<ReturnCursos> ObtenerCursos() throws Exception
+    {
+        return lookupCursosBean().ObtenerCursos();
     }
     
     /**********************************/
