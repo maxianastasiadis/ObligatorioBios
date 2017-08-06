@@ -22,6 +22,9 @@ public class ReturnMisCursos implements Serializable{
     private String horario;
     private String salon;
     private String docente;
+    private String cuota;
+    private String beca;
+    private String aprobadoSn;
     
     public int getIdCurso() {
         return idCurso;
@@ -94,4 +97,29 @@ public class ReturnMisCursos implements Serializable{
     public void setDocente(String docente) {
         this.docente = docente;
     }
+
+    public String getCuota() {
+        return cuota;
+    }
+
+    public void setCuota(String cuota) {
+        this.cuota = cuota;
+    }
+
+    public String getBeca() {
+        return beca;
+    }
+
+    public void setBeca(String beca) {
+        this.beca = beca;
+    }
+
+    public String getAprobadoSn() {
+        return aprobadoSn;
+    }
+
+    public void setAprobadoSn(String aprobadoSn) {
+        this.aprobadoSn = aprobadoSn;
+    }
+    
 }

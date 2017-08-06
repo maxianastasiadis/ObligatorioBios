@@ -22,6 +22,7 @@ public class MisCursosDatos implements Serializable{
     private String horario;
     private String salon;
     private String docente;
+    private MisCursosDetalles datosCursoDetalle;
     
     public int getIdCurso() {
         return idCurso;
@@ -94,4 +95,13 @@ public class MisCursosDatos implements Serializable{
     public void setDocente(String docente) {
         this.docente = docente;
     }
+
+    public MisCursosDetalles getDatosCursoDetalle() {
+        return datosCursoDetalle;
+    }
+
+    public void setDatosCursoDetalle(MisCursosDetalles datosCursoDetalle) {
+        this.datosCursoDetalle = datosCursoDetalle;
+    }
+    
 }

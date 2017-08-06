@@ -6,6 +6,7 @@
 package com.mibios.web.managedbeans;
 
 import com.mibios.dto.cursos.MisCursosDatos;
+import com.mibios.dto.cursos.MisCursosDetalles;
 import com.mibios.dto.cursos.ParamMisCursos;
 import com.mibios.dto.cursos.ReturnMisCursos;
 import com.mibios.dto.usuarios.ReturnLogin;
@@ -17,6 +18,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 
@@ -29,6 +31,7 @@ import javax.faces.context.FacesContext;
 public class MisCursosBean {
 
     private List<MisCursosDatos> misCursos;
+    private MisCursosDetalles verDetalles; 
     
     public MisCursosBean() {
         try {
@@ -52,6 +55,16 @@ public class MisCursosBean {
                 cursoDatos.setDias(cursos.getDias());
                 cursoDatos.setHorario(cursos.getHorario());
                 
+                MisCursosDetalles datosDetalle = new MisCursosDetalles();
+                datosDetalle.setDetalleNombre(cursos.getNombre() + " - " + cursos.getDescripcion());
+                datosDetalle.setDetalleSalon(cursos.getSalon());
+                datosDetalle.setDetalleDocente(cursos.getDocente());
+                datosDetalle.setDetalleAprobado(cursos.getAprobadoSn());
+                datosDetalle.setDetalleBeca(cursos.getBeca());
+                datosDetalle.setDetalleCuota(cursos.getCuota());
+                
+                cursoDatos.setDatosCursoDetalle(datosDetalle);
+                
                 misCursos.add(cursoDatos);
             }
             
@@ -62,5 +75,14 @@ public class MisCursosBean {
 
     public List<MisCursosDatos> getMisCursos() {
         return misCursos;
-    }    
+    } 
+
+    public MisCursosDetalles getVerDetalles() {
+        return verDetalles;
+    }
+
+    public void setVerDetalles(MisCursosDetalles verDetalles) {
+        this.verDetalles = verDetalles;
+    }
+    
 }
