@@ -109,15 +109,15 @@
                 <h:panelGrid columns="2" cellpadding="5">
 
                     <h:outputText value="Clave Actual: " />
-                    <p:password id="claveActual" required="true" requiredMessage="Debe ingresar Clave Actual" value="#{datosPersonalesBean.claveActual}"  feedback="false"></p:password>
+                    <p:password id="claveActual" required="true" requiredMessage="Debe ingresar Clave Actual" value="#{datosPersonalesBean.claveActual}"  feedback="false" maxlength="16"></p:password>
                     <p:spacer></p:spacer>
                     <h:message for="claveActual" class="message"/>
                     <h:outputText value="Clave Nueva: " />
-                    <p:password id="claveNueva" required="true" requiredMessage="Debe ingresar Clave Nueva" value="#{datosPersonalesBean.claveNueva}"  feedback="true"></p:password>
+                    <p:password id="claveNueva" required="true" requiredMessage="Debe ingresar Clave Nueva" value="#{datosPersonalesBean.claveNueva}"  feedback="true" maxlength="16"></p:password>
                     <p:spacer></p:spacer>
                     <h:message for="claveNueva" class="message"/>
                     <h:outputText value="Confirmar Clave: " />
-                    <p:password id="confirmaClaveNueva" required="true" requiredMessage="Debe ingresar Confirmacion de Clave Nueva" value="#{datosPersonalesBean.confirmaClaveNueva}"  feedback="false"></p:password>
+                    <p:password id="confirmaClaveNueva" required="true" requiredMessage="Debe ingresar Confirmacion de Clave Nueva" value="#{datosPersonalesBean.confirmaClaveNueva}"  feedback="false" maxlength="16"></p:password>
                     <p:spacer></p:spacer>
                     <h:message for="confirmaClaveNueva" class="message"/>
 

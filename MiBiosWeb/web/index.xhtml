@@ -30,11 +30,11 @@
                         <f:selectItem itemLabel="Pasaporte" itemValue="3" />
                     </p:selectOneMenu>
                     <h:outputText value="Documento: " />
-                    <p:inputText id="documento" required="true" requiredMessage="Debe ingresar Documento" value="#{loginBean.documento}" ></p:inputText>
+                    <p:inputText id="documento" required="true" requiredMessage="Debe ingresar Documento" value="#{loginBean.documento}" maxlength="16" ></p:inputText>
                     <p:spacer></p:spacer>
                     <h:message for="documento" class="message"/>
                     <h:outputText value="Clave: " />
-                    <p:password id="password" required="true" requiredMessage="Debe ingresar Clave" value="#{loginBean.clave}"  feedback="false"></p:password>
+                    <p:password id="password" required="true" requiredMessage="Debe ingresar Clave" value="#{loginBean.clave}"  feedback="false" maxlength="16"></p:password>
                     <p:spacer></p:spacer>
                     <h:message for="password" class="message"/>
                     <p:spacer></p:spacer>

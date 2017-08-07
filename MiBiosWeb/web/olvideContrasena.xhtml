@@ -30,7 +30,7 @@
                         <f:selectItem itemLabel="Pasaporte" itemValue="3" />
                     </p:selectOneMenu>
                     <h:outputText value="Documento: " />
-                    <p:inputText id="documento" required="true" requiredMessage="Debe ingresar Documento" value="#{recuperarContrasenaBean.documento}" ></p:inputText>
+                    <p:inputText id="documento" required="true" requiredMessage="Debe ingresar Documento" value="#{recuperarContrasenaBean.documento}" maxlength="16"></p:inputText>
                     <p:spacer></p:spacer>
                     <h:message for="documento" class="message"/>
                     

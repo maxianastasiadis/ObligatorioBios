@@ -30,15 +30,15 @@
                         <f:selectItem itemLabel="Pasaporte" itemValue="3" />
                     </p:selectOneMenu>
                     <h:outputText value="Documento: " />
-                    <p:inputText id="documento" required="true" requiredMessage="Debe ingresar Documento" value="#{regsitroUsuarioBean.documento}" ></p:inputText>
+                    <p:inputText id="documento" required="true" requiredMessage="Debe ingresar Documento" value="#{regsitroUsuarioBean.documento}" maxlength="16"></p:inputText>
                     <p:spacer></p:spacer>
                     <h:message for="documento" class="message"/>
                     <h:outputText value="Clave: " />
-                    <p:password id="password" required="true" requiredMessage="Debe ingresar Clave" value="#{regsitroUsuarioBean.clave}"  feedback="true"></p:password>
+                    <p:password id="password" required="true" requiredMessage="Debe ingresar Clave" value="#{regsitroUsuarioBean.clave}"  feedback="true" maxlength="16"></p:password>
                     <p:spacer></p:spacer>
                     <h:message for="password" class="message"/>
                     <h:outputText value="Confirmar Clave: " />
-                    <p:password id="password2" required="true" requiredMessage="Debe ingresar Confirmacion de Clave" value="#{regsitroUsuarioBean.confirmaClave}"  feedback="false"></p:password>
+                    <p:password id="password2" required="true" requiredMessage="Debe ingresar Confirmacion de Clave" value="#{regsitroUsuarioBean.confirmaClave}"  feedback="false" maxlength="16"></p:password>
                     <p:spacer></p:spacer>
                     <h:message for="password2" class="message"/>
                     <p:spacer></p:spacer>
