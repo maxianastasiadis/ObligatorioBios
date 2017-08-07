@@ -30,3 +30,12 @@ PrimeFaces.locales['es'] = {
     day: 'Día',
     allDayText : 'Todo el día'
 };
+
+function controlCambioClave(xhr, status, args) {
+    if(args.validationFailed || !args.cambioCorrecto) {
+        PF('dlg').jq.effect("shake", {times:5}, 100);
+    }
+    else {
+        PF('dlg').hide();
+    }
+}

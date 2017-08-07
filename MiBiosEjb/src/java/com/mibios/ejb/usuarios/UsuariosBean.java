@@ -6,6 +6,7 @@
 package com.mibios.ejb.usuarios;
 
 
+import com.mibios.dto.usuarios.ParamCambiarContrasena;
 import com.mibios.dto.usuarios.ParamLogin;
 import com.mibios.dto.usuarios.ReturnLogin;
 import com.mibios.dto.usuarios.ParamRecuperarContrasena;
@@ -157,6 +158,48 @@ public class UsuariosBean implements UsuariosBeanLocal {
                 objUsuario.setClave("ingresarnueva");
                 UsuariosJpaPersitencia.modificarUsuario(em, objUsuario);
                 recuperar.setRecuperar(true);
+            }
+            else
+            {
+                recuperar.setRecuperar(false);
+                recuperar.setRespuesta("El Usuario no existe");
+            }
+        }
+        catch(Exception e)
+        {
+            Logger.getLogger(UsuariosBean.class.getName()).log(Level.SEVERE, null, e);
+            throw new Exception("Beans--> " + e.getMessage() + " [" + this.getClass().getSimpleName() + "]");
+        }
+        finally{
+        }
+        
+        return recuperar;
+    }
+    
+    @Override
+    public ReturnRecuperarContrasena CambiarContrasena(ParamCambiarContrasena xParamCambiarContrasena) throws Exception
+    {
+        ReturnRecuperarContrasena recuperar = new ReturnRecuperarContrasena();
+        
+        try
+        {
+            // VERIFICAR SI EXISTE USUARIO PARA TIPO PERSONA, TIPO DOCUMENTO Y DOCUMENTO
+            UsuariosPK objUsuariosPK = new UsuariosPK(xParamCambiarContrasena.getTipoPersona(), xParamCambiarContrasena.getTipoDocumento(), xParamCambiarContrasena.getDocumento());
+            if(UsuariosJpaPersitencia.existeUsuario(em, objUsuariosPK))
+            {
+                // SI EXISTE LE HAGO UPDATE A LA CLAVE, LE PONGO ingresarnueva
+                Usuarios objUsuario = UsuariosJpaPersitencia.obtenerUsuario(em, objUsuariosPK);
+                if(objUsuario.getClave().equals(xParamCambiarContrasena.getClave()))
+                {
+                    objUsuario.setClave(xParamCambiarContrasena.getClaveNueva());
+                    UsuariosJpaPersitencia.modificarUsuario(em, objUsuario);
+                    recuperar.setRecuperar(true);
+                }
+                else
+                {
+                    recuperar.setRecuperar(false);
+                    recuperar.setRespuesta("La contrasena introducida no coincide con la vigente");
+                }
             }
             else
             {

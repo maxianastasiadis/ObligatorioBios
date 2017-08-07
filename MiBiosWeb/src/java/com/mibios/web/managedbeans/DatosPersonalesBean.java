@@ -10,8 +10,11 @@ import com.mibios.dto.personas.ParamObtenerDatosPersonales;
 import com.mibios.dto.personas.ReturnActualizarDatosPersonales;
 import com.mibios.dto.usuarios.ReturnLogin;
 import com.mibios.dto.personas.ReturnObtenerDatosPersonales;
+import com.mibios.dto.usuarios.ParamCambiarContrasena;
+import com.mibios.dto.usuarios.ReturnRecuperarContrasena;
 import com.mibios.funciones.FuncionesFecha;
 import com.mibios.web.fachada.PersonasFachada;
+import com.mibios.web.fachada.UsuariosFachada;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.logging.Level;
@@ -20,6 +23,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
+import org.primefaces.context.RequestContext;
 
 /**
  *
@@ -47,6 +51,10 @@ public class DatosPersonalesBean implements Serializable  {
     private String pais;
     private String fechaIngreso;
     private String activo;
+    
+    private String claveActual;
+    private String claveNueva;
+    private String confirmaClaveNueva;
     
     public DatosPersonalesBean() {
         cargarDatosPersonales();
@@ -195,6 +203,30 @@ public class DatosPersonalesBean implements Serializable  {
     public void setActivo(String activo) {
         this.activo = activo;
     }
+
+    public String getClaveActual() {
+        return claveActual;
+    }
+
+    public void setClaveActual(String claveActual) {
+        this.claveActual = claveActual;
+    }
+
+    public String getClaveNueva() {
+        return claveNueva;
+    }
+
+    public void setClaveNueva(String claveNueva) {
+        this.claveNueva = claveNueva;
+    }
+
+    public String getConfirmaClaveNueva() {
+        return confirmaClaveNueva;
+    }
+
+    public void setConfirmaClaveNueva(String confirmaClaveNueva) {
+        this.confirmaClaveNueva = confirmaClaveNueva;
+    }    
     
     public Boolean ActualizarDatosPersonales() {
         ParamActualizarDatosPersonales paramActualizarDatosPersonales = new ParamActualizarDatosPersonales();
@@ -274,5 +306,53 @@ public class DatosPersonalesBean implements Serializable  {
         {
             Logger.getLogger(DatosPersonalesBean.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+    
+    public Boolean CambiarContrasena() 
+    {
+        ReturnRecuperarContrasena returnRecuperarContrasena = new ReturnRecuperarContrasena();
+        ParamCambiarContrasena xParamCambiarContrasena = new ParamCambiarContrasena();
+        UsuariosFachada usuarioFachada = new UsuariosFachada();
+        
+        try
+        {
+            RequestContext context = RequestContext.getCurrentInstance();
+            FacesMessage message = null;
+            boolean cambioCorrecto = false;
+
+            if(claveActual != null && claveNueva != null && confirmaClaveNueva != null && claveNueva.equals(confirmaClaveNueva)) 
+            {
+                ReturnLogin objReturnSesion = (ReturnLogin)FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("Usuario");
+                
+                xParamCambiarContrasena.setClave(claveActual);
+                xParamCambiarContrasena.setClaveNueva(claveNueva);
+                xParamCambiarContrasena.setTipoPersona(objReturnSesion.getTipoPersona());
+                xParamCambiarContrasena.setTipoDocumento(objReturnSesion.getTipoDocumento());
+                xParamCambiarContrasena.setDocumento(objReturnSesion.getDocumento());
+
+                returnRecuperarContrasena = usuarioFachada.CambiarContrasena(xParamCambiarContrasena);
+                
+                if(returnRecuperarContrasena.getRecuperar())
+                {
+                   cambioCorrecto = true;
+                   message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Cambio", "Se modifico clave"); 
+                }
+                else 
+                {
+                    message = new FacesMessage(FacesMessage.SEVERITY_WARN, "Error", returnRecuperarContrasena.getRespuesta());
+                }  
+            } 
+            else 
+            {
+                message = new FacesMessage(FacesMessage.SEVERITY_WARN, "Error", "No Coinciden Claves");
+            }
+
+            FacesContext.getCurrentInstance().addMessage(null, message);
+            context.addCallbackParam("cambioCorrecto", cambioCorrecto);
+        } catch (Exception ex) {
+            Logger.getLogger(DatosPersonalesBean.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return returnRecuperarContrasena.getRecuperar();
     }
 }

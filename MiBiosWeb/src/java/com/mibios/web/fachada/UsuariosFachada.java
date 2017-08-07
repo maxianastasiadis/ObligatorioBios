@@ -5,6 +5,7 @@
  */
 package com.mibios.web.fachada;
 
+import com.mibios.dto.usuarios.ParamCambiarContrasena;
 import com.mibios.dto.usuarios.ParamLogin;
 import com.mibios.dto.usuarios.ParamRecuperarContrasena;
 import com.mibios.dto.usuarios.ParamRegistro;
@@ -38,6 +39,11 @@ public class UsuariosFachada {
     public ReturnRecuperarContrasena RecuperarContrasena(ParamRecuperarContrasena xParamRecuperarContrasena) throws Exception
     {
         return lookupUsuariosBean().RecuperarContrasena(xParamRecuperarContrasena);
+    }
+    
+    public ReturnRecuperarContrasena CambiarContrasena(ParamCambiarContrasena xParamCambiarContrasena) throws Exception
+    {
+        return lookupUsuariosBean().CambiarContrasena(xParamCambiarContrasena);
     }
     
     /**********************************/

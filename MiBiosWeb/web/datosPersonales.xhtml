@@ -16,6 +16,7 @@
     
     <ui:define name="contenido">
         <h:form id="datosPersonales" class="datosPersonales-form">
+            <p:growl id="growl" sticky="false" life="3000" showDetail="true" />
             <p:panel header="Datos Personales">
                 <h:panelGrid id="datosPersonalesPanel" columns="5">
                     <h:outputText value="Tipo Persona:" />
@@ -84,10 +85,12 @@
                     <h:outputText value="Ciudad " />
                     <p:inputText id="ciudad" required="true" requiredMessage="Debe ingresar Ciudad" value="#{datosPersonalesBean.ciudad}" ></p:inputText>
                     <p:spacer></p:spacer>
-                    <p:spacer></p:spacer>
+                    <p:commandButton value="Cambiar Clave" oncomplete="PF('dlg').show()" icon="ui-icon-key">
+                    </p:commandButton>
                     <p:spacer></p:spacer>
                     <h:outputText value="Direccion: " />
                     <p:inputText id="direccion" required="true" requiredMessage="Debe ingresar Direccion" value="#{datosPersonalesBean.direccion}" ></p:inputText>
+                    <p:spacer></p:spacer>
                     <p:spacer></p:spacer>
                     <p:spacer></p:spacer>
                     <p:spacer></p:spacer>
@@ -100,7 +103,28 @@
                 </h:panelGrid>
                 <h:messages class="message" globalOnly="true" />
             </p:panel>
+            
+            <p:dialog header="Cambiar Clave" widgetVar="dlg" resizable="false">
+                <h:panelGrid columns="2" cellpadding="5">
+
+                    <h:outputText value="Clave Actual: " />
+                    <p:password id="claveActual" required="true" requiredMessage="Debe ingresar Clave Actual" value="#{datosPersonalesBean.claveActual}"  feedback="false"></p:password>
+                    <p:spacer></p:spacer>
+                    <h:message for="claveActual" class="message"/>
+                    <h:outputText value="Clave Nueva: " />
+                    <p:password id="claveNueva" required="true" requiredMessage="Debe ingresar Clave Nueva" value="#{datosPersonalesBean.claveNueva}"  feedback="true"></p:password>
+                    <p:spacer></p:spacer>
+                    <h:message for="claveNueva" class="message"/>
+                    <h:outputText value="Confirmar Clave: " />
+                    <p:password id="confirmaClaveNueva" required="true" requiredMessage="Debe ingresar Confirmacion de Clave Nueva" value="#{datosPersonalesBean.confirmaClaveNueva}"  feedback="false"></p:password>
+                    <p:spacer></p:spacer>
+                    <h:message for="confirmaClaveNueva" class="message"/>
+
+                    <f:facet name="footer">
+                        <p:commandButton value="Comfirmar" icon="ui-icon-check" ajax="true" update="growl" actionListener="#{datosPersonalesBean.CambiarContrasena}" oncomplete="controlCambioClave(xhr, status, args)"/>
+                    </f:facet>  
+                </h:panelGrid>
+            </p:dialog>
         </h:form>
     </ui:define>
-
 </ui:composition>

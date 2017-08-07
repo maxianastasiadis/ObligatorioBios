@@ -5,6 +5,7 @@
  */
 package com.mibios.ejb.usuarios;
 
+import com.mibios.dto.usuarios.ParamCambiarContrasena;
 import com.mibios.dto.usuarios.ParamLogin;
 import com.mibios.dto.usuarios.ParamRecuperarContrasena;
 import com.mibios.dto.usuarios.ParamRegistro;
@@ -25,5 +26,7 @@ public interface UsuariosBeanLocal {
     public ReturnRegistro Registro(ParamRegistro xParamRegistro) throws Exception;
     
     public ReturnRecuperarContrasena RecuperarContrasena(ParamRecuperarContrasena xParamRecuperarContrasena) throws Exception;
+    
+    public ReturnRecuperarContrasena CambiarContrasena(ParamCambiarContrasena xParamCambiarContrasena) throws Exception;
     
 }
