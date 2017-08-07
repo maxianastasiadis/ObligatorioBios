@@ -69,7 +69,7 @@
                         </f:facet>
                         <h:outputText value="#{curso.horario}" />
                     </p:column>
-                    <p:column style="width:32px;text-align: center">
+                    <p:column style="width:32px;text-align: center" exportable="false">
                         <p:commandButton update=":form:cursoDetalle" oncomplete="PF('cursoDialogo').show()" icon="ui-icon-search" title="View">
                             <f:setPropertyActionListener value="#{curso.datosCursoDetalle}" target="#{misCursosBean.verDetalles}" />
                        </p:commandButton>

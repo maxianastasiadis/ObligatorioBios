@@ -16,7 +16,6 @@
     
     <ui:define name="contenido">
         <h:form id="datosPersonales" class="datosPersonales-form">
-            <p:growl id="growl" sticky="false" life="3000" showDetail="true" />
             <p:panel header="Datos Personales">
                 <h:panelGrid id="datosPersonalesPanel" columns="5">
                     <h:outputText value="Tipo Persona:" />
@@ -103,7 +102,9 @@
                 </h:panelGrid>
                 <h:messages class="message" globalOnly="true" />
             </p:panel>
-            
+        </h:form>
+        <h:form id="formDetalle">
+            <p:growl id="growl" sticky="false" life="3000" showDetail="true" />
             <p:dialog header="Cambiar Clave" widgetVar="dlg" resizable="false">
                 <h:panelGrid columns="2" cellpadding="5">
 
