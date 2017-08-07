@@ -47,37 +47,37 @@
                     <f:facet name="{Exporters}">
                         <h:commandLink>
                             <p:graphicImage name="/img/excel.png" width="24"/>
-                            <p:dataExporter type="xls" target="tbl" fileName="lineaCuentaCorriente" />
+                            <p:dataExporter type="xls" target="tbl" fileName="CuentaCorriente" />
                         </h:commandLink>
                         <h:commandLink>
                             <p:graphicImage name="/img/pdf.png" width="24"/>
-                            <p:dataExporter type="pdf" target="tbl" fileName="lineaCuentaCorriente"/>
+                            <p:dataExporter type="pdf" target="tbl" fileName="CuentaCorriente"/>
                         </h:commandLink>
                         <h:commandLink>
                             <p:graphicImage name="/img/csv.png" width="24"/>
-                            <p:dataExporter type="csv" target="tbl" fileName="lineaCuentaCorriente" />
+                            <p:dataExporter type="csv" target="tbl" fileName="CuentaCorriente" />
                         </h:commandLink>
                         <h:commandLink>
                             <p:graphicImage name="/img/xml.png" width="24"/>
-                            <p:dataExporter type="xml" target="tbl" fileName="lineaCuentaCorriente" />
+                            <p:dataExporter type="xml" target="tbl" fileName="CuentaCorriente" />
                         </h:commandLink>
                     </f:facet>
                     <p:ajax event="rowEdit" listener="#{pagoBean.onRowEdit}" update=":CuentaCorrienteForm:msgs" oncomplete="onCellEditCuentaCorrienteTableComplete()"/>
                     <p:ajax event="rowEditCancel" listener="#{pagoBean.onRowCancel}" update=":CuentaCorrienteForm:msgs" />
                     
-                    <p:column>
+                    <p:column class="centrarTexto">
                             <f:facet name="header">
                                 <h:outputText value="Fecha" />
                             </f:facet>
                             <h:outputText value="#{transaccion.fecha}"/>
                     </p:column>
-                    <p:column>
+                    <p:column class="centrarTexto">
                             <f:facet name="header">
                                 <h:outputText value="Hora"/>
                             </f:facet>
                             <h:outputText value="#{transaccion.hora}" />
                     </p:column>
-                    <p:column headerText="Concepto">
+                    <p:column headerText="Concepto" class="centrarTexto">
                         <p:cellEditor>
                             <f:facet name="output"><h:outputText value="#{transaccion.concepto}" /></f:facet>
                             <f:facet name="input"><p:inputText id="msgs" required="true" requiredMessage="Debe ingresar concepto" maxlength="500" value="#{transaccion.concepto}" /></f:facet>
@@ -99,7 +99,7 @@
                         <f:facet name="header">
                             <h:outputText value="Saldo" />
                         </f:facet>
-                        <h:outputText value="#{transaccion.saldo}" />
+                        <h:outputText value="#{transaccion.saldo}"/>
                     </p:column>
                     <p:column style="width:32px"  exportable="false">
                         <p:rowEditor/>
@@ -108,6 +108,5 @@
             </p:panel>
         </h:form>
     </ui:define>
-
 </ui:composition>
 

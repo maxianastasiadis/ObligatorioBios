@@ -24,53 +24,53 @@
                     <f:facet name="{Exporters}">
                         <h:commandLink>
                             <p:graphicImage name="/img/excel.png" width="24"/>
-                            <p:dataExporter type="xls" target="tbl" fileName="lineaMisCursos" />
+                            <p:dataExporter type="xls" target="tbl" fileName="MisCursos" />
                         </h:commandLink>
                         <h:commandLink>
                             <p:graphicImage name="/img/pdf.png" width="24"/>
-                            <p:dataExporter type="pdf" target="tbl" fileName="lineaMisCursos"/>
+                            <p:dataExporter type="pdf" target="tbl" fileName="MisCursos"/>
                         </h:commandLink>
                         <h:commandLink>
                             <p:graphicImage name="/img/csv.png" width="24"/>
-                            <p:dataExporter type="csv" target="tbl" fileName="lineaMisCursos" />
+                            <p:dataExporter type="csv" target="tbl" fileName="MisCursos" />
                         </h:commandLink>
                         <h:commandLink>
                             <p:graphicImage name="/img/xml.png" width="24"/>
-                            <p:dataExporter type="xml" target="tbl" fileName="lineaMisCursos" />
+                            <p:dataExporter type="xml" target="tbl" fileName="MisCursos" />
                         </h:commandLink>
                     </f:facet>
-                    <p:column>
+                    <p:column class="centrarTexto">
                         <f:facet name="header">
                             <h:outputText value="Curso" />
                         </f:facet>
                         <h:outputText value="#{curso.nombre}" />
                     </p:column>
-                    <p:column>
+                    <p:column class="centrarTexto">
                         <f:facet name="header">
                             <h:outputText value="Comienzo"/>
                         </f:facet>
                         <h:outputText value="#{curso.fechaComienzo}" />
                     </p:column>
-                    <p:column>
+                    <p:column class="centrarTexto">
                         <f:facet name="header">
                             <h:outputText value="Finaliza" />
                         </f:facet>
                         <h:outputText value="#{curso.fechaFin}" />
                     </p:column>
-                    <p:column>
+                    <p:column class="centrarTexto">
                         <f:facet name="header">
                             <h:outputText value="Dias" />
                         </f:facet>
                         <h:outputText value="#{curso.dias}" />
                     </p:column>
-                    <p:column>
+                    <p:column class="centrarTexto">
                         <f:facet name="header">
                             <h:outputText value="Horario" />
                         </f:facet>
                         <h:outputText value="#{curso.horario}" />
                     </p:column>
                     <p:column style="width:32px;text-align: center" exportable="false">
-                        <p:commandButton update=":form:cursoDetalle" oncomplete="PF('cursoDialogo').show()" icon="ui-icon-search" title="View">
+                        <p:commandButton update=":form:cursoDetalle" oncomplete="PF('cursoDialogo').show()" icon="ui-icon-search" title="Ver Detalle">
                             <f:setPropertyActionListener value="#{curso.datosCursoDetalle}" target="#{misCursosBean.verDetalles}" />
                        </p:commandButton>
                    </p:column>

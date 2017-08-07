@@ -24,22 +24,22 @@
                     <f:facet name="{Exporters}">
                         <h:commandLink>
                             <p:graphicImage name="/img/excel.png" width="24"/>
-                            <p:dataExporter type="xls" target="tbl" fileName="lineaMisCursos" />
+                            <p:dataExporter type="xls" target="tbl" fileName="Cursos" />
                         </h:commandLink>
                         <h:commandLink>
                             <p:graphicImage name="/img/pdf.png" width="24"/>
-                            <p:dataExporter type="pdf" target="tbl" fileName="lineaMisCursos"/>
+                            <p:dataExporter type="pdf" target="tbl" fileName="Cursos"/>
                         </h:commandLink>
                         <h:commandLink>
                             <p:graphicImage name="/img/csv.png" width="24"/>
-                            <p:dataExporter type="csv" target="tbl" fileName="lineaMisCursos" />
+                            <p:dataExporter type="csv" target="tbl" fileName="Cursos" />
                         </h:commandLink>
                         <h:commandLink>
                             <p:graphicImage name="/img/xml.png" width="24"/>
-                            <p:dataExporter type="xml" target="tbl" fileName="lineaMisCursos" />
+                            <p:dataExporter type="xml" target="tbl" fileName="Cursos" />
                         </h:commandLink>
                     </f:facet>
-                    <p:column>
+                    <p:column class="centrarTexto">
                         <f:facet name="header">
                             <h:outputText value="Curso" />
                         </f:facet>
@@ -47,7 +47,7 @@
                     </p:column>
                     
                     <p:column style="width:32px;text-align: center" exportable="false">
-                        <p:commandButton update=":form:cursoDetalle" oncomplete="PF('cursoDialogo').show()" icon="ui-icon-search" title="View">
+                        <p:commandButton update=":form:cursoDetalle" oncomplete="PF('cursoDialogo').show()" icon="ui-icon-search" title="Ver Detalle">
                             <f:setPropertyActionListener value="#{curso.listaClases}" target="#{cursosBean.listaClases}" />
                        </p:commandButton>
                    </p:column>
@@ -110,8 +110,6 @@
                     </p:dataTable>
                 </p:outputPanel>
             </p:dialog>
-        
         </h:form>
     </ui:define>
-
 </ui:composition>

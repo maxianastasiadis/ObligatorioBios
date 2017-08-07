@@ -24,22 +24,22 @@
                     <f:facet name="{Exporters}">
                         <h:commandLink>
                             <p:graphicImage name="/img/excel.png" width="24"/>
-                            <p:dataExporter type="xls" target="tbl" fileName="lineaMisCursos" />
+                            <p:dataExporter type="xls" target="tbl" fileName="Cursos" />
                         </h:commandLink>
                         <h:commandLink>
                             <p:graphicImage name="/img/pdf.png" width="24"/>
-                            <p:dataExporter type="pdf" target="tbl" fileName="lineaMisCursos"/>
+                            <p:dataExporter type="pdf" target="tbl" fileName="Cursos"/>
                         </h:commandLink>
                         <h:commandLink>
                             <p:graphicImage name="/img/csv.png" width="24"/>
-                            <p:dataExporter type="csv" target="tbl" fileName="lineaMisCursos" />
+                            <p:dataExporter type="csv" target="tbl" fileName="Cursos" />
                         </h:commandLink>
                         <h:commandLink>
                             <p:graphicImage name="/img/xml.png" width="24"/>
-                            <p:dataExporter type="xml" target="tbl" fileName="lineaMisCursos" />
+                            <p:dataExporter type="xml" target="tbl" fileName="Cursos" />
                         </h:commandLink>
                     </f:facet>
-                    <p:column>
+                    <p:column class="centrarTexto">
                         <f:facet name="header">
                             <h:outputText value="Curso" />
                         </f:facet>
@@ -47,7 +47,7 @@
                     </p:column>
                     
                     <p:column style="width:32px;text-align: center" exportable="false">
-                        <p:commandButton update=":form:cursoDetalle" oncomplete="PF('cursoDialogo').show()" icon="ui-icon-search" title="View">
+                        <p:commandButton update=":form:cursoDetalle" oncomplete="PF('cursoDialogo').show()" icon="ui-icon-search" title="Ver Detalle">
                             <f:setPropertyActionListener value="#{curso.listaClases}" target="#{cursosBean.listaClases}" />
                        </p:commandButton>
                    </p:column>
@@ -58,61 +58,58 @@
                 <p:outputPanel id="cursoDetalle" style="text-align:center;">
                     <p:dataTable id="tblDetail" var="datos" value="#{cursosBean.listaClases}"
                              emptyMessage="No tiene cursos asignados">
-                        <p:column>
+                        <p:column class="centrarTexto">
                             <f:facet name="header">
                                 <h:outputText value="Curso"/>
                             </f:facet>
                             <h:outputText value="#{datos.nombreCurso}" />
                         </p:column>
-                        <p:column>
+                        <p:column class="centrarTexto">
                             <f:facet name="header">
                                 <h:outputText value="Comienzo"/>
                             </f:facet>
                             <h:outputText value="#{datos.fechaComienzo}" />
                         </p:column>
-                        <p:column>
+                        <p:column class="centrarTexto">
                             <f:facet name="header">
                                 <h:outputText value="Finaliza" />
                             </f:facet>
                             <h:outputText value="#{datos.fechaFin}" />
                         </p:column>
-                        <p:column>
+                        <p:column class="centrarTexto">
                             <f:facet name="header">
                                 <h:outputText value="Dias" />
                             </f:facet>
                             <h:outputText value="#{datos.dias}" />
                         </p:column>
-                        <p:column>
+                        <p:column class="centrarTexto">
                             <f:facet name="header">
                                 <h:outputText value="Horario" />
                             </f:facet>
                             <h:outputText value="#{datos.horario}" />
                         </p:column>
-                        <p:column>
+                        <p:column class="centrarTexto">
                             <f:facet name="header">
                                 <h:outputText value="Docente" />
                             </f:facet>
                             <h:outputText value="#{datos.docente}" />
                         </p:column>
-                        <p:column>
+                        <p:column class="centrarTexto">
                             <f:facet name="header">
                                 <h:outputText value="Salon" />
                             </f:facet>
                             <h:outputText value="#{datos.salon}" />
                         </p:column>
-                        <p:column>
+                        <p:column class="alinearALaDerecha">
                             <f:facet name="header">
                                 <h:outputText value="Cuota" />
                             </f:facet>
                             <h:outputText value="$#{datos.cuota}" />
                         </p:column>
-
                     </p:dataTable>
                 </p:outputPanel>
             </p:dialog>
-        
         </h:form>
     </ui:define>
-
 </ui:composition>
 

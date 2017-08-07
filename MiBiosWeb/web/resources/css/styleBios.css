@@ -48,3 +48,7 @@ and open the template in the editor.
 .alinearALaDerecha{
     text-align: right;
 }
+
+.centrarTexto{
+    text-align: center;
+}

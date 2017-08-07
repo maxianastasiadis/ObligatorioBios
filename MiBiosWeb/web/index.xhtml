@@ -17,6 +17,8 @@
     <ui:define name="contenido">
         <h:form id="loginForm" class="login-form">
             <p:panel header="Login">
+                <p:focus for="documento"/>
+                
                 <h:panelGrid id="loginPanel" columns="2">
                     <h:outputText value="Tipo Persona:" />
                     <p:selectOneMenu id="tipoPersona" value="#{loginBean.tipoPersona}">
