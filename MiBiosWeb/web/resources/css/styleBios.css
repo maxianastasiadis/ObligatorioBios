@@ -35,14 +35,11 @@ and open the template in the editor.
 
 #cabecera {
     text-align: center;
-    margin: 10px 0 40px;
-    padding: 10px;
 }
 
 .contenido{
     position: relative;
     overflow: hidden;
-    padding: 20px;
 }
 
 .alinearALaDerecha{
