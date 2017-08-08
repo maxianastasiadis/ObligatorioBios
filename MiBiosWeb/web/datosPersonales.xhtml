@@ -16,6 +16,7 @@
     
     <ui:define name="contenido">
         <h:form id="datosPersonales" class="datosPersonales-form">
+            <p:growl id="mensajeFlotante" life="3000"/>
             <p:panel header="Datos Personales">
                 <h:panelGrid id="datosPersonalesPanel" columns="5">
                     <h:outputText value="Tipo Persona:" />
@@ -36,14 +37,14 @@
                     <p:inputText id="documento" required="true" requiredMessage="Debe ingresar Documento" value="#{datosPersonalesBean.documento}" readonly="true"></p:inputText>
                     <p:spacer></p:spacer>
                     <h:outputText value="Apellido 1: " />
-                    <p:inputText id="ape1" required="true" requiredMessage="Debe ingresar Apellido 1" value="#{datosPersonalesBean.apellido1}" ></p:inputText>
+                    <p:inputText id="ape1" required="true" requiredMessage="Debe ingresar Apellido 1" value="#{datosPersonalesBean.apellido1}" maxlength="30"></p:inputText>
                     <h:outputText value="Apellido 2: " />
-                    <p:inputText id="ape2" required="true" requiredMessage="Debe ingresar Apellido 2" value="#{datosPersonalesBean.apellido2}" ></p:inputText>
+                    <p:inputText id="ape2" required="true" requiredMessage="Debe ingresar Apellido 2" value="#{datosPersonalesBean.apellido2}" maxlength="30"></p:inputText>
                     <p:spacer></p:spacer>
                     <h:outputText value="Nombre 1: " />
-                    <p:inputText id="nom1" required="true" requiredMessage="Debe ingresar Nombre 1" value="#{datosPersonalesBean.nombre1}" ></p:inputText>
+                    <p:inputText id="nom1" required="true" requiredMessage="Debe ingresar Nombre 1" value="#{datosPersonalesBean.nombre1}" maxlength="30"></p:inputText>
                     <h:outputText value="Nombre 2: " />
-                    <p:inputText id="nom2" required="true" requiredMessage="Debe ingresar Nombre 2" value="#{datosPersonalesBean.nombre2}" ></p:inputText>
+                    <p:inputText id="nom2" required="true" requiredMessage="Debe ingresar Nombre 2" value="#{datosPersonalesBean.nombre2}" maxlength="30"></p:inputText>
                     <p:spacer></p:spacer>
                     <h:outputText value="Fecha Nac.: " />
                     <p:calendar id="fechaNac" required="true" requiredMessage="Debe ingresar Fecha Nacimiento" value="#{datosPersonalesBean.fechaNacimiento}"
@@ -62,33 +63,35 @@
                     </p:selectOneMenu>
                     <p:spacer></p:spacer>
                     <h:outputText value="E-Mail: " />
-                    <p:inputText id="eMail" required="true" requiredMessage="Debe ingresar e-Mail" value="#{datosPersonalesBean.mail}" ></p:inputText>
+                    <p:inputText id="eMail" required="true" requiredMessage="Debe ingresar e-Mail" validatorMessage="El formato del eMail no es valido" value="#{datosPersonalesBean.mail}" maxlength="50">
+                        <f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+                    </p:inputText>
                     <p:spacer></p:spacer>
                     <p:spacer></p:spacer>
                     <p:spacer></p:spacer>
                     <h:outputText value="Telefono: " />
-                    <p:inputText id="telefono" required="true" requiredMessage="Debe ingresar Telefono" value="#{datosPersonalesBean.telefono}" ></p:inputText>
+                    <p:inputText id="telefono" required="true" requiredMessage="Debe ingresar Telefono" value="#{datosPersonalesBean.telefono}" maxlength="8"></p:inputText>
                     <h:outputText value="Celular: " />
-                    <p:inputText id="celular" required="true" requiredMessage="Debe ingresar Celular" value="#{datosPersonalesBean.celular}" ></p:inputText>
+                    <p:inputText id="celular" required="true" requiredMessage="Debe ingresar Celular" value="#{datosPersonalesBean.celular}" maxlength="9"></p:inputText>
                     <p:spacer></p:spacer>
                     <h:outputText value="Pais: " />
-                    <p:inputText id="pais" required="true" requiredMessage="Debe ingresar Pais" value="#{datosPersonalesBean.pais}" ></p:inputText>
+                    <p:inputText id="pais" required="true" requiredMessage="Debe ingresar Pais" value="#{datosPersonalesBean.pais}" maxlength="30"></p:inputText>
                     <p:spacer></p:spacer>
                     <p:spacer></p:spacer>
                     <p:spacer></p:spacer>
                     <h:outputText value="Departamento: " />
-                    <p:inputText id="departamento" required="true" requiredMessage="Debe ingresar Departamento" value="#{datosPersonalesBean.departamento}" ></p:inputText>
+                    <p:inputText id="departamento" required="true" requiredMessage="Debe ingresar Departamento" value="#{datosPersonalesBean.departamento}" maxlength="30"></p:inputText>
                     <p:spacer></p:spacer>
                     <p:spacer></p:spacer>
                     <p:spacer></p:spacer>
                     <h:outputText value="Ciudad " />
-                    <p:inputText id="ciudad" required="true" requiredMessage="Debe ingresar Ciudad" value="#{datosPersonalesBean.ciudad}" ></p:inputText>
+                    <p:inputText id="ciudad" required="true" requiredMessage="Debe ingresar Ciudad" value="#{datosPersonalesBean.ciudad}" maxlength="30"></p:inputText>
                     <p:spacer></p:spacer>
                     <p:commandButton value="Cambiar Clave" oncomplete="PF('dlg').show()" icon="ui-icon-key">
                     </p:commandButton>
                     <p:spacer></p:spacer>
                     <h:outputText value="Direccion: " />
-                    <p:inputText id="direccion" required="true" requiredMessage="Debe ingresar Direccion" value="#{datosPersonalesBean.direccion}" ></p:inputText>
+                    <p:inputText id="direccion" required="true" requiredMessage="Debe ingresar Direccion" value="#{datosPersonalesBean.direccion}" maxlength="50"></p:inputText>
                     <p:spacer></p:spacer>
                     <p:spacer></p:spacer>
                     <p:spacer></p:spacer>
@@ -98,13 +101,13 @@
                     <p:spacer></p:spacer>
                     <p:spacer></p:spacer>
                     <p:spacer></p:spacer>
-                    <p:commandButton action="#{datosPersonalesBean.ActualizarDatosPersonales}" value="Actualizar" icon="ui-icon-check" ajax="true" update="datosPersonales"></p:commandButton>
+                    <p:commandButton action="#{datosPersonalesBean.ActualizarDatosPersonales}" value="Actualizar" icon="ui-icon-check" ajax="true" update="datosPersonales, mensajeFlotante"></p:commandButton>
                 </h:panelGrid>
                 <h:messages class="message" globalOnly="true" />
             </p:panel>
         </h:form>
         <h:form id="formDetalle">
-            <p:growl id="growl" sticky="false" life="3000" showDetail="true" />
+            <p:growl id="growl" sticky="false" life="3000"/>
             <p:dialog header="Cambiar Clave" widgetVar="dlg" resizable="false">
                 <h:panelGrid columns="2" cellpadding="5">
 
