@@ -15,6 +15,7 @@
     </ui:define>
     
     <ui:define name="contenido">
+               
         <h:form id="form">
             <p:panel header="Ver Cursos">
                 <p:dataTable id="tbl" var="curso" value="#{cursosBean.listaCursos}"
@@ -53,6 +54,17 @@
                    </p:column>
                 </p:dataTable>
             </p:panel>
+            
+            <p:commandButton update=":form" value="Ver Centros Bios" oncomplete="PF('mapaCentros').show()" title="Ver Centros">
+                    
+               </p:commandButton>
+            
+            <p:dialog header="Centros BIOS" widgetVar="mapaCentros" modal="true" showEffect="fade" hideEffect="fade" resizable="false" height="400px" width="400px">
+               
+                <p:gmap center="-34.905768,-56.1911781" zoom="15" type="HYBRID" style="width:100%;height:400px" model="#{cursosBean.modeloParaMapaCentrosBios}" />
+
+               
+            </p:dialog>
             
             <p:dialog header="Detalles Curso" widgetVar="cursoDialogo" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
                 <p:outputPanel id="cursoDetalle" style="text-align:center;">
@@ -109,6 +121,8 @@
                     </p:dataTable>
                 </p:outputPanel>
             </p:dialog>
+            
+          
         </h:form>
     </ui:define>
 </ui:composition>
