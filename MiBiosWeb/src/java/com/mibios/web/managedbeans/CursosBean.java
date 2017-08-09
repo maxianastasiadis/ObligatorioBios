@@ -85,9 +85,4 @@ public class CursosBean {
     public MapModel getModeloParaMapaCentrosBios() {
         return modeloParaMapaCentrosBios;
     }
-
-  
-    
-    
-    
 }

@@ -13,7 +13,6 @@
     
     <ui:define name="cabecera">
         <ui:include src="menuPrincipal.xhtml" />
-        <script src="http://maps.google.com/maps/api/js?key=AIzaSyDuv-Hm9tfenX_vz0cY1Jp8eDgqc5lI24M" type="text/javascript" ></script>
     </ui:define>
     
     <ui:define name="contenido">
@@ -56,12 +55,6 @@
                    </p:column>
                 </p:dataTable>
             </p:panel>
-            
-            <p:commandButton update=":form" value="Ver Centros Bios" oncomplete="PF('mapaCentros').show()" title="Ver Centros"></p:commandButton>
-            
-            <p:dialog header="Centros BIOS" widgetVar="mapaCentros" modal="true" showEffect="fade" hideEffect="fade" resizable="false" height="400px" width="400px">
-                <p:gmap center="-34.905768,-56.1911781" zoom="15" type="HYBRID" style="width:100%;height:400px" model="#{cursosBean.modeloParaMapaCentrosBios}" />
-            </p:dialog>
             
             <p:dialog header="Detalles Curso" widgetVar="cursoDialogo" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
                 <p:outputPanel id="cursoDetalle" style="text-align:center;">
