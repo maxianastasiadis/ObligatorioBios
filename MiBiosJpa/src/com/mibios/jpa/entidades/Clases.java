@@ -6,6 +6,7 @@
 package com.mibios.jpa.entidades;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -42,6 +43,9 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Clases.findByDuracionHoras", query = "SELECT c FROM Clases c WHERE c.duracionHoras = :duracionHoras"),
     @NamedQuery(name = "Clases.findBySalon", query = "SELECT c FROM Clases c WHERE c.salon = :salon")})
 public class Clases implements Serializable {
+    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
+    @Column(name = "IMPORTE_CUOTA")
+    private BigDecimal importeCuota;
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -190,6 +194,14 @@ public class Clases implements Serializable {
     @Override
     public String toString() {
         return "com.mibios.jpa.entidades.Clases[ idClase=" + idClase + " ]";
+    }
+
+    public BigDecimal getImporteCuota() {
+        return importeCuota;
+    }
+
+    public void setImporteCuota(BigDecimal importeCuota) {
+        this.importeCuota = importeCuota;
     }
     
 }

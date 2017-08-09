@@ -14,6 +14,7 @@ import java.io.Serializable;
 public class ClaseDatos implements Serializable{
     
     private String nombreCurso;
+    private String modalidad;
     private String fechaComienzo;
     private String fechaFin;
     private String dias;
@@ -28,6 +29,14 @@ public class ClaseDatos implements Serializable{
 
     public void setNombreCurso(String nombreCurso) {
         this.nombreCurso = nombreCurso;
+    }
+
+    public String getModalidad() {
+        return modalidad;
+    }
+
+    public void setModalidad(String modalidad) {
+        this.modalidad = modalidad;
     }
 
     public String getFechaComienzo() {

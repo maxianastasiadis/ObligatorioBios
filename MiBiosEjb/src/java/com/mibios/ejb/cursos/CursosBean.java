@@ -53,7 +53,7 @@ public class CursosBean implements CursosBeanLocal {
                 misCursos.setDocente(clase.getClases().getIdDocente().getPersonas().getNombre1() + " " + clase.getClases().getIdDocente().getPersonas().getApellido1());
                 misCursos.setSalon(clase.getClases().getSalon());
                 misCursos.setBeca(clase.getPorcentajeBeca().toString());
-                misCursos.setCuota(clase.getImporteCuota().toString());
+                misCursos.setCuota(clase.getClases().getImporteCuota().toString());
                 misCursos.setAprobadoSn(clase.getAprobadoSn());
                 
                 colReturnMisCursos.add(misCursos);
@@ -87,11 +87,19 @@ public class CursosBean implements CursosBeanLocal {
                 for(Clases clase: curso.getClasesList())
                 {
                     ClaseDatos claseDatos = new ClaseDatos();
-                    claseDatos.setNombreCurso(cursos.getNombre());
-                    claseDatos.setCuota("1000.00");
+                    claseDatos.setNombreCurso(cursos.getNombre() + " - " + cursos.getDescripcion());
+                    if(clase.getModalidadClase().equalsIgnoreCase("P"))
+                    {
+                        claseDatos.setModalidad("Presencial");
+                    }
+                    else
+                    {
+                        claseDatos.setModalidad("A Distancia");
+                    }
+                    claseDatos.setCuota(clase.getImporteCuota().toString());
                     claseDatos.setDias(clase.getDiasClase());
-                    claseDatos.setFechaComienzo(clase.getFechaComienzo());
-                    claseDatos.setFechaFin(clase.getFechaFin());
+                    claseDatos.setFechaComienzo(FuncionesFecha.mostrarFechaDDMMAAAAString(clase.getFechaComienzo()));
+                    claseDatos.setFechaFin(FuncionesFecha.mostrarFechaDDMMAAAAString(clase.getFechaFin()));
                     claseDatos.setHorario(FuncionesFecha.mostrarHoraHHMM(clase.getHorarioComienzo()) + " A " + FuncionesFecha.mostrarHoraHHMM(FuncionesFecha.incrementarHora(clase.getHorarioComienzo(), clase.getDuracionHoras())));
                     claseDatos.setDocente(clase.getIdDocente().getPersonas().getNombre1() + " " + clase.getIdDocente().getPersonas().getApellido1());
                     claseDatos.setSalon(clase.getSalon());

@@ -29,7 +29,6 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "ClaseEstudiantes.findAll", query = "SELECT c FROM ClaseEstudiantes c"),
     @NamedQuery(name = "ClaseEstudiantes.findByIdClase", query = "SELECT c FROM ClaseEstudiantes c WHERE c.claseEstudiantesPK.idClase = :idClase"),
     @NamedQuery(name = "ClaseEstudiantes.findByIdEstudiante", query = "SELECT c FROM ClaseEstudiantes c WHERE c.claseEstudiantesPK.idEstudiante = :idEstudiante"),
-    @NamedQuery(name = "ClaseEstudiantes.findByImporteCuota", query = "SELECT c FROM ClaseEstudiantes c WHERE c.importeCuota = :importeCuota"),
     @NamedQuery(name = "ClaseEstudiantes.findByPorcentajeBeca", query = "SELECT c FROM ClaseEstudiantes c WHERE c.porcentajeBeca = :porcentajeBeca"),
     @NamedQuery(name = "ClaseEstudiantes.findByAprobadoSn", query = "SELECT c FROM ClaseEstudiantes c WHERE c.aprobadoSn = :aprobadoSn")})
 public class ClaseEstudiantes implements Serializable {
@@ -37,8 +36,6 @@ public class ClaseEstudiantes implements Serializable {
     @EmbeddedId
     protected ClaseEstudiantesPK claseEstudiantesPK;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
-    @Column(name = "IMPORTE_CUOTA")
-    private BigDecimal importeCuota;
     @Column(name = "PORCENTAJE_BECA")
     private BigDecimal porcentajeBeca;
     @Column(name = "APROBADO_SN")
@@ -67,14 +64,6 @@ public class ClaseEstudiantes implements Serializable {
 
     public void setClaseEstudiantesPK(ClaseEstudiantesPK claseEstudiantesPK) {
         this.claseEstudiantesPK = claseEstudiantesPK;
-    }
-
-    public BigDecimal getImporteCuota() {
-        return importeCuota;
-    }
-
-    public void setImporteCuota(BigDecimal importeCuota) {
-        this.importeCuota = importeCuota;
     }
 
     public BigDecimal getPorcentajeBeca() {

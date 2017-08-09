@@ -22,7 +22,7 @@
                 <p:dataTable id="tbl" var="curso" value="#{cursosBean.listaCursos}"
                              paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}"
                              paginator="true" rows="10" style="margin-bottom:20px"
-                             emptyMessage="No tiene cursos asignados">
+                             emptyMessage="No hay cursos disponibles">
                     <f:facet name="{Exporters}">
                         <h:commandLink>
                             <p:graphicImage name="/img/excel.png" width="24"/>
@@ -59,12 +59,18 @@
             <p:dialog header="Detalles Curso" widgetVar="cursoDialogo" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
                 <p:outputPanel id="cursoDetalle" style="text-align:center;">
                     <p:dataTable id="tblDetail" var="datos" value="#{cursosBean.listaClases}"
-                             emptyMessage="No tiene cursos asignados">
+                             emptyMessage="No hay comienzos establecidos">
                         <p:column class="centrarTexto">
                             <f:facet name="header">
                                 <h:outputText value="Curso"/>
                             </f:facet>
                             <h:outputText value="#{datos.nombreCurso}" />
+                        </p:column>
+                        <p:column class="centrarTexto">
+                            <f:facet name="header">
+                                <h:outputText value="Modalidad"/>
+                            </f:facet>
+                            <h:outputText value="#{datos.modalidad}" />
                         </p:column>
                         <p:column class="centrarTexto">
                             <f:facet name="header">
