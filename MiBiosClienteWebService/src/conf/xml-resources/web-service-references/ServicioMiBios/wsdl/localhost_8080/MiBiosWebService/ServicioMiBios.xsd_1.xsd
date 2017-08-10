@@ -1,0 +1,94 @@
+<?xml version='1.0' encoding='UTF-8'?><!-- Published by JAX-WS RI (http://jax-ws.java.net). RI's version is Metro/2.3.1-b419 (branches/2.3.1.x-7937; 2014-08-04T08:11:03+0000) JAXWS-RI/2.2.10-b140803.1500 JAXWS-API/2.2.11 JAXB-RI/2.2.10-b140802.1033 JAXB-API/2.2.12-b140109.1041 svn-revision#unknown. --><xs:schema xmlns:tns="http://servicio.webservice.mibios.com/" xmlns:xs="http://www.w3.org/2001/XMLSchema" version="1.0" targetNamespace="http://servicio.webservice.mibios.com/">
+
+<xs:element name="agregarPersona" type="tns:agregarPersona"/>
+
+<xs:element name="agregarPersonaResponse" type="tns:agregarPersonaResponse"/>
+
+<xs:element name="listaCursos" type="tns:listaCursos"/>
+
+<xs:element name="listaCursosResponse" type="tns:listaCursosResponse"/>
+
+<xs:complexType name="listaCursos">
+<xs:sequence/>
+</xs:complexType>
+
+<xs:complexType name="listaCursosResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:returnListaCursos" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="returnListaCursos">
+<xs:sequence>
+<xs:element name="listaCursos" type="tns:curso" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="curso">
+<xs:sequence>
+<xs:element name="idCurso" type="xs:int"/>
+<xs:element name="listaClases" type="tns:clase" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+<xs:element name="nombre" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="clase">
+<xs:sequence>
+<xs:element name="listaEstudiantes" type="tns:estudiante" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+<xs:element name="objClaseDatos" type="tns:claseDatos" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="estudiante">
+<xs:sequence>
+<xs:element name="apellido1" type="xs:string" minOccurs="0"/>
+<xs:element name="documento" type="xs:string" minOccurs="0"/>
+<xs:element name="nombre1" type="xs:string" minOccurs="0"/>
+<xs:element name="tipoDocumento" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="claseDatos">
+<xs:sequence>
+<xs:element name="cuota" type="xs:string" minOccurs="0"/>
+<xs:element name="dias" type="xs:string" minOccurs="0"/>
+<xs:element name="docente" type="xs:string" minOccurs="0"/>
+<xs:element name="fechaComienzo" type="xs:string" minOccurs="0"/>
+<xs:element name="fechaFin" type="xs:string" minOccurs="0"/>
+<xs:element name="horario" type="xs:string" minOccurs="0"/>
+<xs:element name="modalidad" type="xs:string" minOccurs="0"/>
+<xs:element name="nombreCurso" type="xs:string" minOccurs="0"/>
+<xs:element name="salon" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="agregarPersona">
+<xs:sequence>
+<xs:element name="arg0" type="tns:paramAgregarPersona" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="paramAgregarPersona">
+<xs:sequence>
+<xs:element name="apellido1" type="xs:string" minOccurs="0"/>
+<xs:element name="documento" type="xs:string" minOccurs="0"/>
+<xs:element name="fechaNacimiento" type="xs:string" minOccurs="0"/>
+<xs:element name="nombre1" type="xs:string" minOccurs="0"/>
+<xs:element name="tipoDocumento" type="xs:string" minOccurs="0"/>
+<xs:element name="tipoPersona" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="agregarPersonaResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:returnAgregarPersona" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="returnAgregarPersona">
+<xs:sequence>
+<xs:element name="agregado" type="xs:boolean"/>
+<xs:element name="mensaje" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+</xs:schema>

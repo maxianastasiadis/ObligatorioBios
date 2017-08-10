@@ -7,6 +7,7 @@ package com.mibios.jpa.peristencia;
 
 import com.mibios.dto.usuarios.ParamLogin;
 import com.mibios.dto.usuarios.ParamRegistro;
+import com.mibios.jpa.entidades.PersonasPK;
 import com.mibios.jpa.entidades.Usuarios;
 import com.mibios.jpa.entidades.UsuariosPK;
 import javax.persistence.EntityManager;
@@ -71,6 +72,7 @@ public class UsuariosJpaPersitencia {
             objUsuario.setClave(xParamRegistro.getClave());
             objUsuario.setActivo("S");
             objUsuario.setFechaIngreso("20170719");
+            objUsuario.setPersonas(PersonasJpaPersistencia.ObtenerPersona(em, new PersonasPK(xParamRegistro.getTipoDocumento(), xParamRegistro.getDocumento())));
 
             em.persist(objUsuario);
         }
