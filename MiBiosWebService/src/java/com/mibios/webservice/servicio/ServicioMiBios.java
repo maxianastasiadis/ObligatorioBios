@@ -21,6 +21,7 @@ import com.mibios.jpa.entidades.Estudiantes;
 import com.mibios.jpa.entidades.Personas;
 import com.mibios.jpa.entidades.PersonasPK;
 import com.mibios.jpa.peristencia.CursosJpaPersistencia;
+import com.mibios.jpa.peristencia.PersonasJpaPersistencia;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -100,6 +101,18 @@ public class ServicioMiBios {
         ReturnAgregarPersona retorno = new ReturnAgregarPersona();
         try
         {
+            PersonasPK objPersonasPK = new PersonasPK();
+            objPersonasPK.setTipoDocumento(xParamAgregarPersona.getTipoDocumento());
+            objPersonasPK.setDocumento(xParamAgregarPersona.getDocumento());
+            
+            if(PersonasJpaPersistencia.ExistePersona(em, objPersonasPK))
+            {
+                retorno.setAgregado(false);
+                retorno.setMensaje("Ya existe una persona con ese tipo documento y documento.");
+                
+                return retorno;
+            }
+            
             Personas objPersonas = new Personas();
             objPersonas.setActivo("S");
             objPersonas.setApellido1(xParamAgregarPersona.getApellido1());
@@ -117,11 +130,7 @@ public class ServicioMiBios {
             objPersonas.setPais("");
             objPersonas.setSexo("");
             objPersonas.setTelefono("");
-            
-            
-            PersonasPK objPersonasPK = new PersonasPK();
-            objPersonasPK.setTipoDocumento(xParamAgregarPersona.getTipoDocumento());
-            objPersonasPK.setDocumento(xParamAgregarPersona.getDocumento());
+           
             
             objPersonas.setPersonasPK(objPersonasPK);
             

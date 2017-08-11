@@ -1,0 +1,64 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./template/biosTemplate.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+    
+    <ui:define name ="titulo">
+        Agregar Persona
+    </ui:define>
+    
+    <ui:define name="cabecera">
+        <ui:include src="menuPrincipal.xhtml" />
+    </ui:define>
+    
+    <ui:define name="contenido">
+               
+        <h:form id="AgregarPersonaForm">
+            <p:panel id="AgregarPersonaPanel" header="Agregar Persona">
+                <h:panelGrid id="agregarPersonaPanel" columns="3">
+                    <h:outputText value="Tipo Persona:" />
+                    <p:selectOneMenu id="tipoPersona" value="#{agregarPersonaBean.tipoPersona}">
+                       <f:selectItem itemLabel="Alumno" itemValue="A" />
+                        <f:selectItem itemLabel="Docente" itemValue="D" />
+                        <f:selectItem itemLabel="Personal" itemValue="P" />
+                    </p:selectOneMenu>
+                    <p:spacer></p:spacer>
+                    <h:outputText value="Tipo Documento: " />
+                    <p:selectOneMenu id="tipoDocumento" value="#{agregarPersonaBean.tipoDocumento}">
+                        <f:selectItem itemLabel="C.I." itemValue="1" />
+                        <f:selectItem itemLabel="D.N.I." itemValue="2" />
+                        <f:selectItem itemLabel="Pasaporte" itemValue="3" />
+                    </p:selectOneMenu>                    
+                    <p:spacer></p:spacer>
+                    <h:outputText value="Documento: " />
+                    <p:inputText id="documento" required="true" requiredMessage="Debe ingresar Documento" value="#{agregarPersonaBean.documento}" maxlength="16" ></p:inputText>                                        
+                    <h:message for="documento" class="message"/>
+                    <h:outputText value="Nombre: " />
+                    <p:inputText id="nombre" required="true" requiredMessage="Debe ingresar Nombre" value="#{agregarPersonaBean.nombre1}" maxlength="50" ></p:inputText>                                        
+                    <h:message for="nombre" class="message"/>
+                    <h:outputText value="Apellido: " />
+                    <p:inputText id="apellido" required="true" requiredMessage="Debe ingresar Apellido" value="#{agregarPersonaBean.apellido1}" maxlength="50" ></p:inputText>                    
+                    <h:message for="apellido" class="message"/>
+                    <h:outputText value="Fecha Nac.: " />
+                    <p:calendar id="fechaNac" required="true" requiredMessage="Debe ingresar Fecha Nacimiento" value="#{agregarPersonaBean.fechaNacimiento}"
+                            locale="es"
+                            navigator="true" 
+                            pattern="dd/MM/yyyy"
+                            showOn="both" 
+                            showOtherMonths="true"
+                            yearRange="c-70:c+10"
+                    />
+                    <h:message for="fechaNac" class="message"/>
+                    <p:commandButton action="#{agregarPersonaBean.AgregarPersona}" value="Agregar Persona" icon="ui-icon-check" ajax="true" update="AgregarPersonaForm"></p:commandButton>
+                    
+                </h:panelGrid>
+                <p:growl id="growl" sticky="false" life="3000"/>
+            </p:panel>
+        </h:form>
+        
+    
+    </ui:define>
+</ui:composition>

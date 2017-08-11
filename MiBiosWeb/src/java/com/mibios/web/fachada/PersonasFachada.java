@@ -15,7 +15,11 @@ import com.mibios.dto.personas.ReturnActualizarDatosPersonales;
 import com.mibios.dto.personas.ReturnIngresarPago;
 import com.mibios.dto.personas.ReturnObtenerDatosPersonales;
 import com.mibios.ejb.personas.PersonasBeanLocal;
-import java.util.ArrayList;
+import com.mibios.webservice.servicio.ParamAgregarPersona;
+import com.mibios.webservice.servicio.ReturnAgregarPersona;
+import com.mibios.webservice.servicio.ServicioMiBios;
+import com.mibios.webservice.servicio.ServicioMiBios_Service;
+import java.net.URL;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -53,6 +57,11 @@ public class PersonasFachada {
     {
         return lookupPersonasBean().ModificarPago(xParamModificarPago);
     }
+    
+    public ReturnAgregarPersona AgregarPersonaViaWS(ParamAgregarPersona xParamAgregarPersona)
+    {
+        return this.agregarPersona(xParamAgregarPersona);
+    }
         
     /**********************************/
     /*ACA ESTAN LAS LLAMADAS A LOS EJB*/
@@ -72,4 +81,22 @@ public class PersonasFachada {
             throw new RuntimeException(ne);
         }
     } 
+    
+    private ServicioMiBios_Service obtenerServicio()
+    {
+        try
+        {
+            return new ServicioMiBios_Service(new URL("http://localhost:8080/MiBiosWebService/ServicioMiBios?wsdl"));
+        }
+        catch(Exception ex)
+        {
+            return null;
+        }
+        
+    }
+    
+    private ReturnAgregarPersona agregarPersona(com.mibios.webservice.servicio.ParamAgregarPersona xParamAgregarPersona) {        
+        com.mibios.webservice.servicio.ServicioMiBios port = obtenerServicio().getServicioMiBiosPort();
+        return port.agregarPersona(xParamAgregarPersona);
+    }
 }

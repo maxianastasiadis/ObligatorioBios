@@ -10,6 +10,7 @@
         <p:menuitem icon="ui-icon-pencil" value="Mis Cursos" action="#{menuPrincipalBean.cargarPagina('misCursos.xhtml')}"/>
         <p:menuitem icon="ui-icon-search" value="Ver Cursos" action="#{menuPrincipalBean.cargarPagina('verCursos.xhtml')}"/>
         <p:menuitem icon="ui-icon-search" value="Ver Institutos" action="#{menuPrincipalBean.cargarPagina('verInstitutos.xhtml')}"/>
+        <p:menuitem icon="ui-icon-search" value="Agregar Persona" action="#{menuPrincipalBean.cargarPagina('agregarPersona.xhtml')}" style="visibility: #{menuPrincipalBean.obtenerVisibilidadSegunTipoUsuario()}" />        
         <p:menuitem icon="ui-icon-closethick" value="Logout" action="#{menuPrincipalBean.Logout}" style="position: absolute; right: 4px;"/>
     </p:menubar>
 </h:form>

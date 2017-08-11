@@ -53,4 +53,17 @@ public class MenuPrincipalBean implements Serializable {
         page = pagina;
         return page;
     }
+    
+    public String obtenerVisibilidadSegunTipoUsuario()
+    {
+        ReturnLogin obj = (ReturnLogin)FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("Usuario");
+        if(!obj.getTipoPersona().equalsIgnoreCase("P"))
+        {
+            return "hidden";
+        }
+        else
+        {
+            return "visible";
+        }
+    }
 }
