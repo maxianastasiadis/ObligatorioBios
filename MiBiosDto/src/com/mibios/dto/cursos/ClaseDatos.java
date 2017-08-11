@@ -13,6 +13,7 @@ import java.io.Serializable;
  */
 public class ClaseDatos implements Serializable{
     
+    private int idClase;
     private String nombreCurso;
     private String modalidad;
     private String fechaComienzo;
@@ -23,6 +24,14 @@ public class ClaseDatos implements Serializable{
     private String docente;
     private String cuota;
 
+    public int getIdClase() {
+        return idClase;
+    }
+
+    public void setIdClase(int idClase) {
+        this.idClase = idClase;
+    }
+    
     public String getNombreCurso() {
         return nombreCurso;
     }

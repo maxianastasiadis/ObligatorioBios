@@ -6,15 +6,25 @@
 package com.mibios.ejb.cursos;
 
 import com.mibios.dto.cursos.ClaseDatos;
+import com.mibios.dto.cursos.ParamInscribirmeACurso;
 import com.mibios.dto.cursos.ParamMisCursos;
 import com.mibios.dto.cursos.ReturnCursos;
+import com.mibios.dto.cursos.ReturnInscribirmeACurso;
 import com.mibios.dto.cursos.ReturnMisCursos;
 import com.mibios.funciones.FuncionesFecha;
 import com.mibios.jpa.entidades.ClaseEstudiantes;
+import com.mibios.jpa.entidades.ClaseEstudiantesPK;
 import com.mibios.jpa.entidades.Clases;
 import com.mibios.jpa.entidades.Cursos;
+import com.mibios.jpa.entidades.Estudiantes;
+import com.mibios.jpa.entidades.Personas;
+import com.mibios.jpa.entidades.PersonasPK;
+import com.mibios.jpa.peristencia.ClaseEstudiantesJpaPersistencia;
+import com.mibios.jpa.peristencia.ClasesJpaPersitencia;
 import com.mibios.jpa.peristencia.CursosJpaPersistencia;
 import com.mibios.jpa.peristencia.EstudiantesJpaPersitencia;
+import com.mibios.jpa.peristencia.PersonasJpaPersistencia;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -118,4 +128,37 @@ public class CursosBean implements CursosBeanLocal {
         }
         return colReturnCursos;
     } 
+    
+    @Override
+    public ReturnInscribirmeACurso InscribirmeACurso(ParamInscribirmeACurso xParamInscribirmeACurso) throws Exception
+    {    
+        ReturnInscribirmeACurso objReturnInscribirmeACurso = new ReturnInscribirmeACurso();
+        try
+        {
+            ClaseEstudiantes objClaseEstudiantes = new ClaseEstudiantes();
+            
+            Clases objClases = ClasesJpaPersitencia.ObtenerClase(em, xParamInscribirmeACurso.getIdClase());
+            objClaseEstudiantes.setClases(objClases);
+            Estudiantes objEstudiantes = EstudiantesJpaPersitencia.ObtenerEstudiante(em, xParamInscribirmeACurso.getTipoDocumento(), xParamInscribirmeACurso.getDocumento());
+            objClaseEstudiantes.setEstudiantes(objEstudiantes);
+            objClaseEstudiantes.setPorcentajeBeca(BigDecimal.ZERO);
+            
+            ClaseEstudiantesJpaPersistencia.InscribirmeACurso(em, objClaseEstudiantes);
+
+            objReturnInscribirmeACurso.setGuardado(true);
+            objReturnInscribirmeACurso.setRespuesta("Se inscribio correctamente");
+            //objReturnInscribirmeACurso.setDatosUsuario(datosUsuario);
+            
+        }
+        catch(Exception e)
+        {
+            objReturnInscribirmeACurso.setGuardado(false);
+            objReturnInscribirmeACurso.setRespuesta("Error al inscribirse al curso");
+            Logger.getLogger(CursosBean.class.getName()).log(Level.SEVERE, null, e);
+            throw new Exception("Beans--> " + e.getMessage() + " [" + this.getClass().getSimpleName() + "]");
+        }
+        finally{
+        }
+        return objReturnInscribirmeACurso;
+    }
 }

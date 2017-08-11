@@ -62,4 +62,37 @@ public class CursosBean {
     public void setListaClases(List<ClaseDatos> listaClases) {
         this.listaClases = listaClases;
     }
+    
+    public void InscribirmeACurso() {
+        System.out.println("llegaasdfasdfadsfasdfasdf = ");
+//        System.out.println("xObjClases = " + xObjClases.getIdClase());
+//        ParamInscribirmeACurso objParamInscribirmeACurso = new ParamInscribirmeACurso();
+//        ReturnInscribirmeACurso objReturnInscribirmeACurso = new ReturnInscribirmeACurso();
+//        CursosFachada cursosFachada = new CursosFachada();
+//        try {
+//            System.out.println("xObjClases = ");
+//            ReturnLogin objReturnSesion = (ReturnLogin)FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("Usuario");
+//            objParamInscribirmeACurso.setTipoDocumento(objReturnSesion.getTipoDocumento());
+//            objParamInscribirmeACurso.setDocumento(objReturnSesion.getDocumento());
+//            objParamInscribirmeACurso.setIdClase(xObjClases.getIdClase());
+//            
+//            objReturnInscribirmeACurso = cursosFachada.InscribirmeACurso(objParamInscribirmeACurso);
+//
+//            if(objReturnInscribirmeACurso.getGuardado()){
+//                //mensaje Se ingreso el pago correctamente
+//                FacesContext facesContext = FacesContext.getCurrentInstance();
+//                facesContext.addMessage(null, new FacesMessage(objReturnInscribirmeACurso.getRespuesta()));
+//            }
+//            else
+//            {
+//                FacesContext facesContext = FacesContext.getCurrentInstance();
+//                facesContext.addMessage(null, new FacesMessage(objReturnInscribirmeACurso.getRespuesta()));
+//            }
+//
+//        } 
+//        catch (Exception ex) 
+//        {
+//            Logger.getLogger(DatosPersonalesBean.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+    }
 }

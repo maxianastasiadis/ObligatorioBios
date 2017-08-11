@@ -5,8 +5,10 @@
  */
 package com.mibios.web.fachada;
 
+import com.mibios.dto.cursos.ParamInscribirmeACurso;
 import com.mibios.dto.cursos.ParamMisCursos;
 import com.mibios.dto.cursos.ReturnCursos;
+import com.mibios.dto.cursos.ReturnInscribirmeACurso;
 import com.mibios.dto.cursos.ReturnMisCursos;
 import com.mibios.ejb.cursos.CursosBeanLocal;
 import java.util.List;
@@ -30,6 +32,11 @@ public class CursosFachada {
     public List<ReturnCursos> ObtenerCursos() throws Exception
     {
         return lookupCursosBean().ObtenerCursos();
+    }
+    
+    public ReturnInscribirmeACurso InscribirmeACurso(ParamInscribirmeACurso paramInscribirmeACurso) throws Exception
+    {
+        return lookupCursosBean().InscribirmeACurso(paramInscribirmeACurso);
     }
     
     /**********************************/
