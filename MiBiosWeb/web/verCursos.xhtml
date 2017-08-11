@@ -120,13 +120,25 @@
                             <f:facet name="header">
                                 <h:outputText value="Inscribirme" />
                             </f:facet>
-                            
+                            <p:commandButton update=":InscripcionForm:inscrpcionClase" oncomplete="PF('inscripcionDialogo').show()" icon="ui-icon-search" title="Inscribirme">
+                                <f:setPropertyActionListener value="#{datos.idClase}" target="#{cursosBean.idClaseInscripcion}" />
+                            </p:commandButton>
                         </p:column>
                     </p:dataTable>
                 </p:outputPanel>
             </p:dialog>
         </h:form>
 
+        <h:form id="InscripcionForm">  
+            <p:growl id="msgs" showDetail="true"/>
+            <p:dialog header="Inscripcion" widgetVar="inscripcionDialogo" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+                 <p:outputPanel id="inscrpcionClase" style="text-align:center;">
+                    
+                    <h:outputText value="#{cursosBean.idClaseInscripcion}" />
+                 </p:outputPanel>
+            </p:dialog>
+        </h:form>
+        
     </ui:define>
 </ui:composition>
 

@@ -26,6 +26,7 @@ public class CursosBean {
 
     private List<CursosDatos> listaCursos;
     private List<ClaseDatos> listaClases;
+    private int idClaseInscripcion;
     
     public CursosBean() 
     {
@@ -61,6 +62,14 @@ public class CursosBean {
 
     public void setListaClases(List<ClaseDatos> listaClases) {
         this.listaClases = listaClases;
+    }
+
+    public int getIdClaseInscripcion() {
+        return idClaseInscripcion;
+    }
+
+    public void setIdClaseInscripcion(int idClaseInscripcion) {
+        this.idClaseInscripcion = idClaseInscripcion;
     }
     
     public void InscribirmeACurso() {

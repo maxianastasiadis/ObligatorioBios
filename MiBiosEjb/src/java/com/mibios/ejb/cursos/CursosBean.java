@@ -113,6 +113,7 @@ public class CursosBean implements CursosBeanLocal {
                     claseDatos.setHorario(FuncionesFecha.mostrarHoraHHMM(clase.getHorarioComienzo()) + " A " + FuncionesFecha.mostrarHoraHHMM(FuncionesFecha.incrementarHora(clase.getHorarioComienzo(), clase.getDuracionHoras())));
                     claseDatos.setDocente(clase.getIdDocente().getPersonas().getNombre1() + " " + clase.getIdDocente().getPersonas().getApellido1());
                     claseDatos.setSalon(clase.getSalon());
+                    claseDatos.setIdClase(clase.getIdClase());
                     listaClases.add(claseDatos);
                 }
                 cursos.setListaClases(listaClases);
