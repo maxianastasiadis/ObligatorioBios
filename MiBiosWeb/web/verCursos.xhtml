@@ -120,24 +120,13 @@
                             <f:facet name="header">
                                 <h:outputText value="Inscribirme" />
                             </f:facet>
-                            <p:commandButton update=":IncribirmeForm:InscribirmePanel" oncomplete="PF('InscribirmeDialogo').show()" icon="ui-icon-search" title="Ingresar Beca e inscribirme">
-                                <f:setPropertyActionListener value="clase" target="#{datos}" />
-                           </p:commandButton>
+                            
                         </p:column>
                     </p:dataTable>
                 </p:outputPanel>
             </p:dialog>
         </h:form>
-        <h:form id="IncribirmeForm">  
-            <p:growl id="msgsInscribirme" showDetail="true"/>
-            <p:dialog header="Inscribirme A Curso" widgetVar="InscribirmeDialogo" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
-                <p:outputPanel id="InscribirmePanel" style="text-align:center;">
-                    <f:facet name="output"><h:outputText value="Beca" /></f:facet>
-                    <f:facet name="input"><p:inputText id="msgsInscribirme" required="true" requiredMessage="Debe ingresar beca" maxlength="3" value="0" /></f:facet>
-                    <p:commandButton action="#{pagoBean.IngresarPago}" value="Inscribirme" icon="ui-icon-check" ajax="true" update="IncribirmeForm"></p:commandButton>
-                </p:outputPanel>
-            </p:dialog>
-        </h:form>
+
     </ui:define>
 </ui:composition>
 
