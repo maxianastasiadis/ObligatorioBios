@@ -104,9 +104,5 @@ public class CursosBean {
 //            Logger.getLogger(DatosPersonalesBean.class.getName()).log(Level.SEVERE, null, ex);
 //        }
     }
-    
-    public void cargarClaseActual(ClaseDatos xClaseActual)
-    {
-        this.idClaseInscripcion = xClaseActual.getIdClase();
-    }
+
 }
