@@ -267,8 +267,9 @@ public class ServicioMiBios {
         ReturnCantidadAlumnosSexo retorno = new ReturnCantidadAlumnosSexo();
         try
         {
-            retorno.getLista().add(new SexoCantidad("M", EstudiantesJpaPersitencia.ObtenerCantidadEstudiantesPorSexo(em, "M")));
-            retorno.getLista().add(new SexoCantidad("F", EstudiantesJpaPersitencia.ObtenerCantidadEstudiantesPorSexo(em, "F")));
+            String fechaHoy = FuncionesFecha.mostrarFechaAAAAMMDDString(FuncionesFecha.getFechaSistema());
+            retorno.getLista().add(new SexoCantidad("M", EstudiantesJpaPersitencia.ObtenerCantidadEstudiantesActivosPorSexo(em, "M", fechaHoy)));
+            retorno.getLista().add(new SexoCantidad("F", EstudiantesJpaPersitencia.ObtenerCantidadEstudiantesActivosPorSexo(em, "F", fechaHoy)));
             
         }
         catch(Exception e)

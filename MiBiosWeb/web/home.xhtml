@@ -5,7 +5,8 @@
                 template="./template/biosTemplate.xhtml"
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
                 xmlns:p="http://primefaces.org/ui"
-                xmlns:f="http://xmlns.jcp.org/jsf/core">
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
     
     <ui:define name="titulo">
         HOME
@@ -19,7 +20,7 @@
     <ui:define name="contenido">
         <h:form id="formNoticias">
              <p:panel id="noticias" header="Noticias" toggleable="true">
-                <h:panelGrid columns="1" cellpadding="10">
+                <h:panelGrid columns="1" cellpadding="5">
                     <p:panel header="Próximos comienzos">
                             <p:dataTable var="datos" value="#{homeBean.proximosComienzos}"
                                  emptyMessage="No hay comienzos establecidos">
@@ -86,6 +87,7 @@
                             
                         </p:dataTable>
                     </p:panel>
+                    <p:spacer></p:spacer>
 
                     <p:panel header="Mis clases de hoy">
                         <p:dataTable var="datos" value="#{homeBean.clasesUsuario}"
@@ -152,6 +154,26 @@
                             </p:column>
                             
                         </p:dataTable>
+                    </p:panel>
+                    <p:spacer></p:spacer>
+                    
+                    <p:panel header="Estadísticas">
+                        <h:panelGrid columns="2" cellpadding="5"  >
+                            <h:outputText value="Cantidad Cursos:" />
+                            <h:outputText value="#{homeBean.cantidadCursos}" />
+                            
+                            <h:outputText value="Cantidad Clases activas:" />
+                            <h:outputText value="#{homeBean.cantidadClasesActivas}" />
+                            
+                            <h:outputText value="Cantidad Estudiantes activos:" />
+                            <h:outputText value="#{homeBean.cantidadEstudiantesActivos}" />
+                                                        
+                            <c:forEach items="#{homeBean.listaSexoCantidad}" var="dato">
+                                <h:outputText value="Cantidad #{dato.sexo}:" />
+                                <h:outputText value="#{dato.cantidad}" />
+                            </c:forEach>
+                            
+                        </h:panelGrid> 
                     </p:panel>
                 </h:panelGrid>
             </p:panel>

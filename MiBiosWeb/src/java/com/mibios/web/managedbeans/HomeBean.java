@@ -7,9 +7,15 @@ package com.mibios.web.managedbeans;
 
 import com.mibios.dto.institutos.Instituto;
 import com.mibios.dto.usuarios.ReturnLogin;
+import com.mibios.funciones.FuncionesFecha;
 import com.mibios.web.fachada.CursosFachada;
+import com.mibios.web.fachada.PersonasFachada;
+import com.mibios.webservice.servicio.Clase;
 import com.mibios.webservice.servicio.ClaseDatos;
+import com.mibios.webservice.servicio.Curso;
+import com.mibios.webservice.servicio.Estudiante;
 import com.mibios.webservice.servicio.ParamClasesEnDiaParaPersona;
+import com.mibios.webservice.servicio.SexoCantidad;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -35,6 +41,10 @@ public class HomeBean implements Serializable{
     private MapModel modeloParaMapaCentrosBios;
     private List<ClaseDatos> proximosComienzos; 
     private List<ClaseDatos> clasesUsuario;
+    private List<SexoCantidad> listaSexoCantidad;
+    private int cantidadCursos;
+    private int cantidadClasesActivas;
+    private int cantidadEstudiantesActivos;
     
     
     @PostConstruct
@@ -62,6 +72,7 @@ public class HomeBean implements Serializable{
         institutos.add(instituto9);
         
         CursosFachada objCursosFachada = new CursosFachada();
+        PersonasFachada objPersonasFachada = new PersonasFachada();
         proximosComienzos = objCursosFachada.ProximosComienzos().getListaClases();
         
         ReturnLogin usuarioLogueado = (ReturnLogin)FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("Usuario");
@@ -72,6 +83,47 @@ public class HomeBean implements Serializable{
         objParamClasesEnDiaParaPersona.setDocumento(usuarioLogueado.getDocumento());
         
         clasesUsuario = objCursosFachada.ClasesDelDia(objParamClasesEnDiaParaPersona).getListaClases();
+        
+        listaSexoCantidad = objPersonasFachada.CantidadAlumnosPorSexo().getLista();
+        for(SexoCantidad dato : listaSexoCantidad)
+        {
+            if(dato.getSexo().equalsIgnoreCase("M"))
+            {
+                dato.setSexo("Hombre");
+            }
+            else if(dato.getSexo().equalsIgnoreCase("F"))
+            {
+                dato.setSexo("Mujer");
+            }
+        }
+        
+        List<Curso> listaCursos = objCursosFachada.ListaCursos().getListaCursos();
+        
+        cantidadCursos = listaCursos.size();
+        cantidadClasesActivas = 0;
+        cantidadEstudiantesActivos = 0;
+        String fechaHoy = FuncionesFecha.mostrarFechaAAAAMMDDString(FuncionesFecha.getFechaSistema());
+        List<String> estudiantesDistintosActivos = new ArrayList();
+        for(Curso objCurso : listaCursos)
+        {
+            for(Clase objClase : objCurso.getListaClases())
+            {
+                if(FuncionesFecha.mostrarFechaAAAAMMDDString(objClase.getObjClaseDatos().getFechaComienzo()).compareTo(fechaHoy) <= 0 && 
+                        FuncionesFecha.mostrarFechaAAAAMMDDString(objClase.getObjClaseDatos().getFechaFin()).compareToIgnoreCase(fechaHoy) >= 0)
+                {
+                    cantidadClasesActivas++;
+                    for(Estudiante objEstudiante : objClase.getListaEstudiantes())
+                    {
+                        String claveEstudiante = objEstudiante.getTipoDocumento() + "_" + objEstudiante.getDocumento();
+                        if(!estudiantesDistintosActivos.contains(claveEstudiante))
+                        {
+                            estudiantesDistintosActivos.add(claveEstudiante);
+                        }
+                    }
+                }
+            }
+        }
+        cantidadEstudiantesActivos = estudiantesDistintosActivos.size();        
         
     }
 
@@ -124,6 +176,39 @@ public class HomeBean implements Serializable{
     public void setClasesUsuario(List<ClaseDatos> clasesUsuario) {
         this.clasesUsuario = clasesUsuario;
     }
+
+    public List<SexoCantidad> getListaSexoCantidad() {
+        return listaSexoCantidad;
+    }
+
+    public void setListaSexoCantidad(List<SexoCantidad> listaSexoCantidad) {
+        this.listaSexoCantidad = listaSexoCantidad;
+    }
+
+    public int getCantidadCursos() {
+        return cantidadCursos;
+    }
+
+    public void setCantidadCursos(int cantidadCursos) {
+        this.cantidadCursos = cantidadCursos;
+    }
+
+    public int getCantidadClasesActivas() {
+        return cantidadClasesActivas;
+    }
+
+    public void setCantidadClasesActivas(int cantidadClasesActivas) {
+        this.cantidadClasesActivas = cantidadClasesActivas;
+    }
+
+    public int getCantidadEstudiantesActivos() {
+        return cantidadEstudiantesActivos;
+    }
+
+    public void setCantidadEstudiantesActivos(int cantidadEstudiantesActivos) {
+        this.cantidadEstudiantesActivos = cantidadEstudiantesActivos;
+    }
+    
     
     
     

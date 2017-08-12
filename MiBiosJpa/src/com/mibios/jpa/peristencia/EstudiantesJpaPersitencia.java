@@ -55,13 +55,14 @@ public class EstudiantesJpaPersitencia {
         return objEstudiante;
     }
     
-    public static int ObtenerCantidadEstudiantesPorSexo(EntityManager em, String xSexo) throws Exception
+    public static int ObtenerCantidadEstudiantesActivosPorSexo(EntityManager em, String xSexo, String xFecha) throws Exception
     {
         int retorno = 0;
         try
         {
             long cantidad = (long)em.createNamedQuery("Estudiantes.cantidadPorSexo")
                     .setParameter("sexo", xSexo)                   
+                    .setParameter("fecha", xFecha)
                     .getSingleResult();
             
             retorno = Integer.parseInt(String.valueOf(cantidad));
