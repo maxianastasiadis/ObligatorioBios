@@ -198,7 +198,7 @@ public class UsuariosBean implements UsuariosBeanLocal {
                 else
                 {
                     recuperar.setRecuperar(false);
-                    recuperar.setRespuesta("La contrasena introducida no coincide con la vigente");
+                    recuperar.setRespuesta("La clave introducida no coincide con la vigente");
                 }
             }
             else

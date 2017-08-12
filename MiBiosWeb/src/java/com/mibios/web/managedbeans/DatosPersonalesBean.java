@@ -228,11 +228,10 @@ public class DatosPersonalesBean implements Serializable  {
         this.confirmaClaveNueva = confirmaClaveNueva;
     }    
     
-    public String ActualizarDatosPersonales() {
+    public void ActualizarDatosPersonales() {
         ParamActualizarDatosPersonales paramActualizarDatosPersonales = new ParamActualizarDatosPersonales();
         ReturnActualizarDatosPersonales returnActualizarDatosPersonales = new ReturnActualizarDatosPersonales();
         PersonasFachada personasFachada = new PersonasFachada();
-        String actualizar = "false";
         
         try {
     
@@ -261,29 +260,17 @@ public class DatosPersonalesBean implements Serializable  {
             {
                 FacesContext.getCurrentInstance().getExternalContext().getSessionMap().remove("Usuario");
                 FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("Usuario", returnActualizarDatosPersonales.getDatosUsuario());
+                FacesMessage msg = new FacesMessage("Datos Actualizados", "");
+                FacesContext.getCurrentInstance().addMessage(null, msg);
             }
             else
             {
-                FacesContext facesContext = FacesContext.getCurrentInstance();
-                facesContext.addMessage(null, new FacesMessage(returnActualizarDatosPersonales.getRespuesta()));
+                FacesMessage msg = new FacesMessage(returnActualizarDatosPersonales.getRespuesta(), "");
+                FacesContext.getCurrentInstance().addMessage(null, msg);
             }
         } catch (Exception ex) {
             Logger.getLogger(DatosPersonalesBean.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        if(returnActualizarDatosPersonales.getGuardado())
-        {
-            if(tipoPersona.equalsIgnoreCase("P"))
-            {
-                actualizar = "personal";
-            }
-            else
-            {
-                actualizar = "true";
-            }
-        }
-        
-        return actualizar;
     }
     
     private void cargarDatosPersonales() 
@@ -314,6 +301,9 @@ public class DatosPersonalesBean implements Serializable  {
             ciudad = objReturnObtenerDatosPersonales.getCiudad();
             departamento = objReturnObtenerDatosPersonales.getDepartamento();
             pais = objReturnObtenerDatosPersonales.getPais();
+            claveActual = "";
+            claveNueva = "";
+            confirmaClaveNueva = "";
 
         } 
         catch (Exception ex) 
@@ -349,20 +339,21 @@ public class DatosPersonalesBean implements Serializable  {
                 if(returnRecuperarContrasena.getRecuperar())
                 {
                    cambioCorrecto = true;
-                   message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Cambio", "Se modifico clave"); 
+                   message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Se modifico clave", ""); 
                 }
                 else 
                 {
-                    message = new FacesMessage(FacesMessage.SEVERITY_WARN, "Error", returnRecuperarContrasena.getRespuesta());
+                    message = new FacesMessage(FacesMessage.SEVERITY_WARN, returnRecuperarContrasena.getRespuesta(), "");
                 }  
             } 
             else 
             {
-                message = new FacesMessage(FacesMessage.SEVERITY_WARN, "Error", "No Coinciden Claves");
+                message = new FacesMessage(FacesMessage.SEVERITY_WARN, "No Coinciden Claves", "");
             }
 
             FacesContext.getCurrentInstance().addMessage(null, message);
             context.addCallbackParam("cambioCorrecto", cambioCorrecto);
+            
         } catch (Exception ex) {
             Logger.getLogger(DatosPersonalesBean.class.getName()).log(Level.SEVERE, null, ex);
         }

@@ -103,7 +103,6 @@
                     <p:spacer></p:spacer>
                     <p:commandButton action="#{datosPersonalesBean.ActualizarDatosPersonales}" value="Actualizar" icon="ui-icon-check" ajax="true" update="datosPersonales, mensajeFlotante"></p:commandButton>
                 </h:panelGrid>
-                <h:messages class="message" globalOnly="true" />
             </p:panel>
         </h:form>
         <h:form id="formDetalle">
@@ -125,7 +124,7 @@
                     <h:message for="confirmaClaveNueva" class="message"/>
 
                     <f:facet name="footer">
-                        <p:commandButton value="Confirmar" icon="ui-icon-check" ajax="true" update="growl" actionListener="#{datosPersonalesBean.CambiarContrasena}" oncomplete="controlCambioClave(xhr, status, args)"/>
+                        <p:commandButton value="Confirmar" icon="ui-icon-check" ajax="true" update="formDetalle, growl" actionListener="#{datosPersonalesBean.CambiarContrasena}" oncomplete="controlCambioClave(xhr, status, args)"/>
                     </f:facet>  
                 </h:panelGrid>
             </p:dialog>
