@@ -10,5 +10,7 @@
     <class>com.mibios.jpa.entidades.Clases</class>
     <class>com.mibios.jpa.entidades.Cursos</class>
     <class>com.mibios.jpa.entidades.CuentaCorriente</class>
+    <shared-cache-mode>NONE</shared-cache-mode>
+    
  </persistence-unit>
 </persistence>
