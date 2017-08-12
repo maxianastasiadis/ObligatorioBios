@@ -11,6 +11,10 @@ import com.mibios.dto.cursos.ReturnCursos;
 import com.mibios.dto.cursos.ReturnInscribirmeACurso;
 import com.mibios.dto.cursos.ReturnMisCursos;
 import com.mibios.ejb.cursos.CursosBeanLocal;
+import com.mibios.web.auxiliarWs.IntermedioWebService;
+import com.mibios.webservice.servicio.ParamClasesEnDiaParaPersona;
+import com.mibios.webservice.servicio.ReturnClases;
+import com.mibios.webservice.servicio.ReturnListaCursos;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -37,6 +41,21 @@ public class CursosFachada {
     public ReturnInscribirmeACurso InscribirmeACurso(ParamInscribirmeACurso paramInscribirmeACurso) throws Exception
     {
         return lookupCursosBean().InscribirmeACurso(paramInscribirmeACurso);
+    }
+    
+    public ReturnListaCursos ListaCursos()
+    {
+        return IntermedioWebService.listaCursos();
+    }
+    
+    public ReturnClases ClasesDelDia(ParamClasesEnDiaParaPersona xParamClasesEnDiaParaPersona)
+    {
+        return IntermedioWebService.clasesDelDia(xParamClasesEnDiaParaPersona);
+    }
+    
+    public ReturnClases ProximosComienzos()
+    {
+        return IntermedioWebService.proximosComienzos();
     }
     
     /**********************************/

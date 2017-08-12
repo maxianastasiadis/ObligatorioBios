@@ -10,8 +10,12 @@ import com.mibios.dto.webservice.Clase;
 import com.mibios.dto.webservice.Curso;
 import com.mibios.dto.webservice.Estudiante;
 import com.mibios.dto.webservice.ParamAgregarPersona;
+import com.mibios.dto.webservice.ParamClasesEnDiaParaPersona;
 import com.mibios.dto.webservice.ReturnAgregarPersona;
+import com.mibios.dto.webservice.ReturnCantidadAlumnosSexo;
 import com.mibios.dto.webservice.ReturnListaCursos;
+import com.mibios.dto.webservice.ReturnClases;
+import com.mibios.dto.webservice.SexoCantidad;
 import com.mibios.funciones.FuncionesFecha;
 import com.mibios.jpa.entidades.ClaseEstudiantes;
 import com.mibios.jpa.entidades.Clases;
@@ -20,12 +24,16 @@ import com.mibios.jpa.entidades.Docentes;
 import com.mibios.jpa.entidades.Estudiantes;
 import com.mibios.jpa.entidades.Personas;
 import com.mibios.jpa.entidades.PersonasPK;
+import com.mibios.jpa.peristencia.ClasesJpaPersitencia;
 import com.mibios.jpa.peristencia.CursosJpaPersistencia;
+import com.mibios.jpa.peristencia.EstudiantesJpaPersitencia;
 import com.mibios.jpa.peristencia.PersonasJpaPersistencia;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 import javax.annotation.Resource;
 import javax.jws.WebService;
 import javax.jws.WebMethod;
@@ -174,6 +182,105 @@ public class ServicioMiBios {
         return retorno;
     }
     
+    @WebMethod(operationName = "proximosComienzos")
+    public ReturnClases proximosComienzos()
+    {
+        ReturnClases retorno = new ReturnClases();
+        try
+        {
+            String fechaHoy = FuncionesFecha.mostrarFechaAAAAMMDDString(FuncionesFecha.getFechaSistema());
+            String fechaTresMesesDelante = FuncionesFecha.incrementarFecha(fechaHoy, "M", 3);
+            List<Clases> colClases = ClasesJpaPersitencia.ObtenerClasesPorFechaComienzo(em, fechaHoy, fechaTresMesesDelante);
+            
+            for(Clases objClase : colClases)
+            {               
+                //armo la clase                
+                ClaseDatos objClaseDatos = obtenerClaseDatosDeEntidadClases(objClase);
+                retorno.getListaClases().add(objClaseDatos);
+            }
+            
+        }
+        catch(Exception e)
+        {
+            Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, null, e);            
+        }        
+        
+        return retorno;  
+    }
+    
+    @WebMethod(operationName = "clasesDelDia")
+    public ReturnClases clasesDelDia(ParamClasesEnDiaParaPersona xParamClasesDelDia)    
+    {
+        ReturnClases retorno = new ReturnClases();
+        try
+        {
+            //obtengo a la persona, le pido sus clases y veo:
+                // hoy cae entre fecha inicio y fin
+                // día hoy es uno de los n días en los que hay clases
+            
+            PersonasPK objPersonasPK = new PersonasPK(xParamClasesDelDia.getTipoDocumento(), xParamClasesDelDia.getDocumento());
+            Personas objPersona = PersonasJpaPersistencia.ObtenerPersona(em, objPersonasPK);
+            
+            List<Clases> clasesParaBuscar = null;
+            if(xParamClasesDelDia.getTipoPersona().equalsIgnoreCase("A"))
+            {
+                clasesParaBuscar = new ArrayList();
+                for(ClaseEstudiantes objClaseEstudiantes : objPersona.getEstudiantesList().get(0).getClaseEstudiantesList())
+                {
+                    clasesParaBuscar.add(objClaseEstudiantes.getClases());
+                }                
+            }
+            else if(xParamClasesDelDia.getTipoPersona().equalsIgnoreCase("D"))
+            {
+                clasesParaBuscar = objPersona.getDocentesList().get(0).getClasesList();
+            }
+            
+            String fechaHoy = FuncionesFecha.mostrarFechaAAAAMMDDString(FuncionesFecha.getFechaSistema());
+            int numeroHoyEnDiaSemana = FuncionesFecha.convertirStringACalendaryyyyMMdd(fechaHoy).get(Calendar.DAY_OF_WEEK); //1 es domingo
+            
+            for(Clases objClase : clasesParaBuscar)
+            {               
+                if(objClase.getFechaComienzo().compareTo(fechaHoy) <= 0 && objClase.getFechaFin().compareToIgnoreCase(fechaHoy) >= 0)
+                {
+                    List<Integer> diasEnLosQueSeDaCurso = obtenerNumeroDiasSemana(objClase.getDiasClase());
+                    if(diasEnLosQueSeDaCurso.contains(numeroHoyEnDiaSemana))
+                    {
+                        //armo la clase                
+                        ClaseDatos objClaseDatos = obtenerClaseDatosDeEntidadClases(objClase);
+                        retorno.getListaClases().add(objClaseDatos);
+                    }
+                }
+                
+            }
+            
+        }
+        catch(Exception e)
+        {
+            Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, null, e);            
+        }        
+        
+        return retorno;  
+    }
+    
+    @WebMethod(operationName = "cantidadAlumnosPorSexo")
+    public ReturnCantidadAlumnosSexo cantidadAlumnosPorSexo()
+    {
+        ReturnCantidadAlumnosSexo retorno = new ReturnCantidadAlumnosSexo();
+        try
+        {
+            retorno.getLista().add(new SexoCantidad("M", EstudiantesJpaPersitencia.ObtenerCantidadEstudiantesPorSexo(em, "M")));
+            retorno.getLista().add(new SexoCantidad("F", EstudiantesJpaPersitencia.ObtenerCantidadEstudiantesPorSexo(em, "F")));
+            
+        }
+        catch(Exception e)
+        {
+            Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, null, e);            
+        }        
+        
+        return retorno;  
+    }
+    
+    // Funciones auxiliares
     private ClaseDatos obtenerClaseDatosDeEntidadClases(Clases xObjClase)
     {        
         ClaseDatos retorno = new ClaseDatos();        
@@ -186,6 +293,24 @@ public class ServicioMiBios {
         retorno.setModalidad(xObjClase.getModalidadClase());
         retorno.setNombreCurso(xObjClase.getIdCurso().getNombre());
         retorno.setSalon(xObjClase.getSalon());
+        retorno.setIdClase(xObjClase.getIdClase());
+        retorno.setCantidadEstudiantesInscriptos(xObjClase.getClaseEstudiantesList().size());
+        
+        return retorno;
+    }
+    
+    private List<Integer> obtenerNumeroDiasSemana(String xDias)
+    {
+        List<Integer> retorno = new ArrayList();
+        
+        
+        if(xDias.toLowerCase().contains("domingo")) retorno.add(1);
+        if(xDias.toLowerCase().contains("lunes")) retorno.add(2);
+        if(xDias.toLowerCase().contains("martes")) retorno.add(3);
+        if(xDias.toLowerCase().contains("miercoles") || xDias.toLowerCase().contains("miércoles")) retorno.add(4);
+        if(xDias.toLowerCase().contains("jueves")) retorno.add(5);
+        if(xDias.toLowerCase().contains("viernes")) retorno.add(6);
+        if(xDias.toLowerCase().contains("sabado") || xDias.toLowerCase().contains("sábado")) retorno.add(7);
         
         return retorno;
     }

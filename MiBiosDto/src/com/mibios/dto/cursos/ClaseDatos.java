@@ -23,6 +23,7 @@ public class ClaseDatos implements Serializable{
     private String salon;
     private String docente;
     private String cuota;
+    private int cantidadEstudiantesInscriptos;
 
     public int getIdClase() {
         return idClase;
@@ -102,5 +103,15 @@ public class ClaseDatos implements Serializable{
 
     public void setCuota(String cuota) {
         this.cuota = cuota;
-    }    
+    }
+
+    public int getCantidadEstudiantesInscriptos() {
+        return cantidadEstudiantesInscriptos;
+    }
+
+    public void setCantidadEstudiantesInscriptos(int cantidadEstudiantesInscriptos) {
+        this.cantidadEstudiantesInscriptos = cantidadEstudiantesInscriptos;
+    }
+
+    
 }

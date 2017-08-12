@@ -4,9 +4,53 @@
 
 <xs:element name="agregarPersonaResponse" type="tns:agregarPersonaResponse"/>
 
+<xs:element name="cantidadAlumnosPorSexo" type="tns:cantidadAlumnosPorSexo"/>
+
+<xs:element name="cantidadAlumnosPorSexoResponse" type="tns:cantidadAlumnosPorSexoResponse"/>
+
+<xs:element name="clasesDelDia" type="tns:clasesDelDia"/>
+
+<xs:element name="clasesDelDiaResponse" type="tns:clasesDelDiaResponse"/>
+
 <xs:element name="listaCursos" type="tns:listaCursos"/>
 
 <xs:element name="listaCursosResponse" type="tns:listaCursosResponse"/>
+
+<xs:element name="proximosComienzos" type="tns:proximosComienzos"/>
+
+<xs:element name="proximosComienzosResponse" type="tns:proximosComienzosResponse"/>
+
+<xs:complexType name="proximosComienzos">
+<xs:sequence/>
+</xs:complexType>
+
+<xs:complexType name="proximosComienzosResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:returnClases" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="returnClases">
+<xs:sequence>
+<xs:element name="listaClases" type="tns:claseDatos" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="claseDatos">
+<xs:sequence>
+<xs:element name="cantidadEstudiantesInscriptos" type="xs:int"/>
+<xs:element name="cuota" type="xs:string" minOccurs="0"/>
+<xs:element name="dias" type="xs:string" minOccurs="0"/>
+<xs:element name="docente" type="xs:string" minOccurs="0"/>
+<xs:element name="fechaComienzo" type="xs:string" minOccurs="0"/>
+<xs:element name="fechaFin" type="xs:string" minOccurs="0"/>
+<xs:element name="horario" type="xs:string" minOccurs="0"/>
+<xs:element name="idClase" type="xs:int"/>
+<xs:element name="modalidad" type="xs:string" minOccurs="0"/>
+<xs:element name="nombreCurso" type="xs:string" minOccurs="0"/>
+<xs:element name="salon" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
 
 <xs:complexType name="listaCursos">
 <xs:sequence/>
@@ -48,17 +92,46 @@
 </xs:sequence>
 </xs:complexType>
 
-<xs:complexType name="claseDatos">
+<xs:complexType name="clasesDelDia">
 <xs:sequence>
-<xs:element name="cuota" type="xs:string" minOccurs="0"/>
-<xs:element name="dias" type="xs:string" minOccurs="0"/>
-<xs:element name="docente" type="xs:string" minOccurs="0"/>
-<xs:element name="fechaComienzo" type="xs:string" minOccurs="0"/>
-<xs:element name="fechaFin" type="xs:string" minOccurs="0"/>
-<xs:element name="horario" type="xs:string" minOccurs="0"/>
-<xs:element name="modalidad" type="xs:string" minOccurs="0"/>
-<xs:element name="nombreCurso" type="xs:string" minOccurs="0"/>
-<xs:element name="salon" type="xs:string" minOccurs="0"/>
+<xs:element name="arg0" type="tns:paramClasesEnDiaParaPersona" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="paramClasesEnDiaParaPersona">
+<xs:sequence>
+<xs:element name="documento" type="xs:string" minOccurs="0"/>
+<xs:element name="tipoDocumento" type="xs:string" minOccurs="0"/>
+<xs:element name="tipoPersona" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="clasesDelDiaResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:returnClases" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="cantidadAlumnosPorSexo">
+<xs:sequence/>
+</xs:complexType>
+
+<xs:complexType name="cantidadAlumnosPorSexoResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:returnCantidadAlumnosSexo" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="returnCantidadAlumnosSexo">
+<xs:sequence>
+<xs:element name="lista" type="tns:sexoCantidad" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="sexoCantidad">
+<xs:sequence>
+<xs:element name="cantidad" type="xs:int"/>
+<xs:element name="sexo" type="xs:string" minOccurs="0"/>
 </xs:sequence>
 </xs:complexType>
 

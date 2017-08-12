@@ -19,9 +19,142 @@
     <ui:define name="contenido">
         <h:form id="formNoticias">
              <p:panel id="noticias" header="Noticias" toggleable="true">
-                <h:panelGrid columns="2" cellpadding="10">
-                    <p:graphicImage name="img/instituto.png" />
-                    <h:outputText value="La idea puede ser poner algo aca..." />
+                <h:panelGrid columns="1" cellpadding="10">
+<!--                    <p:graphicImage name="img/instituto.png" />
+                    <h:outputText value="La idea puede ser poner algo aca..." />-->
+                    <p:panel header="Próximos comienzos">
+                            <p:dataTable var="datos" value="#{homeBean.proximosComienzos}"
+                                 emptyMessage="No hay comienzos establecidos">
+                            <p:column class="centrarTexto">
+                                <f:facet name="header">
+                                    <h:outputText value="Curso"/>
+                                </f:facet>
+                                <h:outputText value="#{datos.nombreCurso}" />
+                            </p:column>
+                            <p:column class="centrarTexto">
+                                <f:facet name="header">
+                                    <h:outputText value="Modalidad"/>
+                                </f:facet>
+                                <h:outputText value="#{datos.modalidad}" />
+                            </p:column>
+                            <p:column class="centrarTexto">
+                                <f:facet name="header">
+                                    <h:outputText value="Comienzo"/>
+                                </f:facet>
+                                <h:outputText value="#{datos.fechaComienzo}" />
+                            </p:column>
+                            <p:column class="centrarTexto">
+                                <f:facet name="header">
+                                    <h:outputText value="Finaliza" />
+                                </f:facet>
+                                <h:outputText value="#{datos.fechaFin}" />
+                            </p:column>
+                            <p:column class="centrarTexto">
+                                <f:facet name="header">
+                                    <h:outputText value="Dias" />
+                                </f:facet>
+                                <h:outputText value="#{datos.dias}" />
+                            </p:column>
+                            <p:column class="centrarTexto">
+                                <f:facet name="header">
+                                    <h:outputText value="Horario" />
+                                </f:facet>
+                                <h:outputText value="#{datos.horario}" />
+                            </p:column>
+                            <p:column class="centrarTexto">
+                                <f:facet name="header">
+                                    <h:outputText value="Docente" />
+                                </f:facet>
+                                <h:outputText value="#{datos.docente}" />
+                            </p:column>
+                            <p:column class="centrarTexto">
+                                <f:facet name="header">
+                                    <h:outputText value="Salon" />
+                                </f:facet>
+                                <h:outputText value="#{datos.salon}" />
+                            </p:column>
+                            <p:column class="alinearALaDerecha">
+                                <f:facet name="header">
+                                    <h:outputText value="Cuota" />
+                                </f:facet>
+                                <h:outputText value="$#{datos.cuota}" />
+                            </p:column>
+                            <p:column class="alinearALaDerecha">
+                                <f:facet name="header">
+                                    <h:outputText value="#Inscriptos" />
+                                </f:facet>
+                                <h:outputText value="#{datos.cantidadEstudiantesInscriptos}" />
+                            </p:column>
+                            
+                        </p:dataTable>
+                    </p:panel>
+
+                    <p:panel header="Mis clases de hoy">
+                        <p:dataTable var="datos" value="#{homeBean.clasesUsuario}"
+                                 emptyMessage="No hay comienzos establecidos">
+                            <p:column class="centrarTexto">
+                                <f:facet name="header">
+                                    <h:outputText value="Curso"/>
+                                </f:facet>
+                                <h:outputText value="#{datos.nombreCurso}" />
+                            </p:column>
+                            <p:column class="centrarTexto">
+                                <f:facet name="header">
+                                    <h:outputText value="Modalidad"/>
+                                </f:facet>
+                                <h:outputText value="#{datos.modalidad}" />
+                            </p:column>
+                            <p:column class="centrarTexto">
+                                <f:facet name="header">
+                                    <h:outputText value="Comienzo"/>
+                                </f:facet>
+                                <h:outputText value="#{datos.fechaComienzo}" />
+                            </p:column>
+                            <p:column class="centrarTexto">
+                                <f:facet name="header">
+                                    <h:outputText value="Finaliza" />
+                                </f:facet>
+                                <h:outputText value="#{datos.fechaFin}" />
+                            </p:column>
+                            <p:column class="centrarTexto">
+                                <f:facet name="header">
+                                    <h:outputText value="Dias" />
+                                </f:facet>
+                                <h:outputText value="#{datos.dias}" />
+                            </p:column>
+                            <p:column class="centrarTexto">
+                                <f:facet name="header">
+                                    <h:outputText value="Horario" />
+                                </f:facet>
+                                <h:outputText value="#{datos.horario}" />
+                            </p:column>
+                            <p:column class="centrarTexto">
+                                <f:facet name="header">
+                                    <h:outputText value="Docente" />
+                                </f:facet>
+                                <h:outputText value="#{datos.docente}" />
+                            </p:column>
+                            <p:column class="centrarTexto">
+                                <f:facet name="header">
+                                    <h:outputText value="Salon" />
+                                </f:facet>
+                                <h:outputText value="#{datos.salon}" />
+                            </p:column>
+                            <p:column class="alinearALaDerecha">
+                                <f:facet name="header">
+                                    <h:outputText value="Cuota" />
+                                </f:facet>
+                                <h:outputText value="$#{datos.cuota}" />
+                            </p:column>
+                            <p:column class="alinearALaDerecha">
+                                <f:facet name="header">
+                                    <h:outputText value="#Inscriptos" />
+                                </f:facet>
+                                <h:outputText value="#{datos.cantidadEstudiantesInscriptos}" />
+                            </p:column>
+                            
+                        </p:dataTable>
+                    </p:panel>
                 </h:panelGrid>
             </p:panel>
         </h:form>

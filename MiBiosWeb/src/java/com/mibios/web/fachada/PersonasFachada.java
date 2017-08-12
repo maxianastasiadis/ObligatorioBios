@@ -5,6 +5,7 @@
  */
 package com.mibios.web.fachada;
 
+import com.mibios.web.auxiliarWs.HelpWebService;
 import com.mibios.dto.cuentaCorriente.ParamCuentaCorriente;
 import com.mibios.dto.cuentaCorriente.ReturnCuentaCorriente;
 import com.mibios.dto.personas.ParamActualizarDatosPersonales;
@@ -15,8 +16,10 @@ import com.mibios.dto.personas.ReturnActualizarDatosPersonales;
 import com.mibios.dto.personas.ReturnIngresarPago;
 import com.mibios.dto.personas.ReturnObtenerDatosPersonales;
 import com.mibios.ejb.personas.PersonasBeanLocal;
+import com.mibios.web.auxiliarWs.IntermedioWebService;
 import com.mibios.webservice.servicio.ParamAgregarPersona;
 import com.mibios.webservice.servicio.ReturnAgregarPersona;
+import com.mibios.webservice.servicio.ReturnCantidadAlumnosSexo;
 import com.mibios.webservice.servicio.ServicioMiBios_Service;
 import java.net.URL;
 import java.util.List;
@@ -60,7 +63,12 @@ public class PersonasFachada {
     
     public ReturnAgregarPersona AgregarPersonaViaWS(ParamAgregarPersona xParamAgregarPersona)
     {
-        return this.agregarPersona(xParamAgregarPersona);
+        return IntermedioWebService.agregarPersona(xParamAgregarPersona);
+    }
+    
+    public ReturnCantidadAlumnosSexo CantidadAlumnosPorSexo()
+    {
+        return IntermedioWebService.cantidadAlumnosPorSexo();
     }
         
     /**********************************/
@@ -81,23 +89,5 @@ public class PersonasFachada {
             throw new RuntimeException(ne);
         }
     } 
-    
-    private ServicioMiBios_Service obtenerServicio()
-    {
-        try
-        {
-            String rutaWsdl = FacesContext.getCurrentInstance().getExternalContext().getInitParameterMap().get("rutaWSDL").toString();
-            return new ServicioMiBios_Service(new URL(rutaWsdl));
-        }
-        catch(Exception ex)
-        {
-            return null;
-        }
         
-    }
-    
-    private ReturnAgregarPersona agregarPersona(com.mibios.webservice.servicio.ParamAgregarPersona xParamAgregarPersona) {        
-        com.mibios.webservice.servicio.ServicioMiBios port = obtenerServicio().getServicioMiBiosPort();
-        return port.agregarPersona(xParamAgregarPersona);
-    }
 }

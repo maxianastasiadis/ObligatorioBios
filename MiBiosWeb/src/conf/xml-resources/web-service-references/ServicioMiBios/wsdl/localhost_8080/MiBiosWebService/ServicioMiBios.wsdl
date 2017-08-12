@@ -4,30 +4,69 @@
 <xsd:import namespace="http://servicio.webservice.mibios.com/" schemaLocation="http://localhost:8080/MiBiosWebService/ServicioMiBios?xsd=1"/>
 </xsd:schema>
 </types>
-<message name="agregarPersona">
-<part name="parameters" element="tns:agregarPersona"/>
-</message>
-<message name="agregarPersonaResponse">
-<part name="parameters" element="tns:agregarPersonaResponse"/>
-</message>
 <message name="listaCursos">
 <part name="parameters" element="tns:listaCursos"/>
 </message>
 <message name="listaCursosResponse">
 <part name="parameters" element="tns:listaCursosResponse"/>
 </message>
+<message name="agregarPersona">
+<part name="parameters" element="tns:agregarPersona"/>
+</message>
+<message name="agregarPersonaResponse">
+<part name="parameters" element="tns:agregarPersonaResponse"/>
+</message>
+<message name="proximosComienzos">
+<part name="parameters" element="tns:proximosComienzos"/>
+</message>
+<message name="proximosComienzosResponse">
+<part name="parameters" element="tns:proximosComienzosResponse"/>
+</message>
+<message name="clasesDelDia">
+<part name="parameters" element="tns:clasesDelDia"/>
+</message>
+<message name="clasesDelDiaResponse">
+<part name="parameters" element="tns:clasesDelDiaResponse"/>
+</message>
+<message name="cantidadAlumnosPorSexo">
+<part name="parameters" element="tns:cantidadAlumnosPorSexo"/>
+</message>
+<message name="cantidadAlumnosPorSexoResponse">
+<part name="parameters" element="tns:cantidadAlumnosPorSexoResponse"/>
+</message>
 <portType name="ServicioMiBios">
-<operation name="agregarPersona">
-<input wsam:Action="http://servicio.webservice.mibios.com/ServicioMiBios/agregarPersonaRequest" message="tns:agregarPersona"/>
-<output wsam:Action="http://servicio.webservice.mibios.com/ServicioMiBios/agregarPersonaResponse" message="tns:agregarPersonaResponse"/>
-</operation>
 <operation name="listaCursos">
 <input wsam:Action="http://servicio.webservice.mibios.com/ServicioMiBios/listaCursosRequest" message="tns:listaCursos"/>
 <output wsam:Action="http://servicio.webservice.mibios.com/ServicioMiBios/listaCursosResponse" message="tns:listaCursosResponse"/>
 </operation>
+<operation name="agregarPersona">
+<input wsam:Action="http://servicio.webservice.mibios.com/ServicioMiBios/agregarPersonaRequest" message="tns:agregarPersona"/>
+<output wsam:Action="http://servicio.webservice.mibios.com/ServicioMiBios/agregarPersonaResponse" message="tns:agregarPersonaResponse"/>
+</operation>
+<operation name="proximosComienzos">
+<input wsam:Action="http://servicio.webservice.mibios.com/ServicioMiBios/proximosComienzosRequest" message="tns:proximosComienzos"/>
+<output wsam:Action="http://servicio.webservice.mibios.com/ServicioMiBios/proximosComienzosResponse" message="tns:proximosComienzosResponse"/>
+</operation>
+<operation name="clasesDelDia">
+<input wsam:Action="http://servicio.webservice.mibios.com/ServicioMiBios/clasesDelDiaRequest" message="tns:clasesDelDia"/>
+<output wsam:Action="http://servicio.webservice.mibios.com/ServicioMiBios/clasesDelDiaResponse" message="tns:clasesDelDiaResponse"/>
+</operation>
+<operation name="cantidadAlumnosPorSexo">
+<input wsam:Action="http://servicio.webservice.mibios.com/ServicioMiBios/cantidadAlumnosPorSexoRequest" message="tns:cantidadAlumnosPorSexo"/>
+<output wsam:Action="http://servicio.webservice.mibios.com/ServicioMiBios/cantidadAlumnosPorSexoResponse" message="tns:cantidadAlumnosPorSexoResponse"/>
+</operation>
 </portType>
 <binding name="ServicioMiBiosPortBinding" type="tns:ServicioMiBios">
 <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+<operation name="listaCursos">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+</operation>
 <operation name="agregarPersona">
 <soap:operation soapAction=""/>
 <input>
@@ -37,7 +76,25 @@
 <soap:body use="literal"/>
 </output>
 </operation>
-<operation name="listaCursos">
+<operation name="proximosComienzos">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+</operation>
+<operation name="clasesDelDia">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+</operation>
+<operation name="cantidadAlumnosPorSexo">
 <soap:operation soapAction=""/>
 <input>
 <soap:body use="literal"/>

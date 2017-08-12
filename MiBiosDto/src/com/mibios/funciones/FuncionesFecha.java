@@ -213,6 +213,34 @@ public class FuncionesFecha {
     }
     
     /**
+     * Incrementar Fecha
+     * @param xFecha
+     * @param xTipo M=meses, D=días
+     * @param xIncremento valor a sumar
+     * @return
+     * @throws java.lang.Exception
+     */
+    public static String incrementarFecha(String xFecha, String xTipo, int xIncremento) throws Exception
+    {
+        String f = "";
+        Calendar fecha = convertirStringACalendaryyyyMMdd(xFecha);
+
+        if(xTipo.equalsIgnoreCase("M"))
+        {
+            fecha.add(Calendar.MONTH, xIncremento);
+        }
+        else if(xTipo.equalsIgnoreCase("D"))
+        {
+            fecha.add(Calendar.DATE, xIncremento);
+        }
+
+        SimpleDateFormat formato = new SimpleDateFormat("yyyyMMdd");
+        f = formato.format(fecha.getTime());
+
+        return f.trim();
+    }
+    
+    /**
      * Convierte una hora de tipo String a Calendar con un formato (HHmm).
      * @param xFecha
      * @return
@@ -226,6 +254,31 @@ public class FuncionesFecha {
             DateFormat formato;
             formato = new SimpleDateFormat("HHmm");
             date = (Date) formato.parse(xHora);
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(date);
+
+            return cal;
+        } 
+        catch (Exception ex)
+        {
+            throw new Exception("Genericos--> " + ex.getMessage());
+        }
+    }
+    
+    /**
+     * Convierte una fecha de tipo String a Calendar con un formato (yyyyMMdd).
+     * @param xFecha
+     * @return
+     * @throws java.lang.Exception
+     */
+    public static Calendar convertirStringACalendaryyyyMMdd(String xFecha) throws Exception
+    {
+        try
+        {
+            Date date;
+            DateFormat formato;
+            formato = new SimpleDateFormat("yyyyMMdd");
+            date = (Date) formato.parse(xFecha);
             Calendar cal = Calendar.getInstance();
             cal.setTime(date);
 

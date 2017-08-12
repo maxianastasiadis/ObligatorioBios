@@ -6,6 +6,10 @@
 package com.mibios.web.managedbeans;
 
 import com.mibios.dto.institutos.Instituto;
+import com.mibios.dto.usuarios.ReturnLogin;
+import com.mibios.web.fachada.CursosFachada;
+import com.mibios.webservice.servicio.ClaseDatos;
+import com.mibios.webservice.servicio.ParamClasesEnDiaParaPersona;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +33,9 @@ public class HomeBean implements Serializable{
     private List<Instituto> institutos;
     private Instituto instituto;
     private MapModel modeloParaMapaCentrosBios;
+    private List<ClaseDatos> proximosComienzos; 
+    private List<ClaseDatos> clasesUsuario;
+    
     
     @PostConstruct
     public void init() {
@@ -53,6 +60,19 @@ public class HomeBean implements Serializable{
         institutos.add(instituto7);
         institutos.add(instituto8);
         institutos.add(instituto9);
+        
+        CursosFachada objCursosFachada = new CursosFachada();
+        proximosComienzos = objCursosFachada.ProximosComienzos().getListaClases();
+        
+        ReturnLogin usuarioLogueado = (ReturnLogin)FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("Usuario");
+        
+        ParamClasesEnDiaParaPersona objParamClasesEnDiaParaPersona = new ParamClasesEnDiaParaPersona();
+        objParamClasesEnDiaParaPersona.setTipoPersona(usuarioLogueado.getTipoPersona());
+        objParamClasesEnDiaParaPersona.setTipoDocumento(usuarioLogueado.getTipoDocumento());
+        objParamClasesEnDiaParaPersona.setDocumento(usuarioLogueado.getDocumento());
+        
+        clasesUsuario = objCursosFachada.ClasesDelDia(objParamClasesEnDiaParaPersona).getListaClases();
+        
     }
 
     public List<Instituto> getInstitutos() {
@@ -88,4 +108,24 @@ public class HomeBean implements Serializable{
     public MapModel getModeloParaMapaCentrosBios() {
         return modeloParaMapaCentrosBios;
     }
+
+    public List<ClaseDatos> getProximosComienzos() {
+        return proximosComienzos;
+    }
+
+    public void setProximosComienzos(List<ClaseDatos> proximosComienzos) {
+        this.proximosComienzos = proximosComienzos;
+    }
+
+    public List<ClaseDatos> getClasesUsuario() {
+        return clasesUsuario;
+    }
+
+    public void setClasesUsuario(List<ClaseDatos> clasesUsuario) {
+        this.clasesUsuario = clasesUsuario;
+    }
+    
+    
+    
+    
 }

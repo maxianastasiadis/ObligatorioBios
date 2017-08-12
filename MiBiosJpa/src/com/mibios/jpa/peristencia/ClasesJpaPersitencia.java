@@ -6,6 +6,7 @@
 package com.mibios.jpa.peristencia;
 
 import com.mibios.jpa.entidades.Clases;
+import java.util.List;
 import javax.persistence.EntityManager;
 
 /**
@@ -29,6 +30,25 @@ public class ClasesJpaPersitencia {
             throw new Exception("Persistencia--> " + e);
         }
         return objClases;
+    }
+    
+    public static List<Clases> ObtenerClasesPorFechaComienzo(EntityManager em, String xFechaDesde, String xFechaHasta) throws Exception
+    {
+        List<Clases> retorno = null;
+        
+        try
+        {
+            retorno = em.createNamedQuery("Clases.ObtenerPorFechaComienzo", Clases.class)
+                    .setParameter("fechaDesde", xFechaDesde)
+                    .setParameter("fechaHasta", xFechaHasta)
+                    .getResultList();
+        }
+        catch(Exception e)
+        {
+            throw new Exception("Persistencia--> " + e);
+        }
+        
+        return retorno;
     }
     
 }
