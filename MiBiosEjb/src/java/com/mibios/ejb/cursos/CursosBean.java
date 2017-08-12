@@ -137,19 +137,16 @@ public class CursosBean implements CursosBeanLocal {
         try
         {
             ClaseEstudiantes objClaseEstudiantes = new ClaseEstudiantes();
-            
-            Clases objClases = ClasesJpaPersitencia.ObtenerClase(em, xParamInscribirmeACurso.getIdClase());
-            objClaseEstudiantes.setClases(objClases);
             Estudiantes objEstudiantes = EstudiantesJpaPersitencia.ObtenerEstudiante(em, xParamInscribirmeACurso.getTipoDocumento(), xParamInscribirmeACurso.getDocumento());
-            objClaseEstudiantes.setEstudiantes(objEstudiantes);
-            objClaseEstudiantes.setPorcentajeBeca(BigDecimal.ZERO);
+            ClaseEstudiantesPK objClaseEstudiantesPK = new ClaseEstudiantesPK(xParamInscribirmeACurso.getIdClase(), objEstudiantes.getIdEstudiante());
+            objClaseEstudiantes.setClaseEstudiantesPK(objClaseEstudiantesPK);
+            objClaseEstudiantes.setAprobadoSn("");
+            objClaseEstudiantes.setPorcentajeBeca(new BigDecimal(xParamInscribirmeACurso.getBeca()));
             
             ClaseEstudiantesJpaPersistencia.InscribirmeACurso(em, objClaseEstudiantes);
 
             objReturnInscribirmeACurso.setGuardado(true);
-            objReturnInscribirmeACurso.setRespuesta("Se inscribio correctamente");
-            //objReturnInscribirmeACurso.setDatosUsuario(datosUsuario);
-            
+            objReturnInscribirmeACurso.setRespuesta("Se inscribio correctamente");   
         }
         catch(Exception e)
         {

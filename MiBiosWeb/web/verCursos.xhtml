@@ -57,7 +57,7 @@
             </p:panel>
         </h:form>
         <h:form id="DetalleCursoForm">  
-            <p:growl id="msgs" showDetail="true"/>
+            <p:growl id="msgs" showDetail="false"/>
             <p:dialog header="Detalles Curso" widgetVar="cursoDialogo" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
                 <p:outputPanel id="cursoDetalle" style="text-align:center;">
                     <p:dataTable id="tblDetail" var="datos" value="#{cursosBean.listaClases}"
@@ -120,7 +120,7 @@
                             <f:facet name="header">
                                 <h:outputText value="Inscribirme" />
                             </f:facet>
-                            <p:commandButton update=":InscripcionForm:inscrpcionClase" oncomplete="PF('inscripcionDialogo').show()" icon="ui-icon-search" title="Inscribirme">
+                            <p:commandButton update=":InscripcionForm:inscrpcionClase" oncomplete="PF('inscripcionDialogo').show()" value="Inscribirme" title="Inscribirme">
                                 <f:setPropertyActionListener value="#{datos.idClase}" target="#{cursosBean.idClaseInscripcion}" />
                             </p:commandButton>
                         </p:column>
@@ -130,11 +130,13 @@
         </h:form>
 
         <h:form id="InscripcionForm">  
-            <p:growl id="msgs" showDetail="true"/>
+            <p:growl id="msgs" showDetail="false"/>
             <p:dialog header="Inscripcion" widgetVar="inscripcionDialogo" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
                  <p:outputPanel id="inscrpcionClase" style="text-align:center;">
-                    
-                    <h:outputText value="#{cursosBean.idClaseInscripcion}" />
+                    <h:outputText value="Ingrese Beca: " />
+                    <p:inputText id="beca" required="true" requiredMessage="Debe ingresar Beca" maxlength="3" converterMessage="El porcentaje de beca debe ser numérico" value="#{cursosBean.becaInscripcion}"/>
+                    <h:message for="beca" class="message"/>
+                    <p:commandButton action="#{cursosBean.inscribirmeACurso(cursosBean.idClaseInscripcion)}" value="Inscribirme" icon="ui-icon-check" ajax="true" update=":InscripcionForm:msgs" oncomplete="controlInscribirmeACurso(xhr, status, args)"></p:commandButton>
                  </p:outputPanel>
             </p:dialog>
         </h:form>

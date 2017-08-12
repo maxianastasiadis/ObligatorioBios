@@ -14,6 +14,7 @@ import java.io.Serializable;
 public class ParamInscribirmeACurso implements Serializable {
     
     private int idClase;
+    private int beca;
     private String tipoDocumento;
     private String documento;
 
@@ -23,6 +24,14 @@ public class ParamInscribirmeACurso implements Serializable {
 
     public void setIdClase(int idClase) {
         this.idClase = idClase;
+    }
+
+    public int getBeca() {
+        return beca;
+    }
+
+    public void setBeca(int beca) {
+        this.beca = beca;
     }
 
     public String getTipoDocumento() {

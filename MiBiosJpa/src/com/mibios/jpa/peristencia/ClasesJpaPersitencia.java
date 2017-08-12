@@ -21,7 +21,7 @@ public class ClasesJpaPersitencia {
         
         try
         {
-            objClases = em.createNamedQuery("Clases.obtenerClase",Clases.class)
+            objClases = em.createNamedQuery("Clases.ObtenerClase",Clases.class)
                     .setParameter("idClase", xIdClase)
                     .getSingleResult();
         }

@@ -39,3 +39,12 @@ function controlCambioClave(xhr, status, args) {
         PF('dlg').hide();
     }
 }
+
+function controlInscribirmeACurso(xhr, status, args) {
+    if(args.validationFailed || !args.inscipcionCorrecta) {
+        PF('inscripcionDialogo').jq.effect("shake", {times:5}, 100);
+    }
+    else {
+        PF('inscripcionDialogo').hide();
+    }
+}
