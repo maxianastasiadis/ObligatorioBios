@@ -228,10 +228,11 @@ public class DatosPersonalesBean implements Serializable  {
         this.confirmaClaveNueva = confirmaClaveNueva;
     }    
     
-    public Boolean ActualizarDatosPersonales() {
+    public String ActualizarDatosPersonales() {
         ParamActualizarDatosPersonales paramActualizarDatosPersonales = new ParamActualizarDatosPersonales();
         ReturnActualizarDatosPersonales returnActualizarDatosPersonales = new ReturnActualizarDatosPersonales();
         PersonasFachada personasFachada = new PersonasFachada();
+        String actualizar = "false";
         
         try {
     
@@ -269,7 +270,20 @@ public class DatosPersonalesBean implements Serializable  {
         } catch (Exception ex) {
             Logger.getLogger(DatosPersonalesBean.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return returnActualizarDatosPersonales.getGuardado();
+        
+        if(returnActualizarDatosPersonales.getGuardado())
+        {
+            if(tipoPersona.equalsIgnoreCase("P"))
+            {
+                actualizar = "personal";
+            }
+            else
+            {
+                actualizar = "true";
+            }
+        }
+        
+        return actualizar;
     }
     
     private void cargarDatosPersonales() 

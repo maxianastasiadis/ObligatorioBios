@@ -33,7 +33,6 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.stream.Collectors;
 import javax.annotation.Resource;
 import javax.jws.WebService;
 import javax.jws.WebMethod;
@@ -287,11 +286,16 @@ public class ServicioMiBios {
         retorno.setCuota(xObjClase.getImporteCuota().toString());
         retorno.setDias(xObjClase.getDiasClase());
         retorno.setDocente(xObjClase.getIdDocente().getPersonas().getApellido1() + " " + xObjClase.getIdDocente().getPersonas().getNombre1());
-        retorno.setFechaComienzo(xObjClase.getFechaComienzo());
-        retorno.setFechaFin(xObjClase.getFechaFin());
-        retorno.setHorario(xObjClase.getHorarioComienzo());
-        retorno.setModalidad(xObjClase.getModalidadClase());
-        retorno.setNombreCurso(xObjClase.getIdCurso().getNombre());
+        retorno.setFechaComienzo(FuncionesFecha.mostrarFechaDDMMAAAAString(xObjClase.getFechaComienzo()));
+        retorno.setFechaFin(FuncionesFecha.mostrarFechaDDMMAAAAString(xObjClase.getFechaFin()));
+        retorno.setHorario(FuncionesFecha.mostrarHoraHHMM(xObjClase.getHorarioComienzo()) + " A " + FuncionesFecha.mostrarHoraHHMM(FuncionesFecha.incrementarHora(xObjClase.getHorarioComienzo(), xObjClase.getDuracionHoras())));
+        String modalidad = "Presencial";
+        if(xObjClase.getModalidadClase().equalsIgnoreCase("D"))
+        {
+            modalidad = "A Distancia";
+        }
+        retorno.setModalidad(modalidad);
+        retorno.setNombreCurso(xObjClase.getIdCurso().getNombre() + " " + xObjClase.getIdCurso().getDescripcion());
         retorno.setSalon(xObjClase.getSalon());
         retorno.setIdClase(xObjClase.getIdClase());
         retorno.setCantidadEstudiantesInscriptos(xObjClase.getClaseEstudiantesList().size());

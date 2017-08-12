@@ -66,11 +66,12 @@ public class LoginBean implements Serializable{
         this.clave = clave;
     }
     
-    public Boolean Login() 
+    public String Login() 
     {
         ParamLogin paramLogin = new ParamLogin();
         ReturnLogin returnLogin = new ReturnLogin();
         UsuariosFachada usuarioFachada = new UsuariosFachada();
+        String login = "false";
         
         try {
     
@@ -92,6 +93,19 @@ public class LoginBean implements Serializable{
             Logger.getLogger(LoginBean.class.getName()).log(Level.SEVERE, null, ex);
             ex.printStackTrace();
         }
-        return returnLogin.getLogin();
+        
+        if(returnLogin.getLogin())
+        {
+            if(tipoPersona.equalsIgnoreCase("P"))
+            {
+                login = "personal";
+            }
+            else
+            {
+                login = "true";
+            }
+        }
+        
+        return login;
     }    
 }

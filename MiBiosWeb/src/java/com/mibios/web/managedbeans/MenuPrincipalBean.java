@@ -54,16 +54,146 @@ public class MenuPrincipalBean implements Serializable {
         return page;
     }
     
-    public String obtenerVisibilidadSegunTipoUsuario()
+    public String obtenerVisibilidadSegunTipoUsuario(String itemMenu)
     {
         ReturnLogin obj = (ReturnLogin)FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("Usuario");
-        if(!obj.getTipoPersona().equalsIgnoreCase("P"))
+        
+        String visibilidad = "false";
+        
+        if(itemMenu.equalsIgnoreCase("home"))
         {
-            return "hidden";
+            if(obj.getTipoPersona().equalsIgnoreCase("A"))
+            {
+                visibilidad = "true";
+            }
+            else if(obj.getTipoPersona().equalsIgnoreCase("D"))
+            {
+                visibilidad = "true";
+            } 
+            else if(obj.getTipoPersona().equalsIgnoreCase("P"))
+            {
+                visibilidad = "false";
+            } 
+            else
+            {
+                visibilidad = "false";
+            }
         }
-        else
+        else if(itemMenu.equalsIgnoreCase("datosPersonales"))
         {
-            return "visible";
+            if(obj.getTipoPersona().equalsIgnoreCase("A"))
+            {
+                visibilidad = "true";
+            }
+            else if(obj.getTipoPersona().equalsIgnoreCase("D"))
+            {
+                visibilidad = "true";
+            } 
+            else if(obj.getTipoPersona().equalsIgnoreCase("P"))
+            {
+                visibilidad = "true";
+            } 
+            else
+            {
+                visibilidad = "false";
+            }
         }
+        else if(itemMenu.equalsIgnoreCase("cuentaCorriente"))
+        {
+            if(obj.getTipoPersona().equalsIgnoreCase("A"))
+            {
+                visibilidad = "true";
+            }
+            else if(obj.getTipoPersona().equalsIgnoreCase("D"))
+            {
+                visibilidad = "true";
+            } 
+            else if(obj.getTipoPersona().equalsIgnoreCase("P"))
+            {
+                visibilidad = "false";
+            } 
+            else
+            {
+                visibilidad = "false";
+            }
+        } 
+        else if(itemMenu.equalsIgnoreCase("misCursos"))
+        {
+            if(obj.getTipoPersona().equalsIgnoreCase("A"))
+            {
+                visibilidad = "true";
+            }
+            else if(obj.getTipoPersona().equalsIgnoreCase("D"))
+            {
+                visibilidad = "false";
+            } 
+            else if(obj.getTipoPersona().equalsIgnoreCase("P"))
+            {
+                visibilidad = "false";
+            } 
+            else
+            {
+                visibilidad = "false";
+            }
+        } 
+        else if(itemMenu.equalsIgnoreCase("verCursos"))
+        {
+            if(obj.getTipoPersona().equalsIgnoreCase("A"))
+            {
+                visibilidad = "true";
+            }
+            else if(obj.getTipoPersona().equalsIgnoreCase("D"))
+            {
+                visibilidad = "false";
+            } 
+            else if(obj.getTipoPersona().equalsIgnoreCase("P"))
+            {
+                visibilidad = "false";
+            } 
+            else
+            {
+                visibilidad = "false";
+            }
+        } 
+        else if(itemMenu.equalsIgnoreCase("verInstitutos"))
+        {
+            if(obj.getTipoPersona().equalsIgnoreCase("A"))
+            {
+                visibilidad = "true";
+            }
+            else if(obj.getTipoPersona().equalsIgnoreCase("D"))
+            {
+                visibilidad = "true";
+            } 
+            else if(obj.getTipoPersona().equalsIgnoreCase("P"))
+            {
+                visibilidad = "false";
+            } 
+            else
+            {
+                visibilidad = "false";
+            }
+        } 
+        else if(itemMenu.equalsIgnoreCase("agregarPersona"))
+        {
+            if(obj.getTipoPersona().equalsIgnoreCase("A"))
+            {
+                visibilidad = "false";
+            }
+            else if(obj.getTipoPersona().equalsIgnoreCase("D"))
+            {
+                visibilidad = "false";
+            } 
+            else if(obj.getTipoPersona().equalsIgnoreCase("P"))
+            {
+                visibilidad = "true";
+            } 
+            else
+            {
+                visibilidad = "false";
+            }
+        } 
+        
+        return visibilidad;
     }
 }

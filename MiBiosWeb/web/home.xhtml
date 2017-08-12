@@ -20,8 +20,6 @@
         <h:form id="formNoticias">
              <p:panel id="noticias" header="Noticias" toggleable="true">
                 <h:panelGrid columns="1" cellpadding="10">
-<!--                    <p:graphicImage name="img/instituto.png" />
-                    <h:outputText value="La idea puede ser poner algo aca..." />-->
                     <p:panel header="Próximos comienzos">
                             <p:dataTable var="datos" value="#{homeBean.proximosComienzos}"
                                  emptyMessage="No hay comienzos establecidos">
@@ -161,8 +159,9 @@
         <h:form id="form">            
             <p:panel id="mapas" header="Institutos" toggleable="true">
                 <p:dataList value="#{homeBean.institutos}" var="instituto" type="unordered" itemType="none">
-                    <p:commandLink update=":form:gmap2" oncomplete="PF('verMapa').show()" title="Ver Instituto" styleClass="ui-icon ui-icon-search" style="float:left;margin-right:10px">
-                        <f:setPropertyActionListener value="#{instituto}" target="#{homeBean.instituto}" />
+                    <p:commandLink update=":form:gmap2" oncomplete="PF('verMapa').show()" title="Ver Instituto" style="text-align: left;margin-right:10px">
+                        <h:graphicImage name="img/instituto.png" width="28" height="28"/>
+                        <f:setPropertyActionListener value="#{instituto}" target="#{homeBean.instituto}" />    
                     </p:commandLink>
                     <h:outputText value="#{instituto.nombre}, #{instituto.direccion}" style="display:inline-block"/>
                 </p:dataList>

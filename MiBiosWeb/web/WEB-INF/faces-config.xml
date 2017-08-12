@@ -13,6 +13,12 @@
                 </navigation-case>
                 <navigation-case>
                     <from-action>#{loginBean.Login}</from-action>
+                    <from-outcome>personal</from-outcome>
+                    <to-view-id>/agregarPersona.xhtml</to-view-id>
+                    <redirect></redirect>
+                </navigation-case>
+                <navigation-case>
+                    <from-action>#{loginBean.Login}</from-action>
                     <from-outcome>false</from-outcome>
                     <to-view-id>/index.xhtml</to-view-id>
                 </navigation-case>
@@ -32,6 +38,12 @@
                     <from-action>#{datosPersonalesBean.ActualizarDatosPersonales}</from-action>
                     <from-outcome>true</from-outcome>
                     <to-view-id>/home.xhtml</to-view-id>
+                    <redirect></redirect>
+                </navigation-case>
+                <navigation-case>
+                    <from-action>#{datosPersonalesBean.ActualizarDatosPersonales}</from-action>
+                    <from-outcome>personal</from-outcome>
+                    <to-view-id>/agregarPersona.xhtml</to-view-id>
                     <redirect></redirect>
                 </navigation-case>
         </navigation-rule>

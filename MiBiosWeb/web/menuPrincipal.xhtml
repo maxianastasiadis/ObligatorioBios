@@ -5,12 +5,13 @@
       xmlns:p="http://primefaces.org/ui">
 <h:form>
     <p:menubar>
-        <p:menuitem icon="ui-icon-person" value="#{menuPrincipalBean.nombreUsuario}" action="#{menuPrincipalBean.cargarPagina('datosPersonales.xhtml')}" />
-        <p:menuitem icon="ui-icon-document" value="Cuenta Corriente" action="#{menuPrincipalBean.cargarPagina('cuentaCorriente.xhtml')}" />
-        <p:menuitem icon="ui-icon-pencil" value="Mis Cursos" action="#{menuPrincipalBean.cargarPagina('misCursos.xhtml')}"/>
-        <p:menuitem icon="ui-icon-search" value="Ver Cursos" action="#{menuPrincipalBean.cargarPagina('verCursos.xhtml')}"/>
-        <p:menuitem icon="ui-icon-search" value="Ver Institutos" action="#{menuPrincipalBean.cargarPagina('verInstitutos.xhtml')}"/>
-        <p:menuitem icon="ui-icon-search" value="Agregar Persona" action="#{menuPrincipalBean.cargarPagina('agregarPersona.xhtml')}" style="visibility: #{menuPrincipalBean.obtenerVisibilidadSegunTipoUsuario()}" />        
+        <p:menuitem icon="ui-icon-home" value="BIOS" action="#{menuPublicoBean.cargarPagina('home.xhtml')}" rendered="#{menuPrincipalBean.obtenerVisibilidadSegunTipoUsuario('home')}"/>
+        <p:menuitem icon="ui-icon-person" value="#{menuPrincipalBean.nombreUsuario}" action="#{menuPrincipalBean.cargarPagina('datosPersonales.xhtml')}" rendered="#{menuPrincipalBean.obtenerVisibilidadSegunTipoUsuario('datosPersonales')}" />
+        <p:menuitem icon="ui-icon-document" value="Cuenta Corriente" action="#{menuPrincipalBean.cargarPagina('cuentaCorriente.xhtml')}" rendered="#{menuPrincipalBean.obtenerVisibilidadSegunTipoUsuario('cuentaCorriente')}" />
+        <p:menuitem icon="ui-icon-pencil" value="Mis Cursos" action="#{menuPrincipalBean.cargarPagina('misCursos.xhtml')}" rendered="#{menuPrincipalBean.obtenerVisibilidadSegunTipoUsuario('misCursos')}"/>
+        <p:menuitem icon="ui-icon-search" value="Ver Cursos" action="#{menuPrincipalBean.cargarPagina('verCursos.xhtml')}" rendered="#{menuPrincipalBean.obtenerVisibilidadSegunTipoUsuario('verCursos')}"/>
+        <p:menuitem icon="ui-icon-search" value="Ver Institutos" action="#{menuPrincipalBean.cargarPagina('verInstitutos.xhtml')}" rendered="#{menuPrincipalBean.obtenerVisibilidadSegunTipoUsuario('verInstitutos')}"/>
+        <p:menuitem icon="ui-icon-search" value="Agregar Persona" action="#{menuPrincipalBean.cargarPagina('agregarPersona.xhtml')}" rendered="#{menuPrincipalBean.obtenerVisibilidadSegunTipoUsuario('agregarPersona')}" />        
         <p:menuitem icon="ui-icon-closethick" value="Logout" action="#{menuPrincipalBean.Logout}" style="position: absolute; right: 4px;"/>
     </p:menubar>
 </h:form>

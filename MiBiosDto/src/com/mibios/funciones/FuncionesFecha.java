@@ -108,36 +108,30 @@ public class FuncionesFecha {
      * Da un formato para mostar al usuario.
      * @param xHora
      * @return una fecha con un formato (hh:mm)
-     * @throws java.lang.Exception
      */
-    public static String mostrarHoraHHMM(String xHora) throws Exception
+    public static String mostrarHoraHHMM(String xHora)
     {
-        try
+        if (xHora != null)
         {
-            if (xHora != null)
+            xHora = xHora.trim();
+
+            if (!(xHora.equals("")) && xHora.length() > 3)
             {
-                xHora = xHora.trim();
+                String h, m;
 
-                if (!(xHora.equals("")) && xHora.length() > 3)
-                {
-                    String h, m;
+                h = xHora.substring(0, 2);
+                m = xHora.substring(2, 4);
 
-                    h = xHora.substring(0, 2);
-                    m = xHora.substring(2, 4);
-
-                    return h + ":" + m;
-                } 
-                else
-                {
-                    return "00:00";
-                }
+                return h + ":" + m;
             } 
             else
             {
                 return "00:00";
             }
-        } catch (Exception ex) {
-            throw new Exception("Genericos--> " + ex.getMessage());
+        } 
+        else
+        {
+            return "00:00";
         }
     }
     
@@ -195,7 +189,7 @@ public class FuncionesFecha {
      * @return
      * @throws java.lang.Exception
      */
-    public static String incrementarHora(String xHora, String xIncremento) throws Exception
+    public static String incrementarHora(String xHora, String xIncremento)
     {
         String f = "";
         Calendar hora = convertirStringACalendarHHmm(xHora);
@@ -244,25 +238,21 @@ public class FuncionesFecha {
      * Convierte una hora de tipo String a Calendar con un formato (HHmm).
      * @param xFecha
      * @return
-     * @throws java.lang.Exception
      */
-    public static Calendar convertirStringACalendarHHmm(String xHora) throws Exception
+    public static Calendar convertirStringACalendarHHmm(String xHora)
     {
-        try
-        {
+        Calendar cal = Calendar.getInstance();
+        try {
             Date date;
             DateFormat formato;
             formato = new SimpleDateFormat("HHmm");
             date = (Date) formato.parse(xHora);
-            Calendar cal = Calendar.getInstance();
             cal.setTime(date);
 
-            return cal;
-        } 
-        catch (Exception ex)
-        {
-            throw new Exception("Genericos--> " + ex.getMessage());
+        } catch (ParseException ex) {
+            Logger.getLogger(FuncionesFecha.class.getName()).log(Level.SEVERE, null, ex);
         }
+        return cal;
     }
     
     /**
