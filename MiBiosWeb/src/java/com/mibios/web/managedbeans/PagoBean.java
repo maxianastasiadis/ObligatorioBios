@@ -81,7 +81,7 @@ public class PagoBean implements Serializable {
         this.importe = importe;
     }
     
-    public Boolean IngresarPago() {
+    public void IngresarPago() {
         ParamIngresarPago objParamIngresarPago = new ParamIngresarPago();
         ReturnIngresarPago objReturnIngresarPago = new ReturnIngresarPago();
         PersonasFachada personasFachada = new PersonasFachada();
@@ -99,20 +99,21 @@ public class PagoBean implements Serializable {
             if(objReturnIngresarPago.getGuardado()){
                 //mensaje Se ingreso el pago correctamente
                 FacesContext facesContext = FacesContext.getCurrentInstance();
-                facesContext.addMessage(null, new FacesMessage(objReturnIngresarPago.getRespuesta()));
+                facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, objReturnIngresarPago.getRespuesta(), ""));
+                
+                limpiarControles();
             }
             else
             {
                 FacesContext facesContext = FacesContext.getCurrentInstance();
-                facesContext.addMessage(null, new FacesMessage(objReturnIngresarPago.getRespuesta()));
+                facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, objReturnIngresarPago.getRespuesta(), ""));
             }
 
         } 
         catch (Exception ex) 
         {
             Logger.getLogger(DatosPersonalesBean.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return objReturnIngresarPago.getGuardado();
+        }        
     }
     
     public void onRowEdit(RowEditEvent event) throws Exception {
@@ -152,4 +153,10 @@ public class PagoBean implements Serializable {
         FacesContext.getCurrentInstance().addMessage(null, msg);
     }
     
+    private void limpiarControles()
+    {
+        this.concepto = "";
+        this.importe = null;
+        this.tipoMovimiento = "D";
+    }
 }

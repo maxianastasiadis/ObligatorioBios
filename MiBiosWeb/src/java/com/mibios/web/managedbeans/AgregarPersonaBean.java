@@ -9,7 +9,6 @@ import com.mibios.funciones.FuncionesFecha;
 import com.mibios.web.fachada.PersonasFachada;
 import com.mibios.webservice.servicio.ParamAgregarPersona;
 import com.mibios.webservice.servicio.ReturnAgregarPersona;
-import com.mibios.webservice.servicio.ServicioMiBios_Service;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.logging.Level;
@@ -18,7 +17,6 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
-import javax.xml.ws.WebServiceRef;
 
 /**
  *

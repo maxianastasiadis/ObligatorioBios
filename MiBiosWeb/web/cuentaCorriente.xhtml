@@ -31,7 +31,8 @@
                     <p:spacer></p:spacer>
                     <h:message for="importe" class="message"/>
                     <p:spacer></p:spacer>
-                    <p:commandButton action="#{pagoBean.IngresarPago}" value="Ingresar Pago" icon="ui-icon-check" ajax="true" update="IngresoPagoForm"></p:commandButton>
+                    <p:commandButton action="#{pagoBean.IngresarPago}" value="Ingresar Pago" icon="ui-icon-check" ajax="true" update="IngresoPagoForm,:CuentaCorrienteForm:tbl"></p:commandButton>
+                    <p:growl id="growl" sticky="false" life="3000" globalOnly="true"></p:growl>
                 </h:panelGrid>
             </p:panel>
         </h:form>
