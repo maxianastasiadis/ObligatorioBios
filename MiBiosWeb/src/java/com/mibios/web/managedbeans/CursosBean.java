@@ -14,14 +14,14 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
+import javax.faces.bean.ViewScoped;
 
 /**
  *
  * @author Maxi
  */
 @ManagedBean
-@RequestScoped
+@ViewScoped
 public class CursosBean {
 
     private List<CursosDatos> listaCursos;
@@ -103,5 +103,10 @@ public class CursosBean {
 //        {
 //            Logger.getLogger(DatosPersonalesBean.class.getName()).log(Level.SEVERE, null, ex);
 //        }
+    }
+    
+    public void cargarClaseActual(ClaseDatos xClaseActual)
+    {
+        this.idClaseInscripcion = xClaseActual.getIdClase();
     }
 }
