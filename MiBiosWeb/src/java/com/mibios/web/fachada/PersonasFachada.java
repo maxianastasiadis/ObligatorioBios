@@ -17,12 +17,12 @@ import com.mibios.dto.personas.ReturnObtenerDatosPersonales;
 import com.mibios.ejb.personas.PersonasBeanLocal;
 import com.mibios.webservice.servicio.ParamAgregarPersona;
 import com.mibios.webservice.servicio.ReturnAgregarPersona;
-import com.mibios.webservice.servicio.ServicioMiBios;
 import com.mibios.webservice.servicio.ServicioMiBios_Service;
 import java.net.URL;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.faces.context.FacesContext;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
@@ -86,7 +86,8 @@ public class PersonasFachada {
     {
         try
         {
-            return new ServicioMiBios_Service(new URL("http://localhost:8080/MiBiosWebService/ServicioMiBios?wsdl"));
+            String rutaWsdl = FacesContext.getCurrentInstance().getExternalContext().getInitParameterMap().get("rutaWSDL").toString();
+            return new ServicioMiBios_Service(new URL(rutaWsdl));
         }
         catch(Exception ex)
         {
