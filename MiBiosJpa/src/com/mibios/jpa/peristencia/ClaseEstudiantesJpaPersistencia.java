@@ -6,6 +6,7 @@
 package com.mibios.jpa.peristencia;
 
 import com.mibios.jpa.entidades.ClaseEstudiantes;
+import com.mibios.jpa.entidades.ClaseEstudiantesPK;
 import javax.persistence.EntityManager;
 
 /**
@@ -24,6 +25,25 @@ public class ClaseEstudiantesJpaPersistencia {
         {
             throw new Exception("Persistencia--> " + e);
         }
+    }
+    
+    public static Boolean existeClaseEstudiante(EntityManager em, ClaseEstudiantesPK objClaseEstudiantesPK) throws Exception 
+    {
+        Boolean existeClaseEstudiante = false;
+        try
+        {
+            ClaseEstudiantes objClaseEstudiantes = em.find(ClaseEstudiantes.class, objClaseEstudiantesPK);
+
+            if(objClaseEstudiantes!=null)
+            {
+                existeClaseEstudiante = true;
+            }
+        }
+        catch(Exception e)
+        {
+            throw new Exception("Persistencia--> " + e);
+        }
+        return existeClaseEstudiante;
     }
     
 }

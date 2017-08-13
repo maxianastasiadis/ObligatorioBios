@@ -88,18 +88,21 @@ public class CursosBean implements Serializable {
         this.becaInscripcion = becaInscripcion;
     }
 
-    public void inscribirmeACurso(int xIdClase) {       
+    public void inscribirmeACurso(int xIdClase) 
+    {       
         ParamInscribirmeACurso objParamInscribirmeACurso = new ParamInscribirmeACurso();
         ReturnInscribirmeACurso objReturnInscribirmeACurso = new ReturnInscribirmeACurso();
         CursosFachada cursosFachada = new CursosFachada();
+        
         try {
+            
             RequestContext context = RequestContext.getCurrentInstance();
             boolean inscipcionCorrecta = false;
             ReturnLogin objReturnSesion = (ReturnLogin)FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("Usuario");
             objParamInscribirmeACurso.setTipoDocumento(objReturnSesion.getTipoDocumento());
             objParamInscribirmeACurso.setDocumento(objReturnSesion.getDocumento());
             objParamInscribirmeACurso.setIdClase(xIdClase);
-            System.out.println("becaInscripcion = " + becaInscripcion);
+            
             objParamInscribirmeACurso.setBeca(becaInscripcion);
 
             objReturnInscribirmeACurso = cursosFachada.InscribirmeACurso(objParamInscribirmeACurso);

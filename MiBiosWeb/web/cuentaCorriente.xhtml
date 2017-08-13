@@ -31,7 +31,7 @@
                     <p:spacer></p:spacer>
                     <h:message for="importe" class="message"/>
                     <p:spacer></p:spacer>
-                    <p:commandButton action="#{pagoBean.IngresarPago}" value="Ingresar Pago" icon="ui-icon-check" ajax="true" update="IngresoPagoForm,:CuentaCorrienteForm:tbl"></p:commandButton>
+                    <p:commandButton action="#{pagoBean.IngresarPago}" value="Ingresar Pago" icon="ui-icon-check" ajax="true" oncomplete="PF('cuentaCorrienteTable').paginator.setPage(PF('cuentaCorrienteTable').paginator.cfg.pageCount - 1);" update="IngresoPagoForm,:CuentaCorrienteForm:tbl"></p:commandButton>
                     <p:growl id="growl" sticky="false" life="3000" globalOnly="true"></p:growl>
                 </h:panelGrid>
             </p:panel>
@@ -41,10 +41,12 @@
             <p:growl id="msgs" showDetail="true"/>
             <p:panel id="CuentaCorrientePanel" header="Cuenta Corriente" rendered="true">
                 <p:dataTable id="tbl" var="transaccion" value="#{cuentaCorrienteBean.transacciones}"
-                             paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}"
+                             paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}"
                              paginator="true" rows="10" style="margin-bottom:20px"
                              emptyMessage="No hay movimientos en su cuenta Corriente"
-                             editable="true">
+                             widgetVar="cuentaCorrienteTable"
+                             editable="true"
+                             currentPageReportTemplate="Movimientos del {startRecord} al {endRecord} de {totalRecords} en total">
                     <f:facet name="{Exporters}">
                         <h:commandLink>
                             <p:graphicImage name="/img/excel.png" width="24"/>

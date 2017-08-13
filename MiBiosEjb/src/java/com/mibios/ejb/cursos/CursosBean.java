@@ -15,6 +15,7 @@ import com.mibios.funciones.FuncionesFecha;
 import com.mibios.jpa.entidades.ClaseEstudiantes;
 import com.mibios.jpa.entidades.ClaseEstudiantesPK;
 import com.mibios.jpa.entidades.Clases;
+import com.mibios.jpa.entidades.CuentaCorriente;
 import com.mibios.jpa.entidades.Cursos;
 import com.mibios.jpa.entidades.Estudiantes;
 import com.mibios.jpa.entidades.Personas;
@@ -138,15 +139,57 @@ public class CursosBean implements CursosBeanLocal {
         {
             ClaseEstudiantes objClaseEstudiantes = new ClaseEstudiantes();
             Estudiantes objEstudiantes = EstudiantesJpaPersitencia.ObtenerEstudiante(em, xParamInscribirmeACurso.getTipoDocumento(), xParamInscribirmeACurso.getDocumento());
-            ClaseEstudiantesPK objClaseEstudiantesPK = new ClaseEstudiantesPK(xParamInscribirmeACurso.getIdClase(), objEstudiantes.getIdEstudiante());
-            objClaseEstudiantes.setClaseEstudiantesPK(objClaseEstudiantesPK);
-            objClaseEstudiantes.setAprobadoSn("");
-            objClaseEstudiantes.setPorcentajeBeca(new BigDecimal(xParamInscribirmeACurso.getBeca()));
             
-            ClaseEstudiantesJpaPersistencia.InscribirmeACurso(em, objClaseEstudiantes);
+            ClaseEstudiantesPK objClaseEstudiantesPK = new ClaseEstudiantesPK(xParamInscribirmeACurso.getIdClase(), objEstudiantes.getIdEstudiante());
+            
+            if(!ClaseEstudiantesJpaPersistencia.existeClaseEstudiante(em, objClaseEstudiantesPK))
+            {
+                objClaseEstudiantes.setClaseEstudiantesPK(objClaseEstudiantesPK);
+                objClaseEstudiantes.setAprobadoSn("");
+                objClaseEstudiantes.setPorcentajeBeca(new BigDecimal(xParamInscribirmeACurso.getBeca()));
 
-            objReturnInscribirmeACurso.setGuardado(true);
-            objReturnInscribirmeACurso.setRespuesta("Se inscribio correctamente");   
+                ClaseEstudiantesJpaPersistencia.InscribirmeACurso(em, objClaseEstudiantes);
+                
+                Clases objClase = ClasesJpaPersitencia.ObtenerClase(em, xParamInscribirmeACurso.getIdClase());
+                String fechaComienzo = objClase.getFechaComienzo();
+                String fechaFin = objClase.getFechaFin();
+                int mesesDuracion = FuncionesFecha.getCantidadMeses(fechaComienzo, fechaFin);
+                
+                if(mesesDuracion==0)
+                {
+                    mesesDuracion=1;
+                }
+                
+                for(int i=1; i<=mesesDuracion; i++)
+                {
+                    PersonasPK objPersonasPK = new PersonasPK(objEstudiantes.getPersonas().getPersonasPK().getTipoDocumento(), objEstudiantes.getPersonas().getPersonasPK().getDocumento());
+                    Personas objPersonas = PersonasJpaPersistencia.ObtenerPersona(em, objPersonasPK);
+
+                    CuentaCorriente objCuentaCorriente = new CuentaCorriente();
+
+                    objCuentaCorriente.setPersonas(objPersonas);
+                    objCuentaCorriente.setConcepto("Cuota " + i + " Curso " + objClase.getIdCurso().getNombre());
+                    objCuentaCorriente.setTipoMovimiento("D");
+                    objCuentaCorriente.setFecha(FuncionesFecha.mostrarFechaAAAAMMDDString(FuncionesFecha.getFechaSistema()));
+                    objCuentaCorriente.setHora(FuncionesFecha.getHoraSistema().replace(":", ""));
+
+                    BigDecimal importeCuota = objClase.getImporteCuota();
+                    BigDecimal porcentajeBeca = BigDecimal.valueOf(Double.parseDouble(String.valueOf(xParamInscribirmeACurso.getBeca())));
+                    BigDecimal total = importeCuota.subtract(importeCuota.multiply(porcentajeBeca.divide(new BigDecimal(100))));
+                    
+                    objCuentaCorriente.setImporte(total);
+
+                    PersonasJpaPersistencia.IngresarPago(em, objCuentaCorriente);   
+                }
+
+                objReturnInscribirmeACurso.setGuardado(true);
+                objReturnInscribirmeACurso.setRespuesta("Se inscribio correctamente");
+            }
+            else
+            {
+                objReturnInscribirmeACurso.setGuardado(false);
+                objReturnInscribirmeACurso.setRespuesta("Ya esta inscripto a este curso");
+            }   
         }
         catch(Exception e)
         {

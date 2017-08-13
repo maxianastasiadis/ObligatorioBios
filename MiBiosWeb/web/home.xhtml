@@ -21,7 +21,7 @@
         <h:form id="formNoticias">
              <p:panel id="noticias" header="Noticias" toggleable="true">
                 <h:panelGrid columns="1" cellpadding="5">
-                    <p:panel header="Próximos comienzos">
+                    <p:panel header="Próximos comienzos" toggleable="true">
                             <p:dataTable var="datos" value="#{homeBean.proximosComienzos}"
                                  emptyMessage="No hay comienzos establecidos">
                             <p:column class="centrarTexto">
@@ -89,7 +89,7 @@
                     </p:panel>
                     <p:spacer></p:spacer>
 
-                    <p:panel header="Mis clases de hoy">
+                    <p:panel header="Mis clases de hoy" toggleable="true">
                         <p:dataTable var="datos" value="#{homeBean.clasesUsuario}"
                                  emptyMessage="No hay comienzos establecidos">
                             <p:column class="centrarTexto">
@@ -157,7 +157,7 @@
                     </p:panel>
                     <p:spacer></p:spacer>
                     
-                    <p:panel header="Estadísticas">
+                    <p:panel header="Estadísticas" toggleable="true">
                         <h:panelGrid columns="2" cellpadding="5"  >
                             <h:outputText value="Cantidad Cursos:" />
                             <h:outputText value="#{homeBean.cantidadCursos}" />

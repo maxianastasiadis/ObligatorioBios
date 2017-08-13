@@ -280,4 +280,24 @@ public class FuncionesFecha {
         }
     }
     
+    /**
+     * Calcula la cantidad de mesese que hay entre dos fechas.
+     * @param xFechaDesde
+     * @param xFechaHasta
+     * @return cantidad de meses
+     */
+     public static int getCantidadMeses(String xFechaDesde, String xFechaHasta)
+     {
+        int mDesde, mHasta, aDesde, aHasta;
+        
+        mDesde = Integer.parseInt(xFechaDesde.substring(4, 6));
+        mHasta = Integer.parseInt(xFechaHasta.substring(4, 6));
+        aDesde = Integer.parseInt(xFechaDesde.substring(0, 4));
+        aHasta = Integer.parseInt(xFechaHasta.substring(0, 4));
+
+        int cantidadMeses=(aHasta-aDesde)*12;
+        cantidadMeses=cantidadMeses+((12-(mDesde-1)+(mHasta-12)));
+
+        return cantidadMeses;
+    }
 }

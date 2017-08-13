@@ -22,6 +22,7 @@
                 <p:dataTable id="tbl" var="curso" value="#{cursosBean.listaCursos}"
                              paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}"
                              paginator="true" rows="10" style="margin-bottom:20px"
+                             currentPageReportTemplate="Cursos del {startRecord} al {endRecord} de {totalRecords} en total"
                              emptyMessage="No hay cursos disponibles">
                     <f:facet name="{Exporters}">
                         <h:commandLink>
@@ -133,7 +134,7 @@
             <p:growl id="msgs" showDetail="false"/>
             <p:dialog header="Inscripcion" widgetVar="inscripcionDialogo" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
                  <p:outputPanel id="inscrpcionClase" style="text-align:center;">
-                    <h:outputText value="Ingrese Beca: " />
+                    <h:outputText value="Ingrese Porcentaje Beca: " />
                     <p:inputText id="beca" required="true" requiredMessage="Debe ingresar Beca" maxlength="3" converterMessage="El porcentaje de beca debe ser numérico" value="#{cursosBean.becaInscripcion}"/>
                     <h:message for="beca" class="message"/>
                     <p:commandButton action="#{cursosBean.inscribirmeACurso(cursosBean.idClaseInscripcion)}" value="Inscribirme" icon="ui-icon-check" ajax="true" update=":InscripcionForm:msgs" oncomplete="controlInscribirmeACurso(xhr, status, args)"></p:commandButton>
