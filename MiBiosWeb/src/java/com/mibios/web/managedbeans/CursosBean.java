@@ -95,8 +95,18 @@ public class CursosBean implements Serializable {
         CursosFachada cursosFachada = new CursosFachada();
         
         try {
-            
             RequestContext context = RequestContext.getCurrentInstance();
+            
+            if(becaInscripcion < 0 || becaInscripcion > 100)
+            {
+                FacesContext facesContext = FacesContext.getCurrentInstance();
+                facesContext.addMessage(null, new FacesMessage("La beca debe estar entre 0 y 100"));
+                
+                context.addCallbackParam("inscipcionCorrecta", false);
+                return;
+            }
+            
+            
             boolean inscipcionCorrecta = false;
             ReturnLogin objReturnSesion = (ReturnLogin)FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("Usuario");
             objParamInscribirmeACurso.setTipoDocumento(objReturnSesion.getTipoDocumento());
