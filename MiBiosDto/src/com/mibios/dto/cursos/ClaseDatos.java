@@ -23,6 +23,7 @@ public class ClaseDatos implements Serializable{
     private String salon;
     private String docente;
     private String cuota;
+    private boolean yaInscripto;
     private int cantidadEstudiantesInscriptos;
 
     public int getIdClase() {
@@ -103,6 +104,14 @@ public class ClaseDatos implements Serializable{
 
     public void setCuota(String cuota) {
         this.cuota = cuota;
+    }
+
+    public boolean isYaInscripto() {
+        return yaInscripto;
+    }
+
+    public void setYaInscripto(boolean yaInscripto) {
+        this.yaInscripto = yaInscripto;
     }
 
     public int getCantidadEstudiantesInscriptos() {

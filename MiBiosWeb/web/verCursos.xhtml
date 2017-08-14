@@ -121,9 +121,10 @@
                             <f:facet name="header">
                                 <h:outputText value="Inscribirme" />
                             </f:facet>
-                            <p:commandButton update=":InscripcionForm:inscrpcionClase" oncomplete="PF('inscripcionDialogo').show()" value="Inscribirme" title="Inscribirme">
+                            <p:commandButton update=":InscripcionForm:inscrpcionClase" oncomplete="PF('inscripcionDialogo').show()" value="Inscribirme" title="Inscribirme" rendered="#{!datos.yaInscripto}">
                                 <f:setPropertyActionListener value="#{datos.idClase}" target="#{cursosBean.idClaseInscripcion}" />
                             </p:commandButton>
+                            <h:outputText value="Inscripto" style="color: red" rendered="#{datos.yaInscripto}"/>
                         </p:column>
                     </p:dataTable>
                 </p:outputPanel>

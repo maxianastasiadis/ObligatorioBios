@@ -12,6 +12,7 @@ import com.mibios.dto.cursos.ParamMisCursos;
 import com.mibios.dto.cursos.ReturnCursos;
 import com.mibios.dto.cursos.ReturnInscribirmeACurso;
 import com.mibios.dto.cursos.ReturnMisCursos;
+import com.mibios.dto.usuarios.ReturnLogin;
 import com.mibios.funciones.FuncionesFecha;
 import com.mibios.jpa.entidades.ClaseEstudiantes;
 import com.mibios.jpa.entidades.ClaseEstudiantesPK;
@@ -33,6 +34,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.Stateless;
+import javax.faces.context.FacesContext;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
@@ -163,6 +165,12 @@ public class CursosBean implements CursosBeanLocal {
                     {
                         claseDatos.setModalidad("A Distancia");
                     }
+                    //Verifico si el usuario activo esta inscripto alguna clase y mando un un boolean que avisa para que no aparezca el boton
+                    ReturnLogin objReturnSesion = (ReturnLogin)FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("Usuario");
+                    Estudiantes objEstudiantes = EstudiantesJpaPersitencia.ObtenerEstudiante(em, objReturnSesion.getTipoDocumento(), objReturnSesion.getDocumento());
+                    ClaseEstudiantesPK objClaseEstudiantesPK = new ClaseEstudiantesPK(clase.getIdClase(), objEstudiantes.getIdEstudiante());
+                    boolean existeInscripcion = ClaseEstudiantesJpaPersistencia.existeClaseEstudiante(em, objClaseEstudiantesPK);
+                    claseDatos.setYaInscripto(existeInscripcion);
                     claseDatos.setCuota(clase.getImporteCuota().toString());
                     claseDatos.setDias(clase.getDiasClase());
                     claseDatos.setFechaComienzo(FuncionesFecha.mostrarFechaDDMMAAAAString(clase.getFechaComienzo()));
