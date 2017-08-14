@@ -136,6 +136,25 @@ public class MenuPrincipalBean implements Serializable {
                 visibilidad = "false";
             }
         } 
+        else if(itemMenu.equalsIgnoreCase("misCursosDocente"))
+        {
+            if(obj.getTipoPersona().equalsIgnoreCase("A"))
+            {
+                visibilidad = "false";
+            }
+            else if(obj.getTipoPersona().equalsIgnoreCase("D"))
+            {
+                visibilidad = "true";
+            } 
+            else if(obj.getTipoPersona().equalsIgnoreCase("P"))
+            {
+                visibilidad = "false";
+            } 
+            else
+            {
+                visibilidad = "false";
+            }
+        } 
         else if(itemMenu.equalsIgnoreCase("verCursos"))
         {
             if(obj.getTipoPersona().equalsIgnoreCase("A"))

@@ -33,6 +33,11 @@ public class CursosFachada {
         return lookupCursosBean().ObtenerMisCursos(xParamMisCursos);
     }
     
+    public List<ReturnMisCursos> ObtenerMisCursosDocente(ParamMisCursos xParamMisCursos) throws Exception
+    {
+        return lookupCursosBean().ObtenerMisCursosDocente(xParamMisCursos);
+    }
+    
     public List<ReturnCursos> ObtenerCursos() throws Exception
     {
         return lookupCursosBean().ObtenerCursos();

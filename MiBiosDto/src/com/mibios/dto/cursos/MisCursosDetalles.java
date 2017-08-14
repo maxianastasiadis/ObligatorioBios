@@ -20,6 +20,7 @@ public class MisCursosDetalles implements Serializable{
     private String detalleBeca;
     private String detalleTotal;
     private String detalleAprobado;
+    private String detalleModalidad;
 
     public String getDetalleNombre() {
         return detalleNombre;
@@ -75,6 +76,14 @@ public class MisCursosDetalles implements Serializable{
 
     public void setDetalleTotal(String detalleTotal) {
         this.detalleTotal = detalleTotal;
+    }
+
+    public String getDetalleModalidad() {
+        return detalleModalidad;
+    }
+
+    public void setDetalleModalidad(String detalleModalidad) {
+        this.detalleModalidad = detalleModalidad;
     }
 
 }

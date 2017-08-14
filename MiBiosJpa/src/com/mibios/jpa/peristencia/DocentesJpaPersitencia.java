@@ -7,7 +7,6 @@ package com.mibios.jpa.peristencia;
 
 import com.mibios.jpa.entidades.Docentes;
 import javax.persistence.EntityManager;
-import javax.persistence.TypedQuery;
 
 /**
  *
@@ -35,6 +34,24 @@ public class DocentesJpaPersitencia {
             throw new Exception("Persistencia--> " + e);
         }
         return existeDocente;
+    }
+    
+    public static Docentes ObtenerDocente(EntityManager em, String xTipoDocumento, String xDocumento) throws Exception 
+    {
+        Docentes objDocente = new Docentes();
+        
+        try
+        {
+            objDocente = em.createNamedQuery("Docentes.obtenerDocente",Docentes.class)
+                    .setParameter("tipoDocumento", xTipoDocumento)
+                    .setParameter("documento", xDocumento)
+                    .getSingleResult();
+        }
+        catch(Exception e)
+        {
+            throw new Exception("Persistencia--> " + e);
+        }
+        return objDocente;
     }
     
 }

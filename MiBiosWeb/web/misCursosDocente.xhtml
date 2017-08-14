@@ -1,0 +1,121 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./template/biosTemplate.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+    
+    <ui:define name ="titulo">
+        Mis Cursos
+    </ui:define>
+    
+    <ui:define name="cabecera">
+        <ui:include src="menuPrincipal.xhtml" />
+    </ui:define>
+    
+    <ui:define name="contenido">
+        <h:form id="form">
+            <p:panel header="Mis Cursos">
+                <p:dataTable id="tbl" var="curso" value="#{misCursosDocenteBean.misCursos}"
+                             paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}"
+                             paginator="true" rows="10" style="margin-bottom:20px"
+                             currentPageReportTemplate="Cursos del {startRecord} al {endRecord} de {totalRecords} en total"
+                             emptyMessage="No tiene cursos asignados">
+                    <f:facet name="{Exporters}">
+                        <h:commandLink>
+                            <p:graphicImage name="/img/excel.png" width="24"/>
+                            <p:dataExporter type="xls" target="tbl" fileName="MisCursos" />
+                        </h:commandLink>
+                        <h:commandLink>
+                            <p:graphicImage name="/img/pdf.png" width="24"/>
+                            <p:dataExporter type="pdf" target="tbl" fileName="MisCursos"/>
+                        </h:commandLink>
+                        <h:commandLink>
+                            <p:graphicImage name="/img/csv.png" width="24"/>
+                            <p:dataExporter type="csv" target="tbl" fileName="MisCursos" />
+                        </h:commandLink>
+                        <h:commandLink>
+                            <p:graphicImage name="/img/xml.png" width="24"/>
+                            <p:dataExporter type="xml" target="tbl" fileName="MisCursos" />
+                        </h:commandLink>
+                    </f:facet>
+                    <p:column class="centrarTexto">
+                        <f:facet name="header">
+                            <h:outputText value="Curso" />
+                        </f:facet>
+                        <h:outputText value="#{curso.nombre}" />
+                    </p:column>
+                    <p:column class="centrarTexto">
+                        <f:facet name="header">
+                            <h:outputText value="Modalidad" />
+                        </f:facet>
+                        <h:outputText value="#{curso.datosCursoDetalle.detalleModalidad}" />
+                    </p:column>
+                    <p:column class="centrarTexto">
+                        <f:facet name="header">
+                            <h:outputText value="Salon" />
+                        </f:facet>
+                        <h:outputText value="#{curso.datosCursoDetalle.detalleSalon}" />
+                    </p:column>
+                    <p:column class="centrarTexto">
+                        <f:facet name="header">
+                            <h:outputText value="Comienzo"/>
+                        </f:facet>
+                        <h:outputText value="#{curso.fechaComienzo}" />
+                    </p:column>
+                    <p:column class="centrarTexto">
+                        <f:facet name="header">
+                            <h:outputText value="Finaliza" />
+                        </f:facet>
+                        <h:outputText value="#{curso.fechaFin}" />
+                    </p:column>
+                    <p:column class="centrarTexto">
+                        <f:facet name="header">
+                            <h:outputText value="Dias" />
+                        </f:facet>
+                        <h:outputText value="#{curso.dias}" />
+                    </p:column>
+                    <p:column class="centrarTexto">
+                        <f:facet name="header">
+                            <h:outputText value="Horario" />
+                        </f:facet>
+                        <h:outputText value="#{curso.horario}" />
+                    </p:column>
+                    <p:column style="width:32px;text-align: center" exportable="false">
+                        <p:commandButton update=":DetalleCursoForm:cursoDetalle" oncomplete="PF('cursoDialogo').show()" icon="ui-icon-search" title="Ver Estudiantes">
+                            <f:setPropertyActionListener value="#{curso.datosListaAlumnos}" target="#{misCursosDocenteBean.listaAlumnos}" />
+                       </p:commandButton>
+                   </p:column>
+                </p:dataTable>
+            </p:panel>        
+        </h:form>
+        <h:form id="DetalleCursoForm">  
+            <p:dialog header="Listado Estudiantes" widgetVar="cursoDialogo" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+                <p:outputPanel id="cursoDetalle" style="text-align:center;">
+                    <p:dataTable id="tblDetail" var="datos" value="#{misCursosDocenteBean.listaAlumnos}"
+                             emptyMessage="No hay Alumnos inscriptos">
+                        <p:column class="centrarTexto">
+                            <f:facet name="header">
+                                <h:outputText value="Nombre"/>
+                            </f:facet>
+                            <h:outputText value="#{datos.nombreCompleto}" />
+                        </p:column>
+                        <p:column class="centrarTexto">
+                            <f:facet name="header">
+                                <h:outputText value="Edad"/>
+                            </f:facet>
+                            <h:outputText value="#{datos.edad}" />
+                        </p:column>
+                        <p:column class="centrarTexto">
+                            <f:facet name="header">
+                                <h:outputText value="Aprobado"/>
+                            </f:facet>
+                            <h:outputText value="#{datos.aprobado}" />
+                        </p:column>
+                    </p:dataTable>
+                </p:outputPanel>
+            </p:dialog>
+        </h:form>
+    </ui:define>
+</ui:composition>

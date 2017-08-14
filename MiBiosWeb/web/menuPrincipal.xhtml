@@ -9,6 +9,7 @@
         <p:menuitem icon="ui-icon-person" value="#{menuPrincipalBean.nombreUsuario}" action="#{menuPrincipalBean.cargarPagina('datosPersonales.xhtml')}" rendered="#{menuPrincipalBean.obtenerVisibilidadSegunTipoUsuario('datosPersonales')}" />
         <p:menuitem icon="ui-icon-document" value="Cuenta Corriente" action="#{menuPrincipalBean.cargarPagina('cuentaCorriente.xhtml')}" rendered="#{menuPrincipalBean.obtenerVisibilidadSegunTipoUsuario('cuentaCorriente')}" />
         <p:menuitem icon="ui-icon-pencil" value="Mis Cursos" action="#{menuPrincipalBean.cargarPagina('misCursos.xhtml')}" rendered="#{menuPrincipalBean.obtenerVisibilidadSegunTipoUsuario('misCursos')}"/>
+        <p:menuitem icon="ui-icon-pencil" value="Mis Cursos" action="#{menuPrincipalBean.cargarPagina('misCursosDocente.xhtml')}" rendered="#{menuPrincipalBean.obtenerVisibilidadSegunTipoUsuario('misCursosDocente')}"/>
         <p:menuitem icon="ui-icon-search" value="Ver Cursos" action="#{menuPrincipalBean.cargarPagina('verCursos.xhtml')}" rendered="#{menuPrincipalBean.obtenerVisibilidadSegunTipoUsuario('verCursos')}"/>
         <p:menuitem icon="ui-icon-search" value="Ver Institutos" action="#{menuPrincipalBean.cargarPagina('verInstitutos.xhtml')}" rendered="#{menuPrincipalBean.obtenerVisibilidadSegunTipoUsuario('verInstitutos')}"/>
         <p:menuitem icon="ui-icon-search" value="Agregar Persona" action="#{menuPrincipalBean.cargarPagina('agregarPersona.xhtml')}" rendered="#{menuPrincipalBean.obtenerVisibilidadSegunTipoUsuario('agregarPersona')}" />        

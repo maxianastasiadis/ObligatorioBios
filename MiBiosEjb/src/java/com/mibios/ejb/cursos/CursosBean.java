@@ -5,6 +5,7 @@
  */
 package com.mibios.ejb.cursos;
 
+import com.mibios.dto.cursos.AlumnoDatos;
 import com.mibios.dto.cursos.ClaseDatos;
 import com.mibios.dto.cursos.ParamInscribirmeACurso;
 import com.mibios.dto.cursos.ParamMisCursos;
@@ -23,6 +24,7 @@ import com.mibios.jpa.entidades.PersonasPK;
 import com.mibios.jpa.peristencia.ClaseEstudiantesJpaPersistencia;
 import com.mibios.jpa.peristencia.ClasesJpaPersitencia;
 import com.mibios.jpa.peristencia.CursosJpaPersistencia;
+import com.mibios.jpa.peristencia.DocentesJpaPersitencia;
 import com.mibios.jpa.peristencia.EstudiantesJpaPersitencia;
 import com.mibios.jpa.peristencia.PersonasJpaPersistencia;
 import java.math.BigDecimal;
@@ -66,6 +68,60 @@ public class CursosBean implements CursosBeanLocal {
                 misCursos.setBeca(clase.getPorcentajeBeca().toString());
                 misCursos.setCuota(clase.getClases().getImporteCuota().toString());
                 misCursos.setAprobadoSn(clase.getAprobadoSn());
+                
+                colReturnMisCursos.add(misCursos);
+            }
+        }
+        catch(Exception e)
+        {
+            Logger.getLogger(CursosBean.class.getName()).log(Level.SEVERE, null, e);
+            throw new Exception("Beans--> " + e.getMessage() + " [" + this.getClass().getSimpleName() + "]");
+        }
+        finally{
+        }
+        return colReturnMisCursos;
+    }
+    
+    @Override
+    public List<ReturnMisCursos> ObtenerMisCursosDocente(ParamMisCursos xParamMisCursos) throws Exception
+    {    
+        List<ReturnMisCursos> colReturnMisCursos = new ArrayList<>();
+        try
+        {
+            List<Clases> colClases = DocentesJpaPersitencia.ObtenerDocente(em, xParamMisCursos.getTipoDocumento(), xParamMisCursos.getDocumento()).getClasesList();
+            for(Clases clase: colClases)
+            {
+                ReturnMisCursos misCursos = new ReturnMisCursos();
+                misCursos.setIdCurso(clase.getIdCurso().getIdCurso());
+                misCursos.setNombre(clase.getIdCurso().getNombre());
+                misCursos.setDescripcion(clase.getIdCurso().getDescripcion());
+                misCursos.setFechaComienzo(clase.getFechaComienzo());
+                misCursos.setFechaFin(clase.getFechaFin());
+                misCursos.setHorario(FuncionesFecha.mostrarHoraHHMM(clase.getHorarioComienzo()) + " A " + FuncionesFecha.mostrarHoraHHMM(FuncionesFecha.incrementarHora(clase.getHorarioComienzo(), clase.getDuracionHoras())));
+                misCursos.setDias(clase.getDiasClase());
+                misCursos.setSalon(clase.getSalon());
+                if(clase.getModalidadClase().equalsIgnoreCase("P"))
+                {
+                    misCursos.setModalidad("Presencial");
+                }
+                else
+                {
+                    misCursos.setModalidad("A Distancia");
+                }
+                
+                List<AlumnoDatos> listaAlumnos = new ArrayList<>();
+                for(ClaseEstudiantes claseEstudiantes: clase.getClaseEstudiantesList())
+                {
+                    AlumnoDatos alumno = new AlumnoDatos();
+                    
+                    alumno.setNombreCompleto(claseEstudiantes.getEstudiantes().getPersonas().getNombre1() + " " + claseEstudiantes.getEstudiantes().getPersonas().getApellido1());
+                    String edad = String.valueOf(FuncionesFecha.getEdad(claseEstudiantes.getEstudiantes().getPersonas().getFechaNacimiento(), FuncionesFecha.mostrarFechaAAAAMMDDString(FuncionesFecha.getFechaSistema())));
+                    alumno.setEdad(edad);
+                    alumno.setAprobado(claseEstudiantes.getAprobadoSn());
+                    
+                    listaAlumnos.add(alumno);
+                }
+                misCursos.setListaAlumnoDatos(listaAlumnos);
                 
                 colReturnMisCursos.add(misCursos);
             }

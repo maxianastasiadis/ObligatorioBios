@@ -6,6 +6,7 @@
 package com.mibios.dto.cursos;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  *
@@ -25,6 +26,8 @@ public class ReturnMisCursos implements Serializable{
     private String cuota;
     private String beca;
     private String aprobadoSn;
+    private String modalidad;
+    private List<AlumnoDatos> listaAlumnoDatos;
     
     public int getIdCurso() {
         return idCurso;
@@ -121,5 +124,20 @@ public class ReturnMisCursos implements Serializable{
     public void setAprobadoSn(String aprobadoSn) {
         this.aprobadoSn = aprobadoSn;
     }
-    
+
+    public String getModalidad() {
+        return modalidad;
+    }
+
+    public void setModalidad(String modalidad) {
+        this.modalidad = modalidad;
+    }
+
+    public List<AlumnoDatos> getListaAlumnoDatos() {
+        return listaAlumnoDatos;
+    }
+
+    public void setListaAlumnoDatos(List<AlumnoDatos> listaAlumnoDatos) {
+        this.listaAlumnoDatos = listaAlumnoDatos;
+    }
 }

@@ -300,4 +300,56 @@ public class FuncionesFecha {
 
         return cantidadMeses;
     }
+     
+     /**
+     * Retorna la diferencia Dias, Meses, Años entre dos fechas.
+     * xTipoDiferencia = S(Segundos), D(Días), M(Mes), A(Años).
+     * @param xFechaDesde, xFechaHasta, xTipoDiferencia
+     * @return
+     */
+    public static long getEdad(String xFechaNacimiento, String xFecha)
+    {
+        long edad = 0;
+        Calendar fechaNacimiento = convertirStringACalendar(xFechaNacimiento);
+        Calendar fecha = convertirStringACalendar(xFecha);
+
+        //Diferencia en Años
+        edad = fecha.get(Calendar.YEAR) - fechaNacimiento.get(Calendar.YEAR);
+
+        if ((fecha.get(Calendar.MONTH) - fechaNacimiento.get(Calendar.MONTH)) == 0)
+        {
+            if ((fecha.get(Calendar.DAY_OF_MONTH) - fechaNacimiento.get(Calendar.DAY_OF_MONTH)) < 0)
+            {
+                edad--;
+            }
+        } 
+        else if ((fecha.get(Calendar.MONTH) - fechaNacimiento.get(Calendar.MONTH)) < 0)
+        {
+            edad--;
+        }
+
+        return edad;
+    }
+    
+    /**
+     * Convierte una fecha de tipo String a Calendar con un formato (yyyyMMdd).
+     * @param xFecha
+     * @return
+     */
+    public static Calendar convertirStringACalendar(String xFecha)
+    {
+        Calendar cal = Calendar.getInstance();
+        try {
+            Date date;
+            DateFormat formato;
+            formato = new SimpleDateFormat("yyyyMMdd");
+            date = (Date) formato.parse(xFecha);
+            
+            cal.setTime(date);
+
+        } catch (ParseException ex) {
+            Logger.getLogger(FuncionesFecha.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return cal;
+    }
 }

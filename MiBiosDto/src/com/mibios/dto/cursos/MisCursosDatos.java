@@ -6,6 +6,7 @@
 package com.mibios.dto.cursos;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  *
@@ -23,6 +24,7 @@ public class MisCursosDatos implements Serializable{
     private String salon;
     private String docente;
     private MisCursosDetalles datosCursoDetalle;
+    private List<AlumnoDatos> datosListaAlumnos;
     
     public int getIdCurso() {
         return idCurso;
@@ -103,5 +105,12 @@ public class MisCursosDatos implements Serializable{
     public void setDatosCursoDetalle(MisCursosDetalles datosCursoDetalle) {
         this.datosCursoDetalle = datosCursoDetalle;
     }
-    
+
+    public List<AlumnoDatos> getDatosListaAlumnos() {
+        return datosListaAlumnos;
+    }
+
+    public void setDatosListaAlumnos(List<AlumnoDatos> datosListaAlumnos) {
+        this.datosListaAlumnos = datosListaAlumnos;
+    }
 }

@@ -22,6 +22,8 @@ public interface CursosBeanLocal {
  
     public List<ReturnMisCursos> ObtenerMisCursos(ParamMisCursos xParamMisCursos) throws Exception;
     
+    public List<ReturnMisCursos> ObtenerMisCursosDocente(ParamMisCursos xParamMisCursos) throws Exception;
+    
     public List<ReturnCursos> ObtenerCursos() throws Exception;
     
     public ReturnInscribirmeACurso InscribirmeACurso(ParamInscribirmeACurso xParamInscribirmeACurso) throws Exception;
