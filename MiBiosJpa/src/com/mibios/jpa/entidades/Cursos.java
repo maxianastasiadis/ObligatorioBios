@@ -27,6 +27,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @Table(name = "cursos")
 @XmlRootElement
 @NamedQueries({
+    @NamedQuery(name = "Cursos.cursosActivosEstudiante", query = "SELECT count(c) FROM Cursos c INNER JOIN c.clasesList cl INNER JOIN cl.claseEstudiantesList e where c.idCurso = :idCurso and e.estudiantes.personas.personasPK.tipoDocumento = :tipoDocumento and e.estudiantes.personas.personasPK.documento = :documento and cl.fechaFin >= :fecha"),
     @NamedQuery(name = "Cursos.findAll", query = "SELECT c FROM Cursos c"),
     @NamedQuery(name = "Cursos.findByIdCurso", query = "SELECT c FROM Cursos c WHERE c.idCurso = :idCurso"),
     @NamedQuery(name = "Cursos.findByNombre", query = "SELECT c FROM Cursos c WHERE c.nombre = :nombre"),

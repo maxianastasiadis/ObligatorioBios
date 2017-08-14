@@ -5,9 +5,7 @@
  */
 package com.mibios.jpa.peristencia;
 
-import com.mibios.jpa.entidades.Clases;
 import com.mibios.jpa.entidades.Cursos;
-import com.mibios.jpa.entidades.Estudiantes;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -32,5 +30,26 @@ public class CursosJpaPersistencia {
             throw new Exception("Persistencia--> " + e);
         }
         return colCursos;
+    }
+    
+    public static Boolean EstudianteTieneCursoActivo(EntityManager em, String xTipoDocumento, String xDocumento, int xIdCurso, String xFecha) throws Exception
+    {
+        Boolean tieneCursoActivo = false;
+        try
+        {
+           long existe = (Long)em.createNamedQuery("Cursos.cursosActivosEstudiante")
+                    .setParameter("tipoDocumento", xTipoDocumento)
+                    .setParameter("documento", xDocumento)
+                    .setParameter("idCurso", xIdCurso)
+                    .setParameter("fecha", xFecha)
+                    .getSingleResult();
+
+            tieneCursoActivo = existe > 0;
+        }
+        catch(Exception e)
+        {
+            throw new Exception("Persistencia--> " + e);
+        }
+        return tieneCursoActivo;
     }
 }

@@ -142,7 +142,12 @@ public class CursosBean implements CursosBeanLocal {
             
             ClaseEstudiantesPK objClaseEstudiantesPK = new ClaseEstudiantesPK(xParamInscribirmeACurso.getIdClase(), objEstudiantes.getIdEstudiante());
             
-            if(!ClaseEstudiantesJpaPersistencia.existeClaseEstudiante(em, objClaseEstudiantesPK))
+            int idCurso = ClasesJpaPersitencia.ObtenerClase(em, xParamInscribirmeACurso.getIdClase()).getIdCurso().getIdCurso();
+            String fechaHoy = FuncionesFecha.mostrarFechaAAAAMMDDString(FuncionesFecha.getFechaSistema());
+            
+            //if(!ClaseEstudiantesJpaPersistencia.existeClaseEstudiante(em, objClaseEstudiantesPK))
+            if(!CursosJpaPersistencia.EstudianteTieneCursoActivo(em, xParamInscribirmeACurso.getTipoDocumento(), 
+                    xParamInscribirmeACurso.getDocumento(), idCurso, fechaHoy))    
             {
                 objClaseEstudiantes.setClaseEstudiantesPK(objClaseEstudiantesPK);
                 objClaseEstudiantes.setAprobadoSn("");
@@ -170,7 +175,7 @@ public class CursosBean implements CursosBeanLocal {
                     objCuentaCorriente.setPersonas(objPersonas);
                     objCuentaCorriente.setConcepto("Cuota " + i + " Curso " + objClase.getIdCurso().getNombre());
                     objCuentaCorriente.setTipoMovimiento("D");
-                    objCuentaCorriente.setFecha(FuncionesFecha.mostrarFechaAAAAMMDDString(FuncionesFecha.getFechaSistema()));
+                    objCuentaCorriente.setFecha(fechaHoy);
                     objCuentaCorriente.setHora(FuncionesFecha.getHoraSistema().replace(":", ""));
 
                     BigDecimal importeCuota = objClase.getImporteCuota();
