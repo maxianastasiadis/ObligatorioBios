@@ -352,4 +352,15 @@ public class FuncionesFecha {
         }
         return cal;
     }
+    
+    /**
+     * Compara que la fecha Menor sea menor (yyyyMMdd) o igual a la fecha Mayor (yyyyMMdd).
+     * @param xFechaMenor
+     * @param xFechaMayor
+     * @return true si cumple, false sino
+     */
+    public static boolean validarDistanciaFechas(String xFechaMenor, String xFechaMayor)
+    {
+        return (xFechaMenor.compareTo(xFechaMayor) <=0);
+    }
 }

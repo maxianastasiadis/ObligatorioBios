@@ -46,6 +46,17 @@ public class PersonasBean implements PersonasBeanLocal {
         ReturnActualizarDatosPersonales objReturnActualizarDatosPersonales = new ReturnActualizarDatosPersonales();
         try
         {
+            String fechaNacimiento = FuncionesFecha.guardarFechaAAAAMMDD(xParamActualizarDatosPersonales.getFechaNacimiento());
+            String fechaSistema = FuncionesFecha.mostrarFechaAAAAMMDDString(FuncionesFecha.getFechaSistema());
+
+            if(!FuncionesFecha.validarDistanciaFechas(fechaNacimiento, fechaSistema))
+            {
+                objReturnActualizarDatosPersonales.setGuardado(false);
+                objReturnActualizarDatosPersonales.setRespuesta("La Fecha de Nacimiento no puede ser mayor a la Fecha Actual.");
+                
+                return objReturnActualizarDatosPersonales;
+            }
+            
             //ACA TENGO QUE VER PRIMERO SI EXISTE LA PERSONA
             PersonasPK objPersonasPK = new PersonasPK(xParamActualizarDatosPersonales.getTipoDocumento(), xParamActualizarDatosPersonales.getDocumento());
             //SI EXISTE LA ACTUALIZO
@@ -61,7 +72,7 @@ public class PersonasBean implements PersonasBeanLocal {
                 objPersonas.setDepartamento(xParamActualizarDatosPersonales.getDepartamento());
                 objPersonas.setDireccion(xParamActualizarDatosPersonales.getDireccion());
                 objPersonas.setFechaIngreso(xParamActualizarDatosPersonales.getFechaIngreso());
-                objPersonas.setFechaNacimiento(FuncionesFecha.guardarFechaAAAAMMDD(xParamActualizarDatosPersonales.getFechaNacimiento()));
+                objPersonas.setFechaNacimiento(fechaNacimiento);
                 objPersonas.setMail(xParamActualizarDatosPersonales.getMail());
                 objPersonas.setNombre1(xParamActualizarDatosPersonales.getNombre1());
                 objPersonas.setNombre2(xParamActualizarDatosPersonales.getNombre2());

@@ -108,6 +108,17 @@ public class ServicioMiBios {
         ReturnAgregarPersona retorno = new ReturnAgregarPersona();
         try
         {
+            String fechaIngreso = FuncionesFecha.mostrarFechaAAAAMMDDString(FuncionesFecha.getFechaSistema());
+            
+            
+            if(!FuncionesFecha.validarDistanciaFechas(xParamAgregarPersona.getFechaNacimiento(), fechaIngreso))
+            {
+                retorno.setAgregado(false);
+                retorno.setMensaje("La Fecha de Nacimiento no puede ser mayor a la Fecha Actual.");
+                
+                return retorno;
+            }
+            
             PersonasPK objPersonasPK = new PersonasPK();
             objPersonasPK.setTipoDocumento(xParamAgregarPersona.getTipoDocumento());
             objPersonasPK.setDocumento(xParamAgregarPersona.getDocumento());
@@ -131,7 +142,7 @@ public class ServicioMiBios {
             objPersonas.setCiudad("");
             objPersonas.setDepartamento("");
             objPersonas.setDireccion("");
-            objPersonas.setFechaIngreso(FuncionesFecha.mostrarFechaAAAAMMDDString(FuncionesFecha.getFechaSistema()));
+            objPersonas.setFechaIngreso(fechaIngreso);
             objPersonas.setMail("");
             objPersonas.setNombre2("");
             objPersonas.setPais("");
