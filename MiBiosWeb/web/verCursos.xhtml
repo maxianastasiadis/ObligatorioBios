@@ -138,7 +138,7 @@
                     <h:outputText value="Ingrese Porcentaje Beca: " />
                     <p:inputText id="beca" required="true" requiredMessage="Debe ingresar Beca" maxlength="3" converterMessage="El porcentaje de beca debe ser numérico" value="#{cursosBean.becaInscripcion}"/>
                     <h:message for="beca" class="message"/>
-                    <p:commandButton action="#{cursosBean.inscribirmeACurso(cursosBean.idClaseInscripcion)}" value="Inscribirme" icon="ui-icon-check" ajax="true" update=":InscripcionForm:msgs" oncomplete="controlInscribirmeACurso(xhr, status, args)"></p:commandButton>
+                    <p:commandButton action="#{cursosBean.inscribirmeACurso(cursosBean.idClaseInscripcion)}" value="Inscribirme" icon="ui-icon-check" ajax="true" update=":InscripcionForm:msgs :DetalleCursoForm:tblDetail" oncomplete="controlInscribirmeACurso(xhr, status, args)"></p:commandButton>
                  </p:outputPanel>
             </p:dialog>
         </h:form>

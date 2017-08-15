@@ -129,6 +129,15 @@ public class CursosBean implements Serializable {
                 inscipcionCorrecta = false;
             }
             context.addCallbackParam("inscipcionCorrecta", inscipcionCorrecta);
+            
+            if(inscipcionCorrecta)
+            {
+                for(ClaseDatos c : listaClases)
+                {
+                    if(c.getIdClase() == xIdClase)
+                        c.setYaInscripto(true);
+                }
+            }
         } 
         catch (Exception ex) 
         {
